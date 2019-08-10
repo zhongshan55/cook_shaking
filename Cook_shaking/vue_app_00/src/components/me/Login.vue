@@ -1,8 +1,8 @@
 <template>
     <div class="app-login">
         <div class="login-top">            
-            <img src="../../../public/img/logo.png" alt="" class="logo-icon">
-            <div class="return" @click="return_me" ><img src="../../../public/img/return.png" alt=""></div>
+            <img src="../../../public/image/logo.png" alt="" class="logo-icon">
+            <div class="return" @click="return_me" ><img src="../../../public/image/return.png" alt=""></div>
         </div>
         <div class="login-selected">
         <mt-navbar class="page-part" v-model="selected">
