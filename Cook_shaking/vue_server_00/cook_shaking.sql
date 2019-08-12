@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 SET NAMES UTF8;
 
@@ -118,5 +117,3 @@ CREATE TABLE cook_discuss(
     content	VARCHAR(128)
 );
 
-=======
->>>>>>> 8dfed52e8274957c0ac74154c4bb5055a2fe5c28
