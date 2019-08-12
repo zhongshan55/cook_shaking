@@ -7,7 +7,7 @@
              <indexdetail/>
           </mt-tab-container-item>
           <mt-tab-container-item id="sort">
-              <h1>分类</h1>
+              <sort></sort>
           </mt-tab-container-item>
           <mt-tab-container-item id="shopping_cart">
               <h1>摇一摇</h1>
@@ -82,6 +82,7 @@ import Me from "./me/Me.vue"
 import Collect from "./collect/Collect.vue"
 import IndexDetail from "./home/IndexDetail.vue"
 import Carousel from "./home/Carousel.vue"
+import Sort from "./sort/Sort.vue"
 
 export default {
   data(){
@@ -101,7 +102,8 @@ export default {
     "me":Me,
     "collect" : Collect,
     "indexdetail": IndexDetail,
-    "carousel" : Carousel
+    "carousel" : Carousel,
+    "sort" : Sort
   },
   methods:{
      changeState(idx){
