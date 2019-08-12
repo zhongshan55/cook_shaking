@@ -3,12 +3,14 @@
     <!-- logo -->
     <div class="logoandlocation">
         <div class="logo">
-            <img src="../../../public/image/home/logo.png">
+            <img src="../../../public/image/home/shi.png">
+            <img src="../../../public/image/home/tian.png">
+            <img src="../../../public/image/home/xia.png">
         </div>
-        <div class="location">
-            <img src="../../../public/image/home/location.png">
+        <!-- <div class="location">
+            <img src="../../../public/image/location.png">
             <span><a href="javascript:;">广州</a></span>
-        </div>
+        </div> -->
     </div>
     <div style="margin-top:50px;"></div>
     <!-- 轮播图 -->
@@ -21,33 +23,32 @@
             <!-- <span>粤菜</span> -->
         </div>
         <div class="cake">
-            <a href="#"><img slot="icon" src="../../../public//image/home/hn.png" alt=""></a>
+            <a href="#"><img slot="icon" src="../../../public/image/home/hn.png" alt=""></a>
             <!-- <span>湘菜</span> -->
         </div>
         <div class="cake">
-            <a href="#"><img slot="icon" src="../../../public//image/home/sc.png" alt=""></a>
+            <a href="#"><img slot="icon" src="../../../public/image/home/sc.png" alt=""></a>
             <!-- <span>川菜</span> -->
         </div>
         <div class="cake">
-            <a href="#"><img slot="icon" src="../../../public//image/home/zj.png" alt=""></a>
+            <a href="#"><img slot="icon" src="../../../public/image/home/zj.png" alt=""></a>
             <!-- <span>浙菜</span> -->
         </div>
     </div>
-    <!-- 新品 人气 生日 -->
+    <!-- 热门菜系介绍 -->
     <div class="goods">
-        <!-- 新品 -->
         <div class="news">
-            <!-- 新品 更多 -->
+            <!-- 热门 更多 -->
             <div class="title">
-                <h3>热门</h3>
-                <a href="#">更多></a>
+                <h3>热门菜列</h3>
+                <a href="#">更多<img src="../../../public/image/home/right.png" alt=""></a>
             </div>
-            <!-- 商品展示 -->
+            <!-- 菜系展示 -->
             <ul>
                 <li>
                     <div class="newsImg" >
                         <a href="javascript:;">
-                            <img src="../../../public/image/home/goods1.png" alt="">
+                            <img src="../../../public/image/home/shaoji.jpg" alt="">
                         </a>
                     </div>
                     <div class="detail">
@@ -69,13 +70,13 @@
                 <li>
                     <div class="newsImg" >
                         <a href="javascript:;">
-                            <img src="../../../public/image/home/goods2.png" alt="">
+                            <img src="../../../public/image/home/suancaiyu.jpg" alt="">
                         </a>
                     </div>
                     <div class="detail">
                         <div class="detailbtn">
                             <a href="javascript:;">
-                                <img src="../../../public/image/home/cart.png" alt="">
+                                <img src="../../../public/image/home/collect.png" alt="">
                             </a>
                         </div>
                         <div class="detailtext">
@@ -91,13 +92,13 @@
                 <li>
                     <div class="newsImg" >
                         <a href="javascript:;">
-                            <img src="../../../public/image/home/goods3.png" alt="">
+                            <img src="../../../public/image/home/pig.jpg" alt="">
                         </a>
                     </div>
                     <div class="detail">
                         <div class="detailbtn">
                             <a href="javascript:;">
-                                <img src="../../../public/image/home/cart.png" alt="">
+                                <img src="../../../public/image/home/collect.png" alt="">
                             </a>
                         </div>
                         <div class="detailtext">
@@ -106,162 +107,6 @@
                                 <span class="pprice">398.00</span>
                                 <span class="pspec">元/454g(1.0榜)</span>
                                 <p class="pdetail">浅草才能没马蹄</p>
-                            </a>
-                        </div>
-                    </div>
-                </li>
-                
-            </ul>
-        </div>
-        <!-- 人气 -->
-        <div class="news">
-            <!-- 新品 更多 -->
-            <div class="title">
-                <h3>新品</h3>
-                <a href="#">更多></a>
-            </div>
-            <!-- 商品展示 -->
-            <ul>
-                <li>
-                    <div class="newsImg" >
-                        <a href="javascript:;">
-                            <img src="../../../public/image/home/goods1.png" alt="">
-                        </a>
-                    </div>
-                    <div class="detail">
-                        <div class="detailbtn">
-                            <a href="javascript:;">
-                                <img src="../../../public/image/home/cart.png" alt="">
-                            </a>
-                        </div>
-                        <div class="detailtext">
-                            <a href="javascript:;">
-                                <span class="pname">米道</span>
-                                <span class="pprice">298.00</span>
-                                <span class="pspec">元/454g(1.0榜)</span>
-                                <p class="pdetail">天真，天然，是做这款蛋糕唯一的出发点</p>
-                            </a>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="newsImg" >
-                        <a href="javascript:;">
-                            <img src="../../../public/image/home/goods2.png" alt="">
-                        </a>
-                    </div>
-                    <div class="detail">
-                        <div class="detailbtn">
-                            <a href="javascript:;">
-                                <img src="../../../public/image/home/cart.png" alt="">
-                            </a>
-                        </div>
-                        <div class="detailtext">
-                            <a href="javascript:;">
-                                <span class="pname">米道</span>
-                                <span class="pprice">298.00</span>
-                                <span class="pspec">元/454g(1.0榜)</span>
-                                <p class="pdetail">天真，天然，是做这款蛋糕唯一的出发点</p>
-                            </a>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="newsImg" >
-                        <a href="javascript:;">
-                            <img src="../../../public/image/home/goods3.png" alt="">
-                        </a>
-                    </div>
-                    <div class="detail">
-                        <div class="detailbtn">
-                            <a href="javascript:;">
-                                <img src="../../../public/image/home/cart.png" alt="">
-                            </a>
-                        </div>
-                        <div class="detailtext">
-                            <a href="javascript:;">
-                                <span class="pname">米道</span>
-                                <span class="pprice">298.00</span>
-                                <span class="pspec">元/454g(1.0榜)</span>
-                                <p class="pdetail">天真，天然，是做这款蛋糕唯一的出发点</p>
-                            </a>
-                        </div>
-                    </div>
-                </li>
-                
-            </ul>
-        </div>
-        <!-- 生日 -->
-        <div class="news">
-            <!-- 新品 更多 -->
-            <div class="title">
-                <h3>新品</h3>
-                <a href="#">更多></a>
-            </div>
-            <!-- 商品展示 -->
-            <ul>
-                <li>
-                    <div class="newsImg" >
-                        <a href="javascript:;">
-                            <img src="../../../public/image/home/goods1.png" alt="">
-                        </a>
-                    </div>
-                    <div class="detail">
-                        <div class="detailbtn">
-                            <a href="javascript:;">
-                                <img src="../../../public/image/home/cart.png" alt="">
-                            </a>
-                        </div>
-                        <div class="detailtext">
-                            <a href="javascript:;">
-                                <span class="pname">米道</span>
-                                <span class="pprice">298.00</span>
-                                <span class="pspec">元/454g(1.0榜)</span>
-                                <p class="pdetail">天真，天然，是做这款蛋糕唯一的出发点</p>
-                            </a>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="newsImg" >
-                        <a href="javascript:;">
-                            <img src="../../../public/image/home/goods2.png" alt="">
-                        </a>
-                    </div>
-                    <div class="detail">
-                        <div class="detailbtn">
-                            <a href="javascript:;">
-                                <img src="../../../public/image/home/cart.png" alt="">
-                            </a>
-                        </div>
-                        <div class="detailtext">
-                            <a href="javascript:;">
-                                <span class="pname">米道</span>
-                                <span class="pprice">298.00</span>
-                                <span class="pspec">元/454g(1.0榜)</span>
-                                <p class="pdetail">天真，天然，是做这款蛋糕唯一的出发点</p>
-                            </a>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="newsImg" >
-                        <a href="javascript:;">
-                            <img src="../../../public/image/home/goods3.png" alt="">
-                        </a>
-                    </div>
-                    <div class="detail">
-                        <div class="detailbtn">
-                            <a href="javascript:;">
-                                <img src="../../../public/image/home/cart.png" alt="">
-                            </a>
-                        </div>
-                        <div class="detailtext">
-                            <a href="javascript:;">
-                                <span class="pname">米道</span>
-                                <span class="pprice">298.00</span>
-                                <span class="pspec">元/454g(1.0榜)</span>
-                                <p class="pdetail">天真，天然，是做这款蛋糕唯一的出发点</p>
                             </a>
                         </div>
                     </div>
@@ -280,7 +125,11 @@ export default {
             
         }
     },
-    components:{carousel}
+    components:{carousel},
+    created() {
+        this.axios.get("http://127.0.0.1:8080/")
+        
+    },
 }
 </script>
 <style scoped>
@@ -293,25 +142,22 @@ export default {
 }
 /*logo图片*/
 .logoandlocation{
-    display: flex;
     position: fixed;
     width: 100%;
-    height: 50px;
+    height: 60px;
     background: white;
     border-top: 1px solid blanchedalmond;
+    z-index: 999;
+    padding: 5px 0;
 }
 
 .logoandlocation>.logo{
-    /* margin-left:50%;  */
-    position: relative;
-    width: 50px;
-    height: 50px;
-    left: 50%;
-    margin-left: -25px;
-    
+    display: flex;
+    justify-content: space-around;
 }
 .logoandlocation>.logo>img{
     width: 50px;height:50px;
+    display: block;
 }
 
 /* 地理位置 */
@@ -381,17 +227,17 @@ export default {
 }
 /* 新品 */
 .news>.title>h3{
-    font-size: 14px;
+    font-size: 16px;
     color: black;
     background: #F4EBE2;
     border-radius: 100px;
     font-weight: normal;
-    padding: 2px 10px;
+    padding: 3px 10px;
 }
 /* 更多 */
 .news>.title>a{
     text-decoration: none;
-    font-size: 12px;
+    font-size: 14px;
     color: black;
     font-weight: normal;
 }

@@ -43,6 +43,9 @@ CREATE TABLE cook_index_detail(
     pic		VARCHAR(128),
     href	VARCHAR(128)
 );
+INSERT INTO cook_index_detail VALUES(null,01,"红烧牛肉","香喷喷","01.jpg","aaa");
+
+
 
 /*菜系详情表*/
 CREATE TABLE cook_detail(
