@@ -45,10 +45,10 @@
             </div>
             <!-- 菜系展示 -->
             <ul>
-                <li>
+                <li v-for="(item,i) of list" :key="i">
                     <div class="newsImg" >
                         <a href="javascript:;">
-                            <img src="../../../public/image/home/shaoji.jpg" alt="">
+                            <img :src="`http://127.0.0.1:3000/`+item.pic" alt="">
                         </a>
                     </div>
                     <div class="detail">
@@ -59,15 +59,15 @@
                         </div>
                         <div class="detailtext">
                             <a href="javascript:;">
-                                <span class="pname">米道</span>
-                                <span class="pprice">298.00</span>
-                                <span class="pspec">元/454g(1.0榜)</span>
-                                <p class="pdetail">天真，天然，是做这款蛋糕唯一的出发点</p>
+                                <span class="pname">{{item.title}}</span>
+                                <!-- <span class="pprice"></span> -->
+                                <p class="pdetail">{{item.subtitle}}</p>
                             </a>
                         </div>
                     </div>
                 </li>
-                <li>
+                
+                <!-- <li>
                     <div class="newsImg" >
                         <a href="javascript:;">
                             <img src="../../../public/image/home/suancaiyu.jpg" alt="">
@@ -110,7 +110,7 @@
                             </a>
                         </div>
                     </div>
-                </li>
+                </li> -->
                 
             </ul>
         </div>
@@ -122,13 +122,22 @@ import carousel from "./Carousel"
 export default {
     data() {
         return {
-            
+            // p1:{},
+            // p2:{},
+            // p3:{}
+            list:[]
         }
     },
     components:{carousel},
     created() {
-        this.axios.get("http://127.0.0.1:8080/")
-        
+        this.axios.get("Home").then(result=>{
+            console.log(result.data);
+            // var [p1,p2,p3]=result.data;
+            // this.p1=p1;
+            // this.p2=p2;
+            // this.p3=p3;
+            this.list=result.data;
+        })
     },
 }
 </script>
