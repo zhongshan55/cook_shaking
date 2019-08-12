@@ -7,8 +7,9 @@ import Home from "./components/Home.vue"
 import Me from './components/me/Me.vue'
 import Login from './components/me/Login.vue'
 import Collect from './components/collect/Collect.vue'
-import IndexDetail from './components/home/IndexDetail.vue'
+// import IndexDetail from './components/home/IndexDetail.vue'
 // import Carousel from './components/home/Carousel.vue'
+import Sort from './components/sort/Sort.vue'
 
 
 
@@ -21,8 +22,9 @@ export default new Router({
     {path:'/Me',component:Me},
     {path:'/Login',component:Login},
     {path:'/Collect',component:Collect},
-    {path:'/IndexDetail',component:IndexDetail}
+    // {path:'/IndexDetail',component:IndexDetail},
     // {path:'/Carousel',component:Carousel}
+    {path:'/Sort',component:Sort}
     
 
   ]
