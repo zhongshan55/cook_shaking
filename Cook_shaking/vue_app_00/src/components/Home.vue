@@ -3,7 +3,9 @@
     <div class="page-wrap">
         <mt-tab-container class="page-tabbar-container" v-model="active">
           <mt-tab-container-item id="home">
+            <!-- 轮播图 -->
               <carousel/>
+              <!-- 首页信息 -->
              <indexdetail/>
           </mt-tab-container-item>
           <mt-tab-container-item id="sort">
