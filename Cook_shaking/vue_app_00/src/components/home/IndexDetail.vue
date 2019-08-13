@@ -264,7 +264,8 @@ a{
     overflow: hidden;
 }
 .newsImg>a>img{
-    width: 100%;
+    width:400px;
+    height: 260px;
 }
 .news>ul>li{
     box-shadow: 0px 1px 5px 0 #d4ba92;
