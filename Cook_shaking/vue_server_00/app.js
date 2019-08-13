@@ -44,7 +44,7 @@ server.use(express.static("public"));
 server.listen(3000);
 
                               /*使用路由器来管理路由*/
-server.use("/",index);
+server.use("/Home",index);
 
 
 
