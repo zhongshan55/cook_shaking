@@ -11,6 +11,7 @@ const session = require("express-session");
 
                                           //  引入
 const index=require("./routes/index");
+const userRouter=require("./routes/user");//引入登录/注册的路由器
 
 
 //2:配置数据库连接池:提高数据效率
@@ -45,6 +46,7 @@ server.listen(3000);
 
                               /*使用路由器来管理路由*/
 server.use("/Home",index);
+server.use("/user",userRouter);  //使用登录/注册的路由器
 
 
 
