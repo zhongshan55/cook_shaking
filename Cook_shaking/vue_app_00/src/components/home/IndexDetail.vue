@@ -41,7 +41,7 @@
             <!-- 热门 更多 -->
             <div class="title">
                 <h3>热门菜列</h3>
-                <a href="#">更多<img src="../../../public/image/home/right.png" alt=""></a>
+                <a href="javascript:;" >更多<img src="../../../public/image/home/right.png" alt=""></a>
             </div>
             <!-- 菜系展示 -->
             <ul>
@@ -53,65 +53,19 @@
                     </div>
                     <div class="detail">
                         <div class="detailbtn">
-                            <a href="javascript:;">
-                                <img src="../../../public/image/home/collect.png" alt="">
-                            </a>
+                            <mt-button>
+                                <!-- <img src="../../../public/image/home/collect.png" alt=""> -->
+                            </mt-button>
                         </div>
                         <div class="detailtext">
                             <a href="javascript:;">
-                                <span class="pname">{{item.title}}</span>
+                                <span class="ptitle">{{item.title}}</span>
                                 <!-- <span class="pprice"></span> -->
-                                <p class="pdetail">{{item.subtitle}}</p>
+                                <p class="psubtitle">{{item.subtitle}}</p>
                             </a>
                         </div>
                     </div>
                 </li>
-                
-                <!-- <li>
-                    <div class="newsImg" >
-                        <a href="javascript:;">
-                            <img src="../../../public/image/home/suancaiyu.jpg" alt="">
-                        </a>
-                    </div>
-                    <div class="detail">
-                        <div class="detailbtn">
-                            <a href="javascript:;">
-                                <img src="../../../public/image/home/collect.png" alt="">
-                            </a>
-                        </div>
-                        <div class="detailtext">
-                            <a href="javascript:;">
-                                <span class="pname">(新)杰瑞</span>
-                                <span class="pprice">198.00</span>
-                                <span class="pspec">元/454g(1.0榜)</span>
-                                <p class="pdetail">谁动了我的奶酪！......</p>
-                            </a>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="newsImg" >
-                        <a href="javascript:;">
-                            <img src="../../../public/image/home/pig.jpg" alt="">
-                        </a>
-                    </div>
-                    <div class="detail">
-                        <div class="detailbtn">
-                            <a href="javascript:;">
-                                <img src="../../../public/image/home/collect.png" alt="">
-                            </a>
-                        </div>
-                        <div class="detailtext">
-                            <a href="javascript:;">
-                                <span class="pname">浅草</span>
-                                <span class="pprice">398.00</span>
-                                <span class="pspec">元/454g(1.0榜)</span>
-                                <p class="pdetail">浅草才能没马蹄</p>
-                            </a>
-                        </div>
-                    </div>
-                </li> -->
-                
             </ul>
         </div>
     </div>
@@ -129,7 +83,9 @@ export default {
             datatest:1
         }
     },
-    components:{carousel},
+    components:{
+        carousel
+        },
     created() {
         this.axios.get("Home").then(result=>{
             console.log(result.data);
@@ -191,20 +147,6 @@ export default {
     height: 222px;
     /* background: pink; */
 }
-/* 服务说明 */
-.ulser{
-    display: flex;
-    justify-content: space-around;
-    padding: 0;
-    margin: 10px 0;
-    list-style: square;
-}
-/* 字体大小 */
-.ulser>li{
-    font-size: 12px;
-    color: #d4ba92;
-}
-/* 蛋糕 面包 下午茶 企业中心  */
 .navbar{
     margin-top: 5px;
     display: flex;
@@ -264,7 +206,7 @@ a{
     overflow: hidden;
 }
 .newsImg>a>img{
-    width: 100%;
+    width:100%;
 }
 .news>ul>li{
     box-shadow: 0px 1px 5px 0 #d4ba92;
@@ -276,39 +218,54 @@ a{
     margin-top: 10px;
 }
 .detailtext{
+    width: 250px;
     text-align: left;
-    margin-left: 10px;
-    margin-top: 10px;
+    margin-left: 15px;
+    margin-top: 8px;
     margin-bottom: 10px;
 }
-.detailtext>a>.pname{
-    color: #322418;
+.detailtext>a>.ptitle{
+    font-size: 18px;
+    color: #d4ba92;
+    font-style: oblique;
     margin-right: 5px;
 }
-.detailtext>a>.pprice{
-    color: #d4ba92;
-}
-.detailtext>a>.pspec{
-    color: #d4ba92;
-    margin-left: 5px;
-    font-size: 12px;
-}
-.detailtext>a>.pdetail{
-    margin-top: 5px;
+
+.detailtext>a>.psubtitle{
+    /*文字超出显示...*/
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient: vertical;
+    
+    width:250px;
+    margin-top: 6px;
     margin-bottom: 5px;
     font-size: 14px;
 }
+.detail{
+    position: relative;
+}
 .detailbtn{
-    width: 32px;
-    height: 32px;
-    background: white;
-    /* border: 1px solid #d4ba92; */
+    position: absolute;
+    /* width: 32px;
+    height: 32px; */
     border-radius: 50px;
-    padding: 6px;
-    float: right;
-    /* margin-top: 5px; */
-    margin-right: 20px;
     outline: 0;
+    top: 50%;
+    margin-top: -25px;
+    left: 288px;
+    /* border-radius: 50%; */
+}
+.detailbtn>.mint-button{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background-image: url("../../../public/image/home/collect.png");
+    background-repeat:no-repeat;
+    background-position:center;
 }
 </style>
 
+        
