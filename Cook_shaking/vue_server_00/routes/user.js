@@ -27,4 +27,14 @@ router.get('/login',(req,res)=>{
 
 });
 
+// 注册
+router.get('/reg',(req,res)=>{
+    //获取post请求数据
+    var obj=req.query;
+    console.log(obj)
+    
+})
+
+
+
 module.exports=router;

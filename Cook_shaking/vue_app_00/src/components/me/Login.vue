@@ -68,6 +68,19 @@ export default {
                 this.$toast({message:"密码格式不正确"});
                 return;
             }
+            //发送ajax 请求 axios
+            var url="user/login";
+            var obj={uname:uname,upwd:upwd}
+            this.axios.get(url,{params:obj}).then(res=>{
+                // 获取服务器返回结果
+                // 登录失败 提示
+                if(res.data.code==-1){
+                    this.$toast("用户和密码有误")
+                }else{
+                    // 登录成功 跳转首页组件
+                    this.$router.push("/")
+                }
+            })
         },
         reg(){
             //获取用户名输入密码
