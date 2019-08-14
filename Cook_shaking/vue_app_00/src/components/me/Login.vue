@@ -18,8 +18,8 @@
             </mt-tab-container-item>
             <!-- 注册内容 -->
             <mt-tab-container-item id="reg">
-                <mt-field placeholder="请输入用户名" v-model="uname"></mt-field>
-                <mt-field placeholder="请输入密码" type="password" v-model="upwd"></mt-field>
+                <mt-field placeholder="请输入用户名" v-model="uname2"></mt-field>
+                <mt-field placeholder="请输入密码" type="password" v-model="upwd2"></mt-field>
                 <mt-field placeholder="请确认密码" type="password" v-model="cupwd"></mt-field>
                 <mt-field placeholder="请输入用户姓名" v-model="user_name"></mt-field>  
                 <mt-field placeholder="请输入手机号码" type="tel" v-model="phone"></mt-field>   
@@ -40,6 +40,9 @@ export default {
           selected:"login",
           uname:"",
           upwd:"",
+          //注册页面数据
+          uname2:"",
+          upwd2:"",
           cupwd:"",
           user_name:"",
           phone:"",
@@ -78,17 +81,19 @@ export default {
                     this.$toast("用户和密码有误")
                 }else{
                     // 登录成功 跳转首页组件
+                     this.$toast("登录成功")
                     this.$router.push("/")
                 }
             })
         },
         reg(){
             //获取用户名输入密码
-            var uname=this.uname;
+            var uname=this.uname2;
             //获取用户输入密码
-            var upwd=this.upwd;
+            var upwd=this.upwd2;
             //获取用户确认密码
             var cupwd=this.cupwd;
+            var email=this.email ,user_name=this.user_name,phone=this.phone;
             //创建正则表达式验证用户名和密码
             var reg=/^[a-z0-9]{3,12}$/i;
             //验证用户名
@@ -107,12 +112,23 @@ export default {
                 return;
             }
             //验证两次密码输入是否一致
-            console.log(cupwd);
-            console.log(upwd);
             if(upwd!==cupwd){
                 this.$toast({message:"两次输入密码不一致"});
                 return;
             }
+            //发送ajax请求
+            var url="user/reg";
+            var obj={uname:uname,upwd:upwd,email:email,phone:phone,user_name:user_name}
+            this.axios.get(url,{params:obj}).then(res=>{
+                if(res.data.code==-1){
+                    this.$toast(res.data.msg)
+                }else if(res.data.code==0){
+                   this.$toast(res.data.msg)
+                }else{
+                     this.$messagebox("消息","账号注册成功!").then(res=>{})
+                }                
+            })
+
         }
     }
 }
