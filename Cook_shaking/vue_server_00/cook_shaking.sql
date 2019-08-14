@@ -117,7 +117,6 @@ CREATE TABLE cook_collect(
     id INT PRIMARY KEY AUTO_INCREMENT,
     uid		INT,
     fid		INT,
-    cid		INT,
     title       VARCHAR(128),
     subtitle    VARCHAR(128),
     detail	VARCHAR(128),

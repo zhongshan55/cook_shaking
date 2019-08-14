@@ -53,7 +53,14 @@
                     </div>
                     <div class="detail">
                         <div class="detailbtn">
-                            <mt-button>
+                            <mt-button 
+                            @click="addCollect"
+                            :data-fid="item.fid"
+                            :data-title="item.title"
+                            :data-subtitle="item.subtitle"
+                            :data-pic="item.pic"
+                            :data-href="item.href"
+                            >
                                 <!-- <img src="../../../public/image/home/collect.png" alt=""> -->
                             </mt-button>
                         </div>
@@ -80,7 +87,11 @@ export default {
             // p2:{},
             // p3:{}
             list:[],
-            datatest:1
+        }
+    },
+    methods: {
+        addCollect(){
+            console.log(111)
         }
     },
     components:{
