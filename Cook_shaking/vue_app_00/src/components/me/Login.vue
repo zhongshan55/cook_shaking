@@ -12,17 +12,20 @@
          <div class="content">
          <mt-tab-container v-model="selected">
             <mt-tab-container-item id="login">    
-                <mt-field placeholder="请输入用户名" v-model="uname"></mt-field>
+                <mt-field placeholder="请输入注册账号" v-model="uname"></mt-field>
                 <mt-field placeholder="请输入密码" type="password" v-model="upwd"></mt-field>
-                <mt-button size="large">登录</mt-button>
+                <mt-button size="large" @click="login">登录</mt-button>
             </mt-tab-container-item>
             <!-- 注册内容 -->
             <mt-tab-container-item id="reg">
                 <mt-field placeholder="请输入用户名" v-model="uname"></mt-field>
                 <mt-field placeholder="请输入密码" type="password" v-model="upwd"></mt-field>
-                <mt-field placeholder="请确认密码" type="password"></mt-field>
-                <mt-field placeholder="请输入用户姓名" v-model="user_name"></mt-field>          
-                <mt-button size="large">注册</mt-button>
+                <mt-field placeholder="请确认密码" type="password" v-model="cupwd"></mt-field>
+                <mt-field placeholder="请输入用户姓名" v-model="user_name"></mt-field>  
+                <mt-field placeholder="请输入手机号码" type="tel" v-model="phone"></mt-field>   
+                <mt-field placeholder="请输入邮箱" type="email" v-model="email"></mt-field>   
+
+                <mt-button size="large" @click="reg">注册</mt-button>
             </mt-tab-container-item>
         </mt-tab-container>
          </div>
@@ -37,13 +40,66 @@ export default {
           selected:"login",
           uname:"",
           upwd:"",
-          user_name:""
+          cupwd:"",
+          user_name:"",
+          phone:"",
+          email:""
         }
     },
     methods:{
         return_me(){       
             // 返回上一页
             history.go(-1); 
+        },
+        login(){
+            //获取用户输入用户名
+            var uname=this.uname;
+            //获取用户输入密码
+            var upwd=this.upwd;
+            //创建正则表达式验证用户名和密码
+            var reg=/^[a-z0-9]{3,12}$/i;
+            //验证用户名
+            if(!reg.test(uname)){
+                this.$toast({message:"用户名格式不正确"});
+                return;
+            }
+            //验证密码
+            if(!reg.test(upwd)){
+                this.$toast({message:"密码格式不正确"});
+                return;
+            }
+        },
+        reg(){
+            //获取用户名输入密码
+            var uname=this.uname;
+            //获取用户输入密码
+            var upwd=this.upwd;
+            //获取用户确认密码
+            var cupwd=this.cupwd;
+            //创建正则表达式验证用户名和密码
+            var reg=/^[a-z0-9]{3,12}$/i;
+            //验证用户名
+            if (!reg.test(uname)){
+                this.$toast({message:"用户名格式不正确"});
+                return;
+            }
+            //验证密码
+            if(!reg.test(upwd)){
+                this.$toast({message:"密码格式不正确"});
+                return;
+            }
+            //验证确认密码
+            if(!reg.test(cupwd)){
+                this.$toast({message:"密码格式不正确"});
+                return;
+            }
+            //验证两次密码输入是否一致
+            console.log(cupwd);
+            console.log(upwd);
+            if(upwd!==cupwd){
+                this.$toast({message:"两次输入密码不一致"});
+                return;
+            }
         }
     }
 }
