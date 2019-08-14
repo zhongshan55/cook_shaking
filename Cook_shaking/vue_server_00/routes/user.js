@@ -32,6 +32,23 @@ router.get('/reg',(req,res)=>{
     //获取post请求数据
     var obj=req.query;
     console.log(obj)
+    //判断账号是否已注册过.
+   var sql="SELECT uid FROM cook_user WHERE uname=?"
+    pool.query(sql,[obj.uname],(err,result)=>{
+        if(err) throw err;
+        if(result!=0){
+           res.send("账号已注册")
+        }else{
+            var reg_sql="INSER INTO cook_user SET ?"
+            pool.query(reg_sql,[obj],(err,result)=>{
+                if(err) throw err;
+                console.log(result);
+                if(result.affecteRows>0){
+                    res.send("1")
+                }
+            })
+        }
+    })
     
 })
 
