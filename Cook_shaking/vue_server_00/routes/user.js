@@ -23,8 +23,8 @@ router.get('/login',(req,res)=>{
         }else{
              // //登录成功
             // 1.登录成功的凭据保存session  
-            req.session.sessionid=result[0].uid;
-            console.log(req.session);//打印查看session
+            req.session.uid=result[0].uid;
+            // console.log(req.session);//打印查看session
             res.send({code:1,msg:"登录成功"})
         }
    })

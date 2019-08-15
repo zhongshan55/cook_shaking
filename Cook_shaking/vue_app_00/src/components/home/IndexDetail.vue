@@ -63,6 +63,7 @@
                             :data-pic="item.pic"
                             :data-href="item.href"
                             >
+                            <img class="btnimg" src="../../../public/image/home/collect.png" alt="">
                             </mt-button>
                         </div>
                         <div class="detailtext">
@@ -92,27 +93,32 @@ export default {
     },
     methods: {
         addCollect(e){              //添加收藏夹
-        //获取数据
+            //获取数据
             var fid=e.target.dataset.fid;
             var cid=e.target.dataset.cid;
+            // console.log(cid)
             var title=e.target.dataset.title;
             var subtitle=e.target.dataset.subtitle;
+            var detail=e.target.dataset.detail;
             var pic=e.target.dataset.pic;
             var href=e.target.dataset.href;
             //请求地址
             var url="addcollect";
             //请求参数
-            var obj={fid:fid,title:title,subtitle:subtitle,pic:pic,href:href}
+            var obj={fid,cid,title,subtitle,pic,href,detail}
             // 获取返回结果
             this.axios.get(url,{params:obj}).then(res=>{
-                  if(res.data.code==-1){
-                    this.$messagebox("消息","请先登录再购买")
+                if(res.data.code==-1){
+                    this.$messagebox("消息","请先登录再收藏")
                     .then(res=>{
                         this.$router.push("/Login");
                         return;
                     })
                 }else{
                     this.$toast("添加成功")
+                }
+                if(res.data.code==-2){
+                    this.$messagebox("你好呀！！！","已收藏过了")
                 }
             })
         },
@@ -127,6 +133,10 @@ export default {
                 this.list=result.data.data;  //将数据传给list
             })
         },
+        // 验证是否已收藏 收藏图标变红
+        // addCollect_active(){
+
+        // }
     },
     components:{
         carousel
@@ -297,12 +307,19 @@ a{
     /* border-radius: 50%; */
 }
 .detailbtn>.mint-button{
+    position: relative;
     border-radius: 50%;
     width: 50px;
     height: 50px;
-    background-image: url("../../../public/image/home/collect.png");
-    background-repeat:no-repeat;
-    background-position:center;
+    /* background-image: url("../../../public/image/home/collect.png"); */
+    /* background-repeat:no-repeat; */
+    /* background-position:center; */
+}
+.btnimg{
+    position: absolute;
+    display: block;
+    left:9px;
+    top: 8px;
 }
 </style>
 
