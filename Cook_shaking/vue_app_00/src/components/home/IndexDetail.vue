@@ -56,12 +56,13 @@
                             <mt-button 
                             @click="addCollect"
                             :data-fid="item.fid"
+                            :data-cid="item.cid"
                             :data-title="item.title"
+                            :data-detail="item.detail"
                             :data-subtitle="item.subtitle"
                             :data-pic="item.pic"
                             :data-href="item.href"
                             >
-                                <!-- <img src="../../../public/image/home/collect.png" alt=""> -->
                             </mt-button>
                         </div>
                         <div class="detailtext">
@@ -86,26 +87,52 @@ export default {
             // p1:{},
             // p2:{},
             // p3:{}
-            list:[],
+            list:[],//用于接收服务器端数据
         }
     },
     methods: {
-        addCollect(){
-            console.log(111)
-        }
+        addCollect(e){              //添加收藏夹
+        //获取数据
+            var fid=e.target.dataset.fid;
+            var cid=e.target.dataset.cid;
+            var title=e.target.dataset.title;
+            var subtitle=e.target.dataset.subtitle;
+            var pic=e.target.dataset.pic;
+            var href=e.target.dataset.href;
+            //请求地址
+            var url="addcollect";
+            //请求参数
+            var obj={fid:fid,title:title,subtitle:subtitle,pic:pic,href:href}
+            // 获取返回结果
+            this.axios.get(url,{params:obj}).then(res=>{
+                  if(res.data.code==-1){
+                    this.$messagebox("消息","请先登录再购买")
+                    .then(res=>{
+                        this.$router.push("/Login");
+                        return;
+                    })
+                }else{
+                    this.$toast("添加成功")
+                }
+            })
+        },
+        load(){
+            var url="home"
+            this.axios.get(url).then(result=>{
+                // console.log(result.data);
+                // var [p1,p2,p3]=result.data;
+                // this.p1=p1;
+                // this.p2=p2;
+                // this.p3=p3;
+                this.list=result.data.data;  //将数据传给list
+            })
+        },
     },
     components:{
         carousel
         },
     created() {
-        this.axios.get("Home").then(result=>{
-            console.log(result.data);
-            // var [p1,p2,p3]=result.data;
-            // this.p1=p1;
-            // this.p2=p2;
-            // this.p3=p3;
-            this.list=result.data;
-        })
+        this.load(); //首页信息加载
     },
 }
 </script>
