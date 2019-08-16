@@ -23,6 +23,10 @@ axios.defaults.withCredentials=true
 Vue.prototype.axios = axios;
 
 
+// 添加定义自定义指令focus
+Vue.directive("focus",{inserted(elem){
+     elem.focus();
+ }})
 
 
 

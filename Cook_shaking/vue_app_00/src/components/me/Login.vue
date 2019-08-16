@@ -6,7 +6,7 @@
         </div>
         <div class="login-selected">
         <mt-navbar class="page-part" v-model="selected">
-            <mt-tab-item id="login">登录</mt-tab-item>
+            <mt-tab-item id="login" >登录</mt-tab-item>
             <mt-tab-item id="reg">注册</mt-tab-item>
         </mt-navbar>
          <div class="content">
@@ -33,7 +33,7 @@
     </div>
 </template>
 <script>
-// import Index from '../Index.vue'
+
 export default {
     data(){
         return{

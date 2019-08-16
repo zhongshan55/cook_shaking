@@ -14,7 +14,7 @@ router.get('/login',(req,res)=>{
     var uname=req.query.uname;
     var upwd=req.query.upwd;
     //查询sql语句
-    var sql="SELECT uid FROM cook_user WHERE uname=? AND upwd=md5(?)";
+    var sql="SELECT uid,user_name FROM cook_user WHERE uname=? AND upwd=md5(?)";
    //json:{code:1,msg:"登录成功"}
    pool.query(sql,[uname,upwd],(err,result)=>{
        if(err) throw err;
@@ -24,6 +24,7 @@ router.get('/login',(req,res)=>{
              // //登录成功
             // 1.登录成功的凭据保存session  
             req.session.sessionid=result[0].uid;
+            req.session.user_name=result[0].user_name;
             console.log(req.session);//打印查看session
             res.send({code:1,msg:"登录成功"})
         }
@@ -60,6 +61,24 @@ router.get('/reg',(req,res)=>{
         }
     })
     
+})
+
+
+//查看当前登录账号个人详情
+router.get("/person",(req,res)=>{
+    var uid=req.session.sessionid;
+    console.log(uid);
+    if(!uid){
+        res.send({code:-1,msg:"请登录"})
+    }else{
+        var sql=`SELECT * FROM cook_user WHERE uid=${uid}`;
+        pool.query(sql,(err,result)=>{
+            if(err)  throw err;
+            console.log(result+"123");
+            var data=result[0]
+            res.send({code:1,msg:"查询用户信息成功",data:data});
+        })
+    }
 })
 
 

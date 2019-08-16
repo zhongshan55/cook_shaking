@@ -3,18 +3,19 @@
        <div class="strip">
       <div class="me-top">
           <div class="me-user">
-              <span @click="go_login">登录/注册</span>     
+              <span @click="go_login" v-show="true">登录/注册</span>
+              <!-- <span @click="go_user" v-show="false">{{data.user_name}}</span>      -->
           <div class="me-photo"><img src="../../assets/me1.png" alt=""></div>
           </div>
       </div>
       <ul class="balance"> 
           <li>
-              <h3>0张</h3>
-              <span>优惠券</span>
+              <h3>15</h3>
+              <span>作品</span>
           </li>
           <li>
-              <h3>￥0.00</h3>
-              <span>余额</span>
+              <h3>200</h3>
+              <span>评论</span>
           </li>
       </ul>
       
@@ -22,28 +23,28 @@
         <li class="">   
             <div class="row_img"><img src="../../../public/image/dingdan.png" alt=""></div>
              <div class="row_content">
-             <div class="title">我的订单</div>
+             <div class="title">浏览历史</div>
              <div class="arrow">></div>
              </div>
         </li>
                 <li class="">   
             <div class="row_img"><img src="../../../public/image/address.png" alt=""></div>
              <div class="row_content">
-             <div class="title">地址</div>
+             <div class="title">地址定位</div>
              <div class="arrow">></div>
              </div>
         </li>
                 <li class="">   
             <div class="row_img"><img src="../../../public/image/discount.png" alt=""></div>
              <div class="row_content">
-             <div class="title">优惠券</div>
+             <div class="title">我的关注</div>
              <div class="arrow">></div>
              </div>
         </li>
                 <li class="">   
             <div class="row_img"><img src="../../../public/image/balance.png" alt=""></div>
              <div class="row_content">
-             <div class="title">余额重置</div>
+             <div class="title">我的作品</div>
              <div class="arrow">></div>
              </div>
                 </li>
@@ -83,15 +84,38 @@
    </div> <!--分隔横条  -->
 </template> 
 <script>
+
 export default {
    data(){
-       return{}
+       return{
+           data:{},
+           sta:0 //登录状态
+       }
    },
    methods:{
        go_login(){
            this.$router.push("/Login")
+       },
+       go_user(){
+           this.$router.push("/Login")
+       },
+       loadMore(){
+          var url="person";
+          this.axios.get(url).then(res=>{
+            //   获取返回结果
+            if(res.data.code==-1){
+                  this.sta=0;  //未登录 将status为0 
+            }else{
+                this.sta=1;    //已登录  将status为1
+                this.data=res.data.data ;
+                console.log(this.data+"1233");
+            }
+          })
        }
-   }    
+   } ,
+   created(){
+       this.loadMore();
+   }
 }
 </script>
 <style scoped>
@@ -150,7 +174,7 @@ export default {
         padding:0;
       
   }
-  /* 优惠价/余额4 */
+  /* 作品/[评论 */
   .balance{
       display:flex;
       justify-content: space-between;
@@ -160,7 +184,12 @@ export default {
       padding: 15px;
       border-top:1px solid #ddd;
       border-bottom: 1px solid #ddd;
+      text-align:center;
   }   
+  .balance>li>h3{
+     margin-top:0;
+     margin-bottom:5px;
+  }
   .balance>li:first-child{
       border-right:1px solid #eee;
   }
@@ -198,7 +227,6 @@ export default {
       width: 60px;
       height: 45px;
       line-height: 45px;
-      align-self:
   }
   .me_module2{
       margin-top:12px
