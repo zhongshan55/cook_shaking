@@ -63,7 +63,10 @@
                             :data-pic="item.pic"
                             :data-href="item.href"
                             >
-                            <img class="btnimg" src="../../../public/image/home/collect.png" alt="">
+                             <!-- 未收藏图标 -->
+                            <img v-if="active=1" class="btnimg" :src="`http://127.0.0.1:3000/`+item.pic_collect_active">
+                            <!-- 已收藏图标 -->
+                            <img v-else class="btnimg" :src="`http://127.0.0.1:3000/`+item.pic_collect">
                             </mt-button>
                         </div>
                         <div class="detailtext">
@@ -89,6 +92,7 @@ export default {
             // p2:{},
             // p3:{}
             list:[],//用于接收服务器端数据
+            active:0
         }
     },
     methods: {
@@ -102,8 +106,9 @@ export default {
             var detail=e.target.dataset.detail;
             var pic=e.target.dataset.pic;
             var href=e.target.dataset.href;
+            
             //请求地址
-            var url="addcollect";
+            var url="add/addcollect";
             //请求参数
             var obj={fid,cid,title,subtitle,pic,href,detail}
             // 获取返回结果
@@ -114,15 +119,16 @@ export default {
                         this.$router.push("/Login");
                         return;
                     })
-                }else{
+                }else if(res.data.code==1) {
                     this.$toast("添加成功")
+                }else if(res.data.code==2) {
+                    this.$toast("删除成功")
                 }
-                if(res.data.code==-2){
-                    this.$messagebox("你好呀！！！","已收藏过了")
-                }
+
+
             })
         },
-        load(){
+        load(){                     //首页信息加载
             var url="home"
             this.axios.get(url).then(result=>{
                 // console.log(result.data);
@@ -131,18 +137,30 @@ export default {
                 // this.p2=p2;
                 // this.p3=p3;
                 this.list=result.data.data;  //将数据传给list
-            })
+                // console.log(this.list)
+            }) 
         },
         // 验证是否已收藏 收藏图标变红
-        // addCollect_active(){
-
-        // }
+        addCollect_active(){
+            var url="add/add_active"
+            this.axios.get(url).then(res=>{
+                if(res.data.code==-1){
+                    // this.active=-1
+                    console.log(res)
+                }else{
+                    // this.list_active=res.data.data
+                    this.active=res.data.data[0].display
+                    console.log("active"+this.active)
+                }
+            })
+        }
     },
     components:{
         carousel
         },
     created() {
         this.load(); //首页信息加载
+        this.addCollect_active()
     },
 }
 </script>
