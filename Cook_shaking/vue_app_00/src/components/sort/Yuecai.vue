@@ -101,7 +101,7 @@ export default {
 }
 </script>
 <style scoped>
-  *{
+*{
   padding:0;
   margin:0;
 }

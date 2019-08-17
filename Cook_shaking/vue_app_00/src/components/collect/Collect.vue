@@ -5,10 +5,10 @@
     <h3>收藏列表(4)</h3>
     <hr>
     <!-- 商品列表 -->
-    <div class="collectList"> 
+    <div class="collectList" v-for="(item,i) of list" :key="i"> 
       <!-- 左侧图片 -->
       <div class="left">
-        <img src="../../../public/image/collect/collect.png">
+        <img :src="'http://127.0.0.1:3000/'+item.pic">
       </div>
       <!-- 右侧文字介绍 -->
       <div class="right">
@@ -16,8 +16,8 @@
         <div class="rightTop">
           <!-- 左侧标题部分 -->
           <div class="left_title">
-            <p class="title">面包</p>
-            <p class="sub_title">粤菜 / 面食</p>
+            <p class="title">{{item.title}}</p>
+            <p class="sub_title">{{item.subtitle}}</p>
           </div>
           <!-- 右侧取消收藏部分 -->
           <div class="right_img">
@@ -26,7 +26,7 @@
         </div>
         <!-- 右侧下部分详情介绍 -->
         <div class="right_intr">
-          <p>详情介绍详情介绍详情介绍详情介绍详情介绍详情介绍详情介绍</p>
+          <p>{{item.detail}}</p>
         </div>
       </div>
     </div>
@@ -36,7 +36,33 @@
 <script>
 export default {
   data(){
-    return {}
+    return {
+      list:[]
+    }
+  },
+  methods:{
+    loadMore(){
+      //功能:获取商品分页数据
+      // 1.发送请求
+      var url="collect";
+      //发送ajax请求获取当前页内容
+      this.axios.get(url).then(res=>{
+        console.log(111);
+        // 2.获取服务器返回结果
+        console.log(res.data);
+        // 3.将返回结果保存
+        // var row = 1页.concat(2页)
+        this.list = res.data;
+        // 4.拼接多页内容
+        //var rows = this.list.concat(res.data); 
+        // 5.将结果赋值list
+        //this.list = rows;
+        //console.log(this.list);
+      })
+    }
+  },
+  created(){
+    this.loadMore();
   }
 }
 </script>
@@ -107,6 +133,12 @@ h3{
 .right .right_intr p{
   font-size:14px;
   color:#999;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display:-webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 18px;
 }
 </style>
 

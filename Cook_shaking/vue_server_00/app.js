@@ -20,6 +20,8 @@ const addcollect=require("./routes/addcollect");
 const userRouter=require("./routes/user");//引入登录/注册的路由器
 
 const sort=require("./routes/sort"); //引入分类路由器
+const collect=require("./routes/collect"); //引入分类路由器
+
 
 
 
@@ -64,6 +66,7 @@ server.use("/addcollect",addcollect);
 server.use("/user",userRouter);  //使用登录/注册的路由器
 
 server.use("/sort",sort); //分类路由
+server.use("/collect",collect); //收藏路由
 
 
 
