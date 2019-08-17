@@ -40,26 +40,32 @@ CREATE TABLE cook_index_detail(
     fid         INT,
     title       VARCHAR(128),
     subtitle    VARCHAR(128),
+    detail	VARCHAR(128),
     pic		VARCHAR(128),
-    href	VARCHAR(128)
+    href	VARCHAR(128),
+    pic_collect_active VARCHAR(128),
+    pic_collect VARCHAR(128)
 );
-INSERT INTO cook_index_detail VALUES(null,01,"豉汁蒸排骨","骨头软，肉多","01.jpg","cook_details?cid=1");
-INSERT INTO cook_index_detail VALUES(null,02,"酸菜鱼","鱼肉鲜嫩，酸辣可口","02.jpg","cook_details?cid=2");
-INSERT INTO cook_index_detail VALUES(null,03,"乳猪","色泽红润，皮酥肉嫩，肥而不腻，又鲜又嫩","03.jpg","cook_details?cid=3");
-INSERT INTO cook_index_detail VALUES(null,04,"南京盐水鸭","盐水鸭鸭皮白肉嫩、肥而不腻、香鲜味美","04.jpg","cook_details?cid=4");
-INSERT INTO cook_index_detail VALUES(null,05,"家常豆腐","富有较高的蛋白质，有营养价值并具有医药功能的美味食品","05.jpg","cook_details?cid=5");
-INSERT INTO cook_index_detail VALUES(null,06,"佛跳墙","吃起来软嫩柔润，浓郁荤香，又荤而不腻；各料互为渗透，味中有味","06.jpg","cook_details?cid=6");
+INSERT INTO cook_index_detail VALUES(null,01,"豉汁蒸排骨","骨头软，肉多","豉汁蒸排骨用的是肋排，这个部分的骨头一般比较软，肉多","01.jpg","cook_details?cid=1","collect_active.png","collect.png");
+INSERT INTO cook_index_detail VALUES(null,01,"排骨","骨头软，肉多","豉汁蒸排骨用的是肋排，这个部分的骨头一般比较软，肉多","01.jpg","cook_details?cid=1","collect_active.png","collect.png");
+INSERT INTO cook_index_detail VALUES(null,02,"酸菜鱼","鱼肉鲜嫩，酸辣可口","酸菜鱼的主材鱼含丰富优质蛋白，人体消化吸收率可达96%，并能供给人体必需的氨基酸、矿物质、维生素A和维生素D；鱼的脂肪多为不饱和脂肪酸，能很好的降低胆固醇，可以防治动脉硬化、冠心病，因此，多吃鱼可以健康长寿","02.jpg","cook_details?cid=2","collect_active.png","collect.png");
+INSERT INTO cook_index_detail VALUES(null,03,"乳猪","色泽红润，皮酥肉嫩，肥而不腻，又鲜又嫩","色泽红润，形态完整，皮酥肉嫩，肥而不腻，又鲜又嫩，入口奇香。其烤制方法早在公元前成书的《礼记》中就有记载，周朝时烤猪(炮豚)是“八珍”之一。直到清朝灭亡前，烤全猪还是宫廷宴席中的“上上品","03.jpg","cook_details?cid=3","collect_active.png","collect.png");
+INSERT INTO cook_index_detail VALUES(null,04,"南京盐水鸭","盐水鸭鸭皮白肉嫩、肥而不腻、香鲜味美","南京盐水鸭制作历史悠久，积累了丰富的制作经验。生产的盐水鸭鸭皮白肉嫩、肥而不腻、香鲜味美，具有香、酥、嫩的特点。而以中秋前后，桂花盛开季节制作的的盐水鸭色味最佳，名为桂花鸭","04.jpg","cook_details?cid=4","collect_active.png","collect.png");
+INSERT INTO cook_index_detail VALUES(null,05,"家常豆腐","富有较高的蛋白质，有营养价值并具有医药功能的美味食品","家常豆腐，是一道以豆腐、猪肉作为主要食材，以豆瓣酱、白糖和酱油作为调料制作而成的老少皆宜的美味食品，酸甜苦辣皆宜，味道浓郁。其中含有铁、钙、磷、镁等人体必需的多种微量元素，还含有糖类、植物油和丰富的优质蛋白。菜品没有特别强的季节性，四季可食","05.jpg","cook_details?cid=5","collect_active.png","collect.png");
+INSERT INTO cook_index_detail VALUES(null,06,"佛跳墙","骨头软，肉多","吃起来软嫩柔润，浓郁荤香，又荤而不腻；各料互为渗透，味中有味","06.jpg","cook_details?cid=6","collect_active.png","collect.png");
 
 /*首页轮播图表*/
 CREATE TABLE cook_index_carousel(
-    cid         INT PRIMARY KEY AUTO_INCREMENT,
+    id         INT PRIMARY KEY AUTO_INCREMENT,
     fid         INT,
     title       VARCHAR(128),
-    subtitle    VARCHAR(128),
-    pic		VARCHAR(128),
-    href	VARCHAR(128)
+    pic		    VARCHAR(128),
+    href	    VARCHAR(128)
 );
-
+INSERT INTO cook_index_carousel VALUES(null,01,"烤乳猪","pig.jpg","cook_details?cid=1");
+INSERT INTO cook_index_carousel VALUES(null,02,"酸菜鱼","suancaiyu.jpg","cook_details?cid=2");
+INSERT INTO cook_index_carousel VALUES(null,03,"烤鱼","zhe.jpg","cook_details?cid=3");
+INSERT INTO cook_index_carousel VALUES(null,04,"排骨","paigu.png","cook_details?cid=4");
 
 
 /*菜系详情表*/
@@ -122,10 +128,11 @@ CREATE TABLE cook_collect(
     subtitle    VARCHAR(128),
     detail	VARCHAR(128),
     pic		VARCHAR(128),
-    href	VARCHAR(128)
+    href	VARCHAR(128),
+    display int
 );
-INSERT INTO cook_collect VALUES(null,01,01,01,"豉汁蒸排骨","骨头软，肉多","豉汁蒸排骨用的是肋排，这个部分的骨头一般比较软，肉多","01.jpg","cook_details?cid=1");
-INSERT INTO cook_detail VALUES(null,02,02,02,"酸菜鱼","鱼肉鲜嫩，酸辣可口","酸菜鱼的主材鱼含丰富优质蛋白，人体消化吸收率可达96%，并能供给人体必需的氨基酸、矿物质、维生素A和维生素D；鱼的脂肪多为不饱和脂肪酸，能很好的降低胆固醇，可以防治动脉硬化、冠心病，因此，多吃鱼可以健康长寿","02.jpg","cook_details?cid=2");
+INSERT INTO cook_collect VALUES(null,01,01,01,"豉汁蒸排骨","骨头软，肉多","豉汁蒸排骨用的是肋排，这个部分的骨头一般比较软，肉多","01.jpg","cook_details?cid=1",1);
+INSERT INTO cook_collect VALUES(null,02,02,02,"酸菜鱼","鱼肉鲜嫩，酸辣可口","酸菜鱼的主材鱼含丰富优质蛋白，人体消化吸收率可达96%，并能供给人体必需的氨基酸、矿物质、维生素A和维生素D；鱼的脂肪多为不饱和脂肪酸，能很好的降低胆固醇，可以防治动脉硬化、冠心病，因此，多吃鱼可以健康长寿","02.jpg","cook_details?cid=2",1);
 
 
 /*用户评论表*/

@@ -9,9 +9,20 @@ const cors = require("cors");
 //session
 const session = require("express-session");
 
+
+//  引入
+
                                           //  引入
-const index=require("./routes/index");
+const home=require("./routes/home");//首页热门菜系
+const carousel=require("./routes/carousel");//首页轮播图
+const addcollect=require("./routes/addcollect");
+
 const userRouter=require("./routes/user");//引入登录/注册的路由器
+
+const sort=require("./routes/sort"); //引入分类路由器
+const collect=require("./routes/collect"); //引入分类路由器
+
+
 
 
 //2:配置数据库连接池:提高数据效率
@@ -44,10 +55,18 @@ server.use(express.static("public"));
 //5:启动监听3000
 server.listen(3000);
 
+
+/*使用路由器来管理路由*/
+
                               /*使用路由器来管理路由*/
-server.use("/Home",index);
+server.use("/home",home);//首页热门菜系路由
+server.use("/carousel",carousel);//首页轮播图路由
+server.use("/addcollect",addcollect);
+
 server.use("/user",userRouter);  //使用登录/注册的路由器
 
+server.use("/sort",sort); //分类路由
+server.use("/collect",collect); //收藏路由
 
 
 

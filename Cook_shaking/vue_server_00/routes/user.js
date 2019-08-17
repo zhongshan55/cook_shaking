@@ -23,9 +23,8 @@ router.get('/login',(req,res)=>{
         }else{
              // //登录成功
             // 1.登录成功的凭据保存session  
-            req.session.sessionid=result[0].uid;
-            req.session.user_name=result[0].user_name;
-            console.log(req.session);//打印查看session
+            req.session.uid=result[0].uid;
+            // console.log(req.session);//打印查看session
             res.send({code:1,msg:"登录成功"})
         }
    })
@@ -66,7 +65,7 @@ router.get('/reg',(req,res)=>{
 
 //查看当前登录账号个人详情
 router.get("/person",(req,res)=>{
-    var uid=req.session.sessionid;
+    var uid=req.session.uid;
     console.log(uid);
     if(!uid){
         res.send({code:-1,msg:"请登录"})

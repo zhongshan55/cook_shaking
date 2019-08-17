@@ -53,8 +53,20 @@
                     </div>
                     <div class="detail">
                         <div class="detailbtn">
-                            <mt-button>
-                                <!-- <img src="../../../public/image/home/collect.png" alt=""> -->
+                            <mt-button 
+                            @click="addCollect"
+                            :data-fid="item.fid"
+                            :data-cid="item.cid"
+                            :data-title="item.title"
+                            :data-detail="item.detail"
+                            :data-subtitle="item.subtitle"
+                            :data-pic="item.pic"
+                            :data-href="item.href"
+                            >
+                             <!-- 未收藏图标 -->
+                            <img v-if="active=1" class="btnimg" :src="`http://127.0.0.1:3000/`+item.pic_collect_active">
+                            <!-- 已收藏图标 -->
+                            <img v-else class="btnimg" :src="`http://127.0.0.1:3000/`+item.pic_collect">
                             </mt-button>
                         </div>
                         <div class="detailtext">
@@ -79,22 +91,76 @@ export default {
             // p1:{},
             // p2:{},
             // p3:{}
-            list:[],
-            datatest:1
+            list:[],//用于接收服务器端数据
+            active:0
+        }
+    },
+    methods: {
+        addCollect(e){              //添加收藏夹
+            //获取数据
+            var fid=e.target.dataset.fid;
+            var cid=e.target.dataset.cid;
+            // console.log(cid)
+            var title=e.target.dataset.title;
+            var subtitle=e.target.dataset.subtitle;
+            var detail=e.target.dataset.detail;
+            var pic=e.target.dataset.pic;
+            var href=e.target.dataset.href;
+            
+            //请求地址
+            var url="add/addcollect";
+            //请求参数
+            var obj={fid,cid,title,subtitle,pic,href,detail}
+            // 获取返回结果
+            this.axios.get(url,{params:obj}).then(res=>{
+                if(res.data.code==-1){
+                    this.$messagebox("消息","请先登录再收藏")
+                    .then(res=>{
+                        this.$router.push("/Login");
+                        return;
+                    })
+                }else if(res.data.code==1) {
+                    this.$toast("添加成功")
+                }else if(res.data.code==2) {
+                    this.$toast("删除成功")
+                }
+
+
+            })
+        },
+        load(){                     //首页信息加载
+            var url="home"
+            this.axios.get(url).then(result=>{
+                // console.log(result.data);
+                // var [p1,p2,p3]=result.data;
+                // this.p1=p1;
+                // this.p2=p2;
+                // this.p3=p3;
+                this.list=result.data.data;  //将数据传给list
+                // console.log(this.list)
+            }) 
+        },
+        // 验证是否已收藏 收藏图标变红
+        addCollect_active(){
+            var url="add/add_active"
+            this.axios.get(url).then(res=>{
+                if(res.data.code==-1){
+                    // this.active=-1
+                    console.log(res)
+                }else{
+                    // this.list_active=res.data.data
+                    this.active=res.data.data[0].display
+                    console.log("active"+this.active)
+                }
+            })
         }
     },
     components:{
         carousel
         },
     created() {
-        this.axios.get("Home").then(result=>{
-            console.log(result.data);
-            // var [p1,p2,p3]=result.data;
-            // this.p1=p1;
-            // this.p2=p2;
-            // this.p3=p3;
-            this.list=result.data;
-        })
+        this.load(); //首页信息加载
+        this.addCollect_active()
     },
 }
 </script>
@@ -259,12 +325,19 @@ a{
     /* border-radius: 50%; */
 }
 .detailbtn>.mint-button{
+    position: relative;
     border-radius: 50%;
     width: 50px;
     height: 50px;
-    background-image: url("../../../public/image/home/collect.png");
-    background-repeat:no-repeat;
-    background-position:center;
+    /* background-image: url("../../../public/image/home/collect.png"); */
+    /* background-repeat:no-repeat; */
+    /* background-position:center; */
+}
+.btnimg{
+    position: absolute;
+    display: block;
+    left:9px;
+    top: 8px;
 }
 </style>
 
