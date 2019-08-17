@@ -8,7 +8,7 @@
     <div class="collectList"> 
       <!-- 左侧图片 -->
       <div class="left">
-        <img src="../../../public/image/collect/product1.jpg">
+        <img src="../../../public/image/collect/collect.png">
       </div>
       <!-- 右侧文字介绍 -->
       <div class="right">
@@ -21,7 +21,7 @@
           </div>
           <!-- 右侧取消收藏部分 -->
           <div class="right_img">
-            <span>取消收藏</span><img src="../../../public/image/collect/product1.jpg">
+            <span>取消收藏</span><img src="../../../public/image/collect/collect.png">
           </div>
         </div>
         <!-- 右侧下部分详情介绍 -->
@@ -30,33 +30,6 @@
         </div>
       </div>
     </div>
-
-    <div class="collectList"> 
-      <!-- 左侧图片 -->
-      <div class="left">
-        <img src="../../../public/image/collect/product1.jpg">
-      </div>
-      <!-- 右侧文字介绍 -->
-      <div class="right">
-        <!-- 右侧上部分标题和取消收藏 -->
-        <div class="rightTop">
-          <!-- 左侧标题部分 -->
-          <div class="left_title">
-            <p class="title">面包</p>
-            <p class="sub_title">粤菜 / 面食</p>
-          </div>
-          <!-- 右侧取消收藏部分 -->
-          <div class="right_img">
-            <span>取消收藏</span><img src="../../../public/image/collect/product1.jpg">
-          </div>
-        </div>
-        <!-- 右侧下部分详情介绍 -->
-        <div class="intr">
-          <p>详情介绍</p>
-        </div>
-      </div>
-    </div>
-
   </div>
 </template>
 
