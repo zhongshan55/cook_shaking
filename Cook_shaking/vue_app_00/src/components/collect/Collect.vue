@@ -47,9 +47,8 @@ export default {
       var url="collect";
       //发送ajax请求获取当前页内容
       this.axios.get(url).then(res=>{
-        console.log(111);
         // 2.获取服务器返回结果
-        console.log(res.data);
+        //console.log(res.data);
         // 3.将返回结果保存
         // var row = 1页.concat(2页)
         this.list = res.data;
