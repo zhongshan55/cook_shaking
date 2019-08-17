@@ -1,10 +1,11 @@
 <template>
    <div>
-       <div class="strip">
+       <!-- strip div作为背景,用于显示个分块之间的那个横条 -->
+       <div class="strip"> 
       <div class="me-top">
           <div class="me-user">
-              <span @click="go_login" v-show="true">登录/注册</span>
-              <!-- <span @click="go_user" v-show="false">{{data.user_name}}</span>      -->
+              <span @click="go_login" v-show="loginState==0">登录/注册</span>
+              <span @click="go_user" v-show="loginState==1"><span class="userName">{{data.user_name}}</span>/{{data.phone}}</span>     
           <div class="me-photo"><img src="../../assets/me1.png" alt=""></div>
           </div>
       </div>
@@ -89,26 +90,28 @@ export default {
    data(){
        return{
            data:{},
-           sta:0 //登录状态
+           loginState:0 //登录状态
        }
    },
    methods:{
        go_login(){
-           this.$router.push("/Login")
+
+           this.$router.push("/Login");
+
        },
        go_user(){
-           this.$router.push("/Login")
+           this.$router.push("/User")
        },
        loadMore(){
-          var url="person";
+          var url="user/person";
           this.axios.get(url).then(res=>{
             //   获取返回结果
             if(res.data.code==-1){
-                  this.sta=0;  //未登录 将status为0 
+                  this.loginState=0;  //未登录 将status为0 
             }else{
-                this.sta=1;    //已登录  将status为1
+                this.loginState=1;    //已登录  将status为1
                 this.data=res.data.data ;
-                console.log(this.data+"1233");
+                // console.log(this.data);
             }
           })
        }
@@ -159,6 +162,9 @@ export default {
       font-weight: 800;
       
   }
+  span.userName{
+      font-size: 18px;
+  }
   .me-photo>img{
      border-radius: 50%;
      width: 40px;
@@ -181,14 +187,14 @@ export default {
   }
   .balance>li{
       width: 100%;
-      padding: 15px;
+      padding: 12px;
       border-top:1px solid #ddd;
       border-bottom: 1px solid #ddd;
       text-align:center;
   }   
   .balance>li>h3{
      margin-top:0;
-     margin-bottom:5px;
+     margin-bottom:2px;
   }
   .balance>li:first-child{
       border-right:1px solid #eee;

@@ -74,7 +74,7 @@ router.get("/person",(req,res)=>{
         var sql=`SELECT * FROM cook_user WHERE uid=${uid}`;
         pool.query(sql,(err,result)=>{
             if(err)  throw err;
-            console.log(result+"123");
+            console.log(result);
             var data=result[0]
             res.send({code:1,msg:"查询用户信息成功",data:data});
         })
