@@ -1,8 +1,8 @@
 <template>
     <div class="app-login">
         <div class="login-top">            
-            <img src="../../../public/image/logo.png" alt="" class="logo-icon">
-            <div class="return" @click="return_me" ><img src="../../../public/image/return.png" alt=""></div>
+            <img src="../../../public/image/me/logo.png" alt="" class="logo-icon">
+            <div class="return" @click="return_me" ><img src="../../../public/image/me/return.png" alt=""></div>
         </div>
         <div class="login-selected">
         <mt-navbar class="page-part" v-model="selected">
@@ -52,7 +52,7 @@ export default {
     methods:{
         return_me(){       
             // 返回上一页
-            history.go(-1); 
+            history.back(); 
         },
         login(){
             //获取用户输入用户名

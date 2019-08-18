@@ -22,28 +22,28 @@
       
     <ul class="me_module1">
         <li class="">   
-            <div class="row_img"><img src="../../../public/image/dingdan.png" alt=""></div>
+            <div class="row_img"><img src="../../../public/image/me/dingdan.png" alt=""></div>
              <div class="row_content">
              <div class="title">浏览历史</div>
              <div class="arrow">></div>
              </div>
         </li>
                 <li class="">   
-            <div class="row_img"><img src="../../../public/image/address.png" alt=""></div>
+            <div class="row_img"><img src="../../../public/image/me/address.png" alt=""></div>
              <div class="row_content">
              <div class="title">地址定位</div>
              <div class="arrow">></div>
              </div>
         </li>
                 <li class="">   
-            <div class="row_img"><img src="../../../public/image/discount.png" alt=""></div>
+            <div class="row_img"><img src="../../../public/image/me/discount.png" alt=""></div>
              <div class="row_content">
              <div class="title">我的关注</div>
              <div class="arrow">></div>
              </div>
         </li>
                 <li class="">   
-            <div class="row_img"><img src="../../../public/image/balance.png" alt=""></div>
+            <div class="row_img"><img src="../../../public/image/me/balance.png" alt=""></div>
              <div class="row_content">
              <div class="title">我的作品</div>
              <div class="arrow">></div>
@@ -74,7 +74,7 @@
   <!-- <div class="strip"></div> 分隔横条  -->
   <ul class=me_module3>
       <li>
-             <img src="../../../public/image/phone.png" alt="">
+             <img src="../../../public/image/me/phone.png" alt="">
             <div >
                 客户电话 888 888 8888
             </div>
@@ -133,7 +133,7 @@ export default {
   .me-top{
       height: 165px;
       width: 100%;
-      background: url(../../../public/image/article-1.jpg) no-repeat ;
+      background: url(../../../public/image/me/article-1.jpg) no-repeat ;
       background-size:100% 100%;
       text-align: center;
       /* line-height: 165px; */

@@ -81,5 +81,11 @@ router.get("/person",(req,res)=>{
 })
 
 
+//退出登录
+router.get("/logout",(req,res)=>{
+    req.session.uid=null;
+    res.send({code:1,msg:"退出登录成功"}); 
+})
+
 
 module.exports=router;

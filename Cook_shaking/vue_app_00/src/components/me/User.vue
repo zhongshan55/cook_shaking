@@ -1,7 +1,7 @@
 <template>
   <div class="strip">
     <div class="return" @click="return_me">
-      <img src="../../../public/image/return.png" alt />
+      <img src="../../../public/image/me/return.png" alt />
     </div>
     <div class="user-top">我的账号</div>
     <ul>
@@ -39,11 +39,17 @@ export default {
   methods:{
     //返回上一页
     return_me(){
-        history.go(-1);
+        // history.go(-1);
+        this.$router.back(-1);
     },
     //退出登录
     logOut(){
-        console.log("退出登录")
+        console.log("退出登录");
+        var url="user/logout" ;
+        this.axios.get(url).then(res=>{
+          this.$toast(res.data.msg);
+          this.$router.push("/login")  
+        })
     },
       loadMore(){
       var url="user/person";
