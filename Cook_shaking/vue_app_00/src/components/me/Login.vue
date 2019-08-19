@@ -14,6 +14,11 @@
             <mt-tab-container-item id="login">    
                 <mt-field placeholder="请输入注册账号" v-model="uname"></mt-field>
                 <mt-field placeholder="请输入密码" type="password" v-model="upwd"></mt-field>
+                <!-- 验证码  -->
+                <!-- 设置验证码输入框宽度为50%,inline-block; -->
+                <mt-field placeholder="输入验证码" v-model="cap" style="width:50%;display:inline-block"></mt-field>
+                 <!-- 后台返回的验证码svg  -->
+                <span v-html="captcha">{{captcha}}</span> 
                 <mt-button size="large" @click="login">登录</mt-button>
             </mt-tab-container-item>
             <!-- 注册内容 -->
@@ -33,7 +38,6 @@
     </div>
 </template>
 <script>
-
 export default {
     data(){
         return{
@@ -46,7 +50,9 @@ export default {
           cupwd:"",
           user_name:"",
           phone:"",
-          email:""
+          email:"",
+          captcha:"",   //后台生成的验证码svg路径
+          cap:""   //输入验证值
         }
     },
     methods:{
@@ -54,11 +60,21 @@ export default {
             // 返回上一页
             history.back(); 
         },
+        createCap(){  //获取验证码
+          var url="user/captcha";
+          this.axios.get(url).then(res=>{
+               this.captcha=res.data.img
+            console.log(res.data);
+          })
+        //   console.log(this.session.captcha);
+        },
         login(){
             //获取用户输入用户名
             var uname=this.uname;
             //获取用户输入密码
             var upwd=this.upwd;
+            //获取输入验证码
+            var cap=this.cap;
             //创建正则表达式验证用户名和密码
             var reg=/^[a-z0-9]{3,12}$/i;
             //验证用户名
@@ -71,6 +87,9 @@ export default {
                 this.$toast({message:"密码格式不正确"});
                 return;
             }
+            //验证验证码
+            // if(cap==this.session.captcha)
+
             //发送ajax 请求 axios
             var url="user/login";
             var obj={uname:uname,upwd:upwd}
@@ -130,6 +149,9 @@ export default {
             })
 
         }
+    },
+    created(){
+        this.createCap();
     }
 }
 </script>
