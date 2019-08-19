@@ -5,6 +5,8 @@ const pool=require("../pool");
 var router=express.Router();
 //引入md5-node 模块, 用于密码加密
 var md5=require("md5-node");
+//
+const captcha=require("svg-captcha")
 //添加路由器
 
 
@@ -87,5 +89,13 @@ router.get("/logout",(req,res)=>{
     res.send({code:1,msg:"退出登录成功"}); 
 })
 
+
+//获取验证码
+router.get('/',(req,res)=>{
+    const cap = captcha.create();
+    req.session.captcha = cap.text; // session 存储
+    res.type('svg'); // 响应的类型
+    res.send(cap.data);
+  });
 
 module.exports=router;
