@@ -15,7 +15,7 @@ const session = require("express-session");
                                           //  引入
 const home=require("./routes/home");//首页热门菜系
 const carousel=require("./routes/carousel");//首页轮播图
-const addcollect=require("./routes/addcollect");
+const add=require("./routes/addcollect");
 
 const userRouter=require("./routes/user");//引入登录/注册的路由器
 
@@ -61,7 +61,7 @@ server.listen(3000);
                               /*使用路由器来管理路由*/
 server.use("/home",home);//首页热门菜系路由
 server.use("/carousel",carousel);//首页轮播图路由
-server.use("/addcollect",addcollect);
+server.use("/add",add);
 
 server.use("/user",userRouter);  //使用登录/注册的路由器
 

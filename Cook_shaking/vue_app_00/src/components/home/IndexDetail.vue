@@ -64,9 +64,9 @@
                             :data-href="item.href"
                             >
                              <!-- 未收藏图标 -->
-                            <img v-if="active=1" class="btnimg" :src="`http://127.0.0.1:3000/`+item.pic_collect_active">
+                            <img v-if="active=1" class="btnimg" :src="`http://127.0.0.1:3000/`+item.pic_collect">
                             <!-- 已收藏图标 -->
-                            <img v-else class="btnimg" :src="`http://127.0.0.1:3000/`+item.pic_collect">
+                            <img v-else class="btnimg" :src="`http://127.0.0.1:3000/`+item.pic_collect_active">
                             </mt-button>
                         </div>
                         <div class="detailtext">
@@ -92,7 +92,9 @@ export default {
             // p2:{},
             // p3:{}
             list:[],//用于接收服务器端数据
-            active:0
+            // list_active:[]      ///add_active 请求返回结果
+            active:1
+            
         }
     },
     methods: {
@@ -121,11 +123,10 @@ export default {
                     })
                 }else if(res.data.code==1) {
                     this.$toast("添加成功")
+                    
                 }else if(res.data.code==2) {
                     this.$toast("删除成功")
                 }
-
-
             })
         },
         load(){                     //首页信息加载
@@ -140,7 +141,7 @@ export default {
                 // console.log(this.list)
             }) 
         },
-        // 验证是否已收藏 收藏图标变红
+        // 验证是否已收藏 收藏图标变红   加载获得购物车中uid 和cid display
         addCollect_active(){
             var url="add/add_active"
             this.axios.get(url).then(res=>{
@@ -149,8 +150,8 @@ export default {
                     console.log(res)
                 }else{
                     // this.list_active=res.data.data
-                    this.active=res.data.data[0].display
-                    console.log("active"+this.active)
+                    this.list_active=res.data.data
+                    console.log(this.list_active)
                 }
             })
         }
