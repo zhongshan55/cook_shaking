@@ -15,10 +15,10 @@
                 <mt-field placeholder="请输入注册账号" v-model="uname"></mt-field>
                 <mt-field placeholder="请输入密码" type="password" v-model="upwd"></mt-field>
                 <!-- 验证码  -->
+                 <!-- 后台返回的验证码svg  -->
+                <div v-html="captcha" class="captcha" @click="createCap">{{captcha}}</div> 
                 <!-- 设置验证码输入框宽度为50%,inline-block; -->
                 <mt-field placeholder="输入验证码" v-model="cap" style="width:50%;display:inline-block"></mt-field>
-                 <!-- 后台返回的验证码svg  -->
-                <span v-html="captcha">{{captcha}}</span> 
                 <mt-button size="large" @click="login">登录</mt-button>
             </mt-tab-container-item>
             <!-- 注册内容 -->
@@ -52,7 +52,8 @@ export default {
           phone:"",
           email:"",
           captcha:"",   //后台生成的验证码svg路径
-          cap:""   //输入验证值
+          cap:"",   //输入验证值
+          cap2:""   //返回的验证码文字
         }
     },
     methods:{
@@ -63,10 +64,11 @@ export default {
         createCap(){  //获取验证码
           var url="user/captcha";
           this.axios.get(url).then(res=>{
-               this.captcha=res.data.img
-            console.log(res.data);
+               this.captcha=res.data.img;   //接收返回的验证码svg
+               this.cap2=res.data.captcha;  //接收验证码的文字 
+            //    console.log(res.data.captcha);
           })
-        //   console.log(this.session.captcha);
+    
         },
         login(){
             //获取用户输入用户名
@@ -88,8 +90,10 @@ export default {
                 return;
             }
             //验证验证码
-            // if(cap==this.session.captcha)
-
+             if(cap.toLowerCase()!=this.cap2.toLowerCase()){
+                 this.$toast({message:"验证码有误,请重新输入"});
+                 return;
+             }
             //发送ajax 请求 axios
             var url="user/login";
             var obj={uname:uname,upwd:upwd}
@@ -191,6 +195,11 @@ export default {
 }
 .mint-cell-wrapper{
     border-bottom:1px solid #ccc;
+}
+.captcha{
+    float:right;
+    width: 50%;
+    text-align:right;
 }
 .mint-button--default{ /*按钮颜色*/
 margin-top:20px;

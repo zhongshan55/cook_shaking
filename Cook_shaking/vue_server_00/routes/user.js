@@ -96,14 +96,14 @@ router.get('/captcha',(req,res)=>{
         size:4,    //验证码长度
         noise:1,   //干扰线条的数量
         color:"true",  //验证码的字符是否有颜色,默认没有.设置了背景颜色,默认有
-        background:"green" ,//验证码背景颜色
+        background:"#8a8a8a" ,//验证码背景颜色
         ignoreChars:'0o1i'   //验证码中忽略(排除)的字符
     });
-    req.session.captcha = cap.text; // session 存储c
-    console.log(cap.text);      //text:验证码文字
+    req.session.captcha = cap.text; // session 存储
+    //console.log(cap.text);      //text:验证码文字
     // console.log(cap.data);     //data:  svg 路径(html片段)
     res.type('svg'); // 响应的类型
-    res.send({img:cap.data});
+    res.send({img:cap.data,captcha:cap.text});
   });
 
 module.exports=router;
