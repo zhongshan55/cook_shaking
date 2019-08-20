@@ -6,7 +6,7 @@
             <!-- 轮播图 -->
               <carousel/>
               <!-- 首页信息 -->
-             <indexdetail/>
+             <indexdetail  @uptoYue="changeTabbar($event)"/>
           </mt-tab-container-item>
           <mt-tab-container-item id="sort">
               <sort></sort>
@@ -117,6 +117,9 @@ export default {
          }
        }
 
+     },
+     changeTabbar(active){
+       this.active = active;
      }
   }
 }
