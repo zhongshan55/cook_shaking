@@ -5,7 +5,7 @@ const pool=require("../pool");
 var router=express.Router();
 //引入md5-node 模块, 用于密码加密
 var md5=require("md5-node");
-//
+//引用验证码 svg-captcha 模块  安装命令: install --save svg-captcha
 const captcha=require("svg-captcha")
 //添加路由器
 
