@@ -12,7 +12,7 @@
               <sort></sort>
           </mt-tab-container-item>
           <mt-tab-container-item id="shopping_cart">
-              <h1>摇一摇</h1>
+                  <shake/>
           </mt-tab-container-item>
           <mt-tab-container-item id="bbs">
              <collect></collect> 
@@ -46,11 +46,11 @@
         <mt-tab-item id="shopping_cart" @click.native="changeState(2)">
          <tabbaricon
           :focused="currentIndex[2].isSelect"
-          :selectedImage="require('../assets/cart1.png')"
-          :normalImage="require('../assets/cart2.png')"
+          :selectedImage="require('../assets/shake1.png')"
+          :normalImage="require('../assets/shake2.png')"
           >
           </tabbaricon>
-        摇一摇
+         摇一摇
         </mt-tab-item>
         <mt-tab-item id="bbs" @click.native="changeState(3)">
           <tabbaricon
@@ -85,6 +85,7 @@ import Collect from "./collect/Collect.vue"
 import IndexDetail from "./home/IndexDetail.vue"
 import Carousel from "./home/Carousel.vue"
 import Sort from "./sort/Sort.vue"
+import Shake from "./shake/Shake.vue"
 
 export default {
   data(){
@@ -105,7 +106,8 @@ export default {
     "collect" : Collect,
     "indexdetail": IndexDetail,
     "carousel" : Carousel,
-    "sort" : Sort
+    "sort" : Sort,
+    "shake" : Shake
   },
   methods:{
      changeState(idx){

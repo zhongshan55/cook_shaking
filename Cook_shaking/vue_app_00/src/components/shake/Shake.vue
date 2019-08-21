@@ -1,8 +1,14 @@
 <template>
-    <div>
-        
+    <div id="shake" >
+    <div class="shake-top">菜谱摇一摇</div>
+          
+        <img src="../../../public/image/shake/shake.png" alt="">
     </div>
 </template>
+<script>
+var shake=document.getElementById("shake");
+ shake.style.height = window.innerHeight + 'px'
+</script>
 <script>
   //先判断设备是否支持HTML5摇一摇功能
 if (window.DeviceMotionEvent) {
@@ -62,3 +68,18 @@ export default {
     
 }
 </script>
+<style scope>
+.shake-top{
+  height: 48px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 48px;
+  background: #fff;
+  border-bottom: 2px solid #ddd;
+}
+.shake{
+  background: #000;
+}
+
+</style>

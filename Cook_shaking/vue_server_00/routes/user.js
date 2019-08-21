@@ -106,4 +106,14 @@ router.get('/captcha',(req,res)=>{
     res.send({img:cap.data,captcha:cap.text});
   });
 
+//随机查询5条商品数据
+router.get('/shake',(req,res)=>{
+  var  sql="SELECT cid,title,pic,href From cook_detail ORDER BY RAND() LIMIT 5 ";
+  pool.query(sql,(err,result)=>{
+      if(err) throw err;
+      console.log(result);
+      res.send(result)
+  })
+})
+
 module.exports=router;
