@@ -10,6 +10,7 @@ import Collect from './components/collect/Collect.vue'
 // import IndexDetail from './components/home/IndexDetail.vue'
 // import Carousel from './components/home/Carousel.vue'
 import Sort from './components/sort/Sort.vue'
+import Detail from './components/common/Detail.vue'
 
 
 
@@ -24,8 +25,8 @@ export default new Router({
     {path:'/Collect',component:Collect},
     // {path:'/IndexDetail',component:IndexDetail},
     // {path:'/Carousel',component:Carousel}
-    {path:'/Sort',component:Sort}
-    
+    {path:'/Sort',component:Sort},
+    {path:'/Detail',component:Detail}
 
   ]
 })
