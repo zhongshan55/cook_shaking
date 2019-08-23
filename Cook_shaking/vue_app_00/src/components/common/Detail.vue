@@ -130,7 +130,7 @@ export default {
             }
         },
         comment(){
-            var 
+
         }
     }
 
@@ -146,6 +146,7 @@ window.onscroll=function(){
         top.className="";
     }    
 }
+
 </script>
 <style scoped>
     #top{
