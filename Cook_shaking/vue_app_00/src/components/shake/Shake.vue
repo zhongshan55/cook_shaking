@@ -100,7 +100,7 @@ shake_More(){
             this.$toast("推荐菜谱失败")
           }
         })
-     },
+     }, 
      close(){  //关闭推荐按钮将cook=0;
       this.cook=0;
      }
