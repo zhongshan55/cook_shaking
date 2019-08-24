@@ -1,21 +1,21 @@
 <template>
     <div id="shake-content" >
-    <div class="shake-top">菜谱摇一摇</div>
-        <div class="shake-img"> 
+    <div class="shake-top" >菜谱摇一摇</div>
+        <div class="shake-img" @click="shake_in"> 
         <img src="../../../public/image/shake/shake.png" alt="">
         </div>
-        <div class="shake-cook">
+        <div class="shake-cook" v-if="cook==1" >
           给您推荐
           <div class="cook1">
-            <img src="" alt="">
+            <img :src="'http://127.0.0.1:3000/'+list[0].pic" alt="" >
           </div>
           <div class="cook2">
-            <img src="" alt="">
+            <img :src="'http://127.0.0.1:3000/'+list[1].pic" alt="" data-id="list[1].cid" >
           </div>
-          <div class="cook3"><img src="../../../public/image/shake/01.jpg" alt=""></div>
-          <div class="cook4"><img src="../../../public/image/shake/01.jpg" alt=""></div>
-          <div class="cook5"><img src="../../../public/image/shake/01.jpg" alt=""></div>
-          <div class="close">X</div>
+          <div class="cook3"><img :src="'http://127.0.0.1:3000/'+list[2].pic" alt=""></div>
+          <div class="cook4"><img :src="'http://127.0.0.1:3000/'+list[3].pic" alt=""></div>
+          <div class="cook5"><img :src="'http://127.0.0.1:3000/'+list[4].pic" alt=""></div>
+          <div class="close" @click="close">X</div>
         </div>
     </div>
 </template>
@@ -23,7 +23,10 @@
 <script>
 export default {
     data(){
-      return{}
+      return{
+        cook:0,
+        list:["0","0","0","0","0"]
+      }
     },
     methods:{
       loadMore(){
@@ -31,7 +34,7 @@ export default {
        var shake=document.getElementById("shake-content");
          shake.style.height = (window.innerHeight-55) + 'px'
       },
-shake_in(){
+shake_More(){
      //先判断设备是否支持HTML5摇一摇功能
    if (window.DeviceMotionEvent) {
    //获取移动速度，得到device移动时相对之前某个时间的差值比
@@ -85,11 +88,25 @@ shake_in(){
   }
    } 
 }
+     ,
+     shake_in(){   //点击摇一摇图片,显示推荐菜谱, 将cook=1;
+        this.cook=1;
+        var url="/user/shake";
+        this.axios.get(url).then(res=>{
+          if(res.data.code==1){
+            this.list=res.data.data
 
+          }else{
+            this.$toast("推荐菜谱失败")
+          }
+        })
+     },
+     close(){  //关闭推荐按钮将cook=0;
+      this.cook=0;
+     }
     },
+
     mounted() {
-      
-  
       this.loadMore();
     }
 }
@@ -139,6 +156,7 @@ shake_in(){
   box-shadow: 1px 1px 10px #fff;
   line-height: 140px;
   background: rgb(0,0,0,.8);
+  text-align:center;
 }
 div.cook1{
   /* background: rgb(0,0,0,.8); */
@@ -147,27 +165,43 @@ div.cook1{
 }
 div.cook2{
   /* background: rgb(0,0,0,.8); */
-  top: 38px;
-  left:-40px;
+  top: 39px;
+  left:-38px;
 }
 div.cook3{
   /* background: rgb(0,0,0,.8); */
   top: 186px;
-  left:-3px;
+  left:-2px;
 }
 div.cook4{
   /* background: rgb(0,0,0,.8); */
   top: 186px;
-  left:159px;
+  left:155px;
 }
 div.cook5{
   /* background: rgb(0,0,0,.8); */
-  top: 38px;
-  left:206px;
+  top: 39px;
+  left:198px;
 }
 .shake-cook>div>img{
-  width: 100%;
+  /* width: 100%; */
+  height: 100%;
   vertical-align: middle;  
+  position:absolute;
+  top:0;
+  left:0;
+  transform: translateX(-10%)
+
+}
+.shake-cook>.close{
+  background: transparent;
+  border:0;
+  box-shadow: none;
+  color:#fff;
+  font-size: 20px;
+  line-height: normal;
+  left:250px;
+  top:-80px;
 }
 
 

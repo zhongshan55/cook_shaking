@@ -39,7 +39,7 @@ router.get('/reg',(req,res)=>{
     var obj=req.query;
     //将密码通过md5进行加密
     obj.upwd=md5(obj.upwd);
-    console.log(obj)
+    // console.log(obj)
     //判断账号是否已注册过.
    var sql="SELECT uid FROM cook_user WHERE uname=?"
     pool.query(sql,[obj.uname],(err,result)=>{
@@ -68,14 +68,14 @@ router.get('/reg',(req,res)=>{
 //查看当前登录账号个人详情
 router.get("/person",(req,res)=>{
     var uid=req.session.uid;
-    console.log(uid);
+    // console.log(uid);
     if(!uid){
         res.send({code:-1,msg:"请登录"})
     }else{
         var sql=`SELECT * FROM cook_user WHERE uid=${uid}`;
         pool.query(sql,(err,result)=>{
             if(err)  throw err;
-            console.log(result);
+            // console.log(result);
             var data=result[0]
             res.send({code:1,msg:"查询用户信息成功",data:data});
         })
@@ -112,7 +112,7 @@ router.get('/shake',(req,res)=>{
   pool.query(sql,(err,result)=>{
       if(err) throw err;
       console.log(result);
-      res.send(result)
+      res.send({code:1,msg:"查询成功",data:result})
   })
 })
 

@@ -4,7 +4,7 @@ const pool=require("../pool");
 
 router.get("/",(req,res)=>{
     var uid = req.session.uid;
-    console.log(uid);
+    // console.log(uid);
     // var sql ="SELECT d.fid,d.cid,d.title,d.subtitle,d.detail,d.pic,d.href,d.pic_collect_active,d.pic_collect,c.display  FROM cook_index_detail d,cook_collect c";
     var sql ="SELECT * FROM cook_index_detail";
     pool.query(sql,[],(err,result)=>{
