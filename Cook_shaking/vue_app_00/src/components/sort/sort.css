@@ -1,0 +1,107 @@
+/* 清除样式 */
+*{
+  padding:0;
+  margin:0;
+}
+/* 顶部类名 */
+ul{
+  list-style: none;
+  height:30px;
+  display:flex;
+  justify-content: space-around;
+  border-bottom:1px solid #ccc;
+  padding-top:20px;
+  margin-bottom:20px;
+}
+ul li{
+  font-size:16px;
+  font-weight:bold;
+  padding-bottom: 10px;
+}
+ul li a{
+  text-decoration: none;
+  color:#000;
+  display: inline-block;
+  height: 25px;
+}
+/* 选中类名后样式 */
+.active{
+  border-bottom:5px solid #ccc;
+}
+/* 1.最外层样式 */
+.product{
+  display: flex;   
+  flex-wrap: wrap;
+  justify-content: space-between; 
+  margin:0 10px;
+}
+/* 2.修饰商品样式 */
+.goods_item{
+  width:49%; 
+  box-shadow: 0px 1px 5px 0 #c0bfbe;
+  border-radius: 5px; 
+  text-align: left;
+  margin:5px 0;  
+  padding: 2px;  
+  box-sizing: border-box; 
+  display: flex; 
+  flex-direction: column; 
+  padding: 5px;
+}
+/* 3.修饰商品中图片样式 */
+.goods_item>img{
+  width: 100%;
+  padding-bottom:10px;
+}
+/* 4.商品介绍上部分 */
+.goods_top{
+  display: flex;
+  justify-content: space-between;
+}
+/* 左边标题和副标题  */
+.goods_top .left{
+  width: 60%;
+}
+.goods_top .left h4{
+  font-size:20px;
+  font-weight: normal;
+  color:#d4ba92;
+  font-style: oblique;
+}
+/* 副标题样式 */
+.goods_top .left .sub_title{
+  margin:5px 0;
+  font-size: 16px;
+  color:#747474;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space:nowrap;
+}
+/* 详情介绍 */
+.goods_item .intr{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display:-webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  font-size: 14px;
+  color:#000;
+  line-height: 18px;
+  margin-bottom:10px;
+}
+/* 右边收藏按钮 */
+.right>.mint-button{
+  position: relative;
+  border-radius: 50%;
+  width:50px;
+  height:50px;
+}
+.right img{
+  position: absolute;
+  top:8px;
+  left:9px;
+}
+/* 加载更多按钮 */
+.btn{
+  margin-top:5px;
+}

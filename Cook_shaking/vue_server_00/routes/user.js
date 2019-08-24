@@ -5,6 +5,8 @@ const pool=require("../pool");
 var router=express.Router();
 //引入md5-node 模块, 用于密码加密
 var md5=require("md5-node");
+//引用验证码 svg-captcha 模块  安装命令: install --save svg-captcha
+const captcha=require("svg-captcha")
 //添加路由器
 
 
@@ -14,7 +16,7 @@ router.get('/login',(req,res)=>{
     var uname=req.query.uname;
     var upwd=req.query.upwd;
     //查询sql语句
-    var sql="SELECT uid FROM cook_user WHERE uname=? AND upwd=md5(?)";
+    var sql="SELECT uid,user_name FROM cook_user WHERE uname=? AND upwd=md5(?)";
    //json:{code:1,msg:"登录成功"}
    pool.query(sql,[uname,upwd],(err,result)=>{
        if(err) throw err;
@@ -63,5 +65,55 @@ router.get('/reg',(req,res)=>{
 })
 
 
+//查看当前登录账号个人详情
+router.get("/person",(req,res)=>{
+    var uid=req.session.uid;
+    console.log(uid);
+    if(!uid){
+        res.send({code:-1,msg:"请登录"})
+    }else{
+        var sql=`SELECT * FROM cook_user WHERE uid=${uid}`;
+        pool.query(sql,(err,result)=>{
+            if(err)  throw err;
+            console.log(result);
+            var data=result[0]
+            res.send({code:1,msg:"查询用户信息成功",data:data});
+        })
+    }
+})
+
+
+//退出登录
+router.get("/logout",(req,res)=>{
+    req.session.uid=null;
+    res.send({code:1,msg:"退出登录成功"}); 
+})
+
+
+//获取验证码
+router.get('/captcha',(req,res)=>{
+    const cap = captcha.create({
+        size:4,    //验证码长度
+        noise:1,   //干扰线条的数量
+        color:"true",  //验证码的字符是否有颜色,默认没有.设置了背景颜色,默认有
+        background:"#8a8a8a" ,//验证码背景颜色
+        ignoreChars:'0o1i'   //验证码中忽略(排除)的字符
+    });
+    req.session.captcha = cap.text; // session 存储
+    //console.log(cap.text);      //text:验证码文字
+    // console.log(cap.data);     //data:  svg 路径(html片段)
+    res.type('svg'); // 响应的类型
+    res.send({img:cap.data,captcha:cap.text});
+  });
+
+//随机查询5条商品数据
+router.get('/shake',(req,res)=>{
+  var  sql="SELECT cid,title,pic,href From cook_detail ORDER BY RAND() LIMIT 5 ";
+  pool.query(sql,(err,result)=>{
+      if(err) throw err;
+      console.log(result);
+      res.send(result)
+  })
+})
 
 module.exports=router;

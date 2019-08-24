@@ -10,9 +10,8 @@ import Collect from './components/collect/Collect.vue'
 // import IndexDetail from './components/home/IndexDetail.vue'
 // import Carousel from './components/home/Carousel.vue'
 import Sort from './components/sort/Sort.vue'
+import User from './components/me/User.vue'  //用户详情
 import Detail from './components/common/Detail.vue'
-
-
 
 Vue.use(Router)
 export default new Router({
@@ -26,7 +25,9 @@ export default new Router({
     // {path:'/IndexDetail',component:IndexDetail},
     // {path:'/Carousel',component:Carousel}
     {path:'/Sort',component:Sort},
+    {path:'/User',component:User},
     {path:'/Detail',component:Detail}
+    
 
   ]
 })

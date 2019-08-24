@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="top">
-            <img src="../../../public/image/return.png" alt="">
+            <img src="../../../public/image/common/return.png" alt="">
         </div>
         <div class="bpic">
             <img src="../../../public/image/common/xcf_recipe_1565694834275.jpeg" alt="">
@@ -103,7 +103,6 @@
 export default {
     data() {
         return {
-
         }
     },
     methods:{
@@ -115,7 +114,7 @@ export default {
                 shoucang.className="active";
            }else{
                span3.className="";
-               shoucang.className="";
+               shoucang.className="" ;
            }
         },
         collect2(){
@@ -146,7 +145,6 @@ window.onscroll=function(){
         top.className="";
     }    
 }
-
 </script>
 <style scoped>
     #top{
