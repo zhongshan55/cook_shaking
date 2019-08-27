@@ -5,27 +5,35 @@
         <img src="../../../public/image/shake/shake.png" alt="">
         </div>
         <div class="shake-cook" v-if="cook==1" >
-          给您推荐
+     
           <div class="cook1">
             <img :src="'http://127.0.0.1:3000/'+list[0].pic" alt="" >
           </div>
           <div class="cook2">
             <img :src="'http://127.0.0.1:3000/'+list[1].pic" alt="" data-id="list[1].cid" >
           </div>
-          <div class="cook3"><img :src="'http://127.0.0.1:3000/'+list[2].pic" alt=""></div>
-          <div class="cook4"><img :src="'http://127.0.0.1:3000/'+list[3].pic" alt=""></div>
-          <div class="cook5"><img :src="'http://127.0.0.1:3000/'+list[4].pic" alt=""></div>
+          <div class="cook3">
+            <img :src="'http://127.0.0.1:3000/'+list[2].pic" alt="">
+            </div>
+          <div class="cook4">
+            <img :src="'http://127.0.0.1:3000/'+list[3].pic" alt="">
+            </div>
+          <div class="cook5">
+            <img :src="'http://127.0.0.1:3000/'+list[4].pic" alt="">
+            </div>
           <div class="close" @click="close">X</div>
         </div>
     </div>
 </template>
 
 <script>
+import $ from 'jquery'
 export default {
     data(){
       return{
         cook:0,
-        list:["0","0","0","0","0"]
+        // list:["0","0","0","0","0"]
+        list:[""]
       }
     },
     methods:{
@@ -33,7 +41,19 @@ export default {
         //获取当前浏览器内高度
        var shake=document.getElementById("shake-content");
          shake.style.height = (window.innerHeight-55) + 'px'
+
+         //为了防止第一次搜索时报GET http://127.0.0.1:3000/undefined 404 (Not Found)的错,进入页面默认查询一次,但不显示
+         var url="/user/shake";
+         this.axios.get(url).then(res=>{
+          if(res.data.code==1){
+            this.list=res.data.data
+            console.log(this.list)
+          }
+         })
+         
       },
+
+      
 shake_More(){
      //先判断设备是否支持HTML5摇一摇功能
    if (window.DeviceMotionEvent) {
@@ -95,6 +115,7 @@ shake_More(){
         this.axios.get(url).then(res=>{
           if(res.data.code==1){
             this.list=res.data.data
+            console.log(this.list)
 
           }else{
             this.$toast("推荐菜谱失败")
@@ -137,7 +158,7 @@ shake_More(){
   width: 300px;
   height:300px;
   border-radius:50%;
-  background: pink;
+  background: url(../../../public/image/shake/bg.png);
   position:absolute;
   top:50%;
   left:50%;
@@ -145,6 +166,11 @@ shake_More(){
   z-index: 100;
   text-align:center;
   line-height: 300px;
+  box-shadow:1px 1px 30px #fff; 
+  font-size: 18px;
+  color:rgb(40, 174, 236);
+  font-weight: bolder;
+
 }
 .shake-cook>div{
   width: 140px;
@@ -153,7 +179,7 @@ shake_More(){
   background: yellow;
   position:absolute;
   overflow: hidden;
-  box-shadow: 1px 1px 10px #fff;
+  box-shadow: 0px 1px 20px #ddd;
   line-height: 140px;
   background: rgb(0,0,0,.8);
   text-align:center;
