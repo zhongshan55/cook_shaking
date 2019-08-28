@@ -1,32 +1,19 @@
 <template>
     <div id="shake-content" >
     <div class="shake-top">菜谱摇一摇</div>
-        <div class="shake-img"  @click="cooke1"> 
+        <div class="shake-img"  @click="shake_in"> 
         <img src="../../../public/image/shake/shake.png" alt="">
         </div>
-        <div class="shake-cook" v-if="cook==1" >
+       <!-- 旋转动态菜单效果  -->
+  <div class="shake-cook" v-if="cook==1" >
 <div class='selector' >
   <ul>
-    <li>
-      <label for='1'>Option 1</label>
+    <li v-for="(item,i) of list" :key="i">
+      <label><img :src="'http://127.0.0.1:3000/'+list[i].pic" alt=""></label>
     </li>
-    <li>
-      <label for='2'>Option 2</label>
-    </li>
-    <li>
-      <label for='3'>Option 3</label>
-    </li>
-    <li>
-      <label for='4'>Option 4</label>
-    </li>
-    <li>
-      <label for='5'>Option 5</label>
-    </li>
-
   </ul>
-  <!-- <button ></button> -->
-</div>
-            <div class="close" @click="close">X</div>
+  </div>
+   <div class="close" @click="close">X</div>
 </div>
         </div>
 
@@ -58,16 +45,7 @@ export default {
           }
          })
          
-      }, 
-        cooke1(){
-          var that=this
-           this.cook=1;
-setTimeout(function(){
-  that.toggleOptions('.selector')
-},1000)
-        
-
-    },
+      },
     //旋转动画
     rotate(li,d) {
     $({d:this.angleStart}).animate({d:d}, {
@@ -79,7 +57,7 @@ setTimeout(function(){
         }, duration: 0
     });
    },
-  //显示/隐藏多选菜单
+   //显示/隐藏多选菜单
   toggleOptions(s) {
     $(s).toggleClass('open');
     var li = $(s).find('li');
@@ -87,7 +65,7 @@ setTimeout(function(){
     for(var i=0; i<li.length; i++) {
         var d = $(s).hasClass('half') ? (i*deg)-90 : i*deg;
         $(s).hasClass('open') ? this.rotate(li[i],d) : this.rotate(li[i],this.angleStart);
-    }
+      }
     },
 
       
@@ -147,26 +125,35 @@ shake_More(){
 }
      ,
      shake_in(){   //点击摇一摇图片,显示推荐菜谱, 将cook=1;
-        this.cook=1;
+        // this.cook=1;
         var url="/user/shake";
         this.axios.get(url).then(res=>{
           if(res.data.code==1){
             this.list=res.data.data
-            console.log(this.list)
-
+            // console.log(this.list)
           }else{
             this.$toast("推荐菜谱失败")
           }
         })
-           var that=this
-           this.cook=1;
-          setTimeout(function(){
-            that.toggleOptions('.selector')
-             },1000)
+        $(".shake-img").animate({left:100},500)
+          
+        // setTimeout(function(){
+          
+        // },2000)
+        //动态显示菜谱,需添加定时器后加载动画函数才能出动态效果.
+          //  var that=this
+          //  this.cook=1;
+          // setTimeout(function(){
+          //   that.toggleOptions('.selector')
+          //    },100)
      }, 
      close(){  //关闭推荐按钮将cook=0;
-      this.cook=0;
+     this.toggleOptions('.selector')
+     var that=this;
+     setTimeout(function(){
+       that.cook=0},600)   
      }
+
     },
 
     mounted() {
@@ -196,34 +183,20 @@ shake_More(){
   left:50%;
   transform: translate(-50%,-50%);
 }
-/* .shake-cook{
-  width: 300px;
-  height:300px;
-  border-radius:50%;
-  background: url(../../../public/image/shake/bg.png);
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  z-index: 100;
-  text-align:center;
-  line-height: 300px;
-  box-shadow:1px 1px 30px #fff; 
-  font-size: 18px;
-  color:rgb(40, 174, 236);
-  font-weight: bolder;
-} */
+
 .shake-cook>.close{
-  /* width:30px;
-  height:30px; */
-  background: transparent;
+  width:45px;
+  height:45px;
+  line-height: 45px;
+  border-radius: 50%;
+  background: rgba(13, 188, 241, 0.1);
   border:0;
   box-shadow: none;
-  color:red;
+  color:#fff;
   font-size: 20px;
-  line-height: normal;
-  left:250px;
+  right:-20px;
   top:-80px;
+    position:absolute;
 }
 
 
@@ -297,9 +270,20 @@ shake_More(){
 .selector.open li  label {
   width: 130px;
   height: 130px;
-  line-height: 80px;
-  margin-left: -40px;
-  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+  /* line-height: 130px; */
+  margin-left: -20px;
+  box-shadow: 0 3px 3px rgba(212, 25, 25, 0.1);
+  border:2px solid #ddd;
   font-size: 14px;
+  text-align: center;
 }
+.selector.open li  label img{
+  height: 100%;
+  /* width:100%; */
+  vertical-align: middle;
+  position:absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 </style>
