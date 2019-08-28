@@ -1,35 +1,29 @@
 <template>
     <div id="shake-content" >
-    <div class="shake-top">菜谱摇一摇</div>
-        <div class="shake-img"  @click="cooke1"> 
+    <div class="shake-top" >菜谱摇一摇</div>
+        <div class="shake-img" @click="shake_in"> 
         <img src="../../../public/image/shake/shake.png" alt="">
         </div>
         <div class="shake-cook" v-if="cook==1" >
-<div class='selector' >
-  <ul>
-    <li>
-      <label for='1'>Option 1</label>
-    </li>
-    <li>
-      <label for='2'>Option 2</label>
-    </li>
-    <li>
-      <label for='3'>Option 3</label>
-    </li>
-    <li>
-      <label for='4'>Option 4</label>
-    </li>
-    <li>
-      <label for='5'>Option 5</label>
-    </li>
-
-  </ul>
-  <!-- <button ></button> -->
-</div>
-            <div class="close" @click="close">X</div>
-</div>
+     
+          <div class="cook1">
+            <img :src="'http://127.0.0.1:3000/'+list[0].pic" alt="" >
+          </div>
+          <div class="cook2">
+            <img :src="'http://127.0.0.1:3000/'+list[1].pic" alt="" data-id="list[1].cid" >
+          </div>
+          <div class="cook3">
+            <img :src="'http://127.0.0.1:3000/'+list[2].pic" alt="">
+            </div>
+          <div class="cook4">
+            <img :src="'http://127.0.0.1:3000/'+list[3].pic" alt="">
+            </div>
+          <div class="cook5">
+            <img :src="'http://127.0.0.1:3000/'+list[4].pic" alt="">
+            </div>
+          <div class="close" @click="close">X</div>
         </div>
-
+    </div>
 </template>
 
 <script>
@@ -38,11 +32,10 @@ export default {
     data(){
       return{
         cook:0,
-        list:[""],
-        angleStart:-360
+
+        list:[""]
       }
     },
-
     methods:{
       loadMore(){
         //获取当前浏览器内高度
@@ -58,37 +51,7 @@ export default {
           }
          })
          
-      }, 
-        cooke1(){
-          var that=this
-           this.cook=1;
-setTimeout(function(){
-  that.toggleOptions('.selector')
-},1000)
-        
-
-    },
-    //旋转动画
-    rotate(li,d) {
-    $({d:this.angleStart}).animate({d:d}, {
-        step: function(now) {
-            $(li)
-               .css({ transform: 'rotate('+now+'deg)' })
-               .find('label')
-                  .css({ transform: 'rotate('+(-now)+'deg)' });
-        }, duration: 0
-    });
-   },
-  //显示/隐藏多选菜单
-  toggleOptions(s) {
-    $(s).toggleClass('open');
-    var li = $(s).find('li');
-    var deg = $(s).hasClass('half') ? 180/(li.length-1) : 360/li.length;
-    for(var i=0; i<li.length; i++) {
-        var d = $(s).hasClass('half') ? (i*deg)-90 : i*deg;
-        $(s).hasClass('open') ? this.rotate(li[i],d) : this.rotate(li[i],this.angleStart);
-    }
-    },
+      },
 
       
 shake_More(){
@@ -158,11 +121,6 @@ shake_More(){
             this.$toast("推荐菜谱失败")
           }
         })
-           var that=this
-           this.cook=1;
-          setTimeout(function(){
-            that.toggleOptions('.selector')
-             },1000)
      }, 
      close(){  //关闭推荐按钮将cook=0;
       this.cook=0;
@@ -196,7 +154,7 @@ shake_More(){
   left:50%;
   transform: translate(-50%,-50%);
 }
-/* .shake-cook{
+.shake-cook{
   width: 300px;
   height:300px;
   border-radius:50%;
@@ -212,14 +170,60 @@ shake_More(){
   font-size: 18px;
   color:rgb(40, 174, 236);
   font-weight: bolder;
-} */
+
+}
+.shake-cook>div{
+  width: 140px;
+  height:140px;
+  border-radius:50%;
+  background: yellow;
+  position:absolute;
+  overflow: hidden;
+  box-shadow: 0px 1px 20px #ddd;
+  line-height: 140px;
+  background: rgb(0,0,0,.8);
+  text-align:center;
+}
+div.cook1{
+  /* background: rgb(0,0,0,.8); */
+  top: -53px;
+  left:81px;
+}
+div.cook2{
+  /* background: rgb(0,0,0,.8); */
+  top: 39px;
+  left:-38px;
+}
+div.cook3{
+  /* background: rgb(0,0,0,.8); */
+  top: 186px;
+  left:-2px;
+}
+div.cook4{
+  /* background: rgb(0,0,0,.8); */
+  top: 186px;
+  left:155px;
+}
+div.cook5{
+  /* background: rgb(0,0,0,.8); */
+  top: 39px;
+  left:198px;
+}
+.shake-cook>div>img{
+  /* width: 100%; */
+  height: 100%;
+  vertical-align: middle;  
+  position:absolute;
+  top:0;
+  left:0;
+  transform: translateX(-10%)
+
+}
 .shake-cook>.close{
-  /* width:30px;
-  height:30px; */
   background: transparent;
   border:0;
   box-shadow: none;
-  color:red;
+  color:#fff;
   font-size: 20px;
   line-height: normal;
   left:250px;
@@ -227,79 +231,4 @@ shake_More(){
 }
 
 
-/*动态菜单*/
-.shake-cook{
-    width: 300px;
-  height:300px;
-  border-radius:50%;
-  background: url(../../../public/image/shake/bg.png);
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  z-index: 100;
-  text-align:center;
-  line-height: 300px;
-  box-shadow:1px 1px 30px #fff; 
-  
-}
-    .selector {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 100px;
-  height: 100px;
-  transform:translate(-50%,-50%)
-}
-
-.selector ul {
-  position: absolute;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  top: 50%;
-  /* right: 50%; */
-  /* bottom: -20px; */
-  left: 50%;
-  width: 90px;
-  height:90px;
-  transform: translate(-50%,-50%)
-}
-
-.selector li {
-  position: absolute;
-  width: 0;
-  height: 100%;
-  margin: 0 50%;
-  -webkit-transform: rotate(-360deg);
-  transition: all 0.8s ease-in-out;
-}
-
-.selector li label {
-  position: absolute;
-  left: 50%;
-  bottom: 100%;
-  width: 0;
-  height: 0;
-  line-height: 1px;
-  margin-left: 0;
-  background: #fff;
-  border-radius: 50%;
-  text-align: center;
-  font-size: 1px;
-  overflow: hidden;
-  cursor: pointer;
-  box-shadow: none;
-  transition: all 0.8s ease-in-out, color 0.1s, background 0.1s;
-}
-
-
-.selector.open li  label {
-  width: 130px;
-  height: 130px;
-  line-height: 80px;
-  margin-left: -40px;
-  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
-  font-size: 14px;
-}
 </style>

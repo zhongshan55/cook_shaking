@@ -13,6 +13,8 @@ import Sort from './components/sort/Sort.vue'
 import User from './components/me/User.vue'  //用户详情
 import Detail from './components/common/Detail.vue'
 
+import Test from './components/shake/test.vue'
+
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -26,7 +28,9 @@ export default new Router({
     // {path:'/Carousel',component:Carousel}
     {path:'/Sort',component:Sort},
     {path:'/User',component:User},
-    {path:'/Detail',component:Detail}
+    {path:'/Detail',component:Detail},
+
+    {path:'/Test',component:Test}
     
 
   ]
