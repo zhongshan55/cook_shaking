@@ -37,13 +37,13 @@ export default {
          shake.style.height = (window.innerHeight-55) + 'px'
 
          //为了防止第一次搜索时报GET http://127.0.0.1:3000/undefined 404 (Not Found)的错,进入页面默认查询一次,但不显示
-         var url="/user/shake";
-         this.axios.get(url).then(res=>{
-          if(res.data.code==1){
-            this.list=res.data.data
-            console.log(this.list)
-          }
-         })
+        //  var url="/user/shake";
+        //  this.axios.get(url).then(res=>{
+        //   if(res.data.code==1){
+        //     this.list=res.data.data
+        //     console.log(this.list)
+        //   }
+        //  })
          
       },
     //旋转动画
@@ -148,6 +148,8 @@ shake_More(){
         },1000)
      }, 
      close(){  //关闭推荐按钮将cook=0;
+     //去掉动画效果的类名
+      $(".shake-img").removeClass("animated wobble")
      this.toggleOptions('.selector')
      var that=this;
      setTimeout(function(){
