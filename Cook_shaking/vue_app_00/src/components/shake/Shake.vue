@@ -181,7 +181,9 @@ shake_More(){
   position:absolute;
   top:50%;
   left:50%;
-  transform: translate(-50%,-50%);
+  /* transform: translate(-50%,-50%); */
+  margin-left:-125px;
+  margin-top:-96px;
 
 }
 
