@@ -22,6 +22,10 @@ axios.defaults.withCredentials=true
 //由于axios不支持 use 将实例添加vue原型
 Vue.prototype.axios = axios;
 
+//引入animate.css模块
+import animated from "animate.css"
+
+Vue.use(animated)
 
 // 添加定义自定义指令focus
 Vue.directive("focus",{inserted(elem){

@@ -135,17 +135,17 @@ shake_More(){
             this.$toast("推荐菜谱失败")
           }
         })
-        $(".shake-img").animate({left:100},500)
+        //图片晃动,通过引入animate.css实现动画效果
+         $(".shake-img").addClass("animated wobble")
           
-        // setTimeout(function(){
-          
-        // },2000)
-        //动态显示菜谱,需添加定时器后加载动画函数才能出动态效果.
-          //  var that=this
-          //  this.cook=1;
-          // setTimeout(function(){
-          //   that.toggleOptions('.selector')
-          //    },100)
+          // 动态显示菜谱,需添加定时器后加载动画函数才能出动态效果.
+             var that=this
+        setTimeout(function(){  
+          that.cook=1;
+         setTimeout(function(){
+           that.toggleOptions('.selector')
+            },100)
+        },1000)
      }, 
      close(){  //关闭推荐按钮将cook=0;
      this.toggleOptions('.selector')
@@ -182,6 +182,7 @@ shake_More(){
   top:50%;
   left:50%;
   transform: translate(-50%,-50%);
+
 }
 
 .shake-cook>.close{
