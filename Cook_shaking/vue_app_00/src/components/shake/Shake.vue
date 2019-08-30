@@ -34,7 +34,7 @@ export default {
       go_detail(e){
         var cid=e.target.dataset.cid;
         
-        this.$router.push(`/detail?cid=${cid}`);
+        this.$router.push(`/detail/${cid}`);
       
       },
       loadMore(){

@@ -127,6 +127,7 @@ export default {
         ,
         loadMore(){
             var url1="detail";
+            console.log(this.cid);
             var obj={cid:this.cid}
             this.axios.get(url1,{params:obj}).then(res=>{
                 this.list=res.data.data;
@@ -175,6 +176,11 @@ export default {
     mounted() {
       this.fun()  
     },
+    watch:{
+        cid(){
+            this.loadMore()
+        }
+    }
 
 }
 
