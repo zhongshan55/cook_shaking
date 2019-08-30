@@ -93,6 +93,18 @@ CREATE TABLE cook_detail_material(
     material	VARCHAR(128),
     amount	VARCHAR(128)
 );
+INSERT INTO cook_detail_material VALUES(null,1,"排骨","500克");
+INSERT INTO cook_detail_material VALUES(null,1,"蒜","适量");
+INSERT INTO cook_detail_material VALUES(null,1,"姜","适量");
+INSERT INTO cook_detail_material VALUES(null,1,"红椒","适量");
+INSERT INTO cook_detail_material VALUES(null,1,"葱","少许");
+INSERT INTO cook_detail_material VALUES(null,1,"黑豆豉","1汤匙(15g)");
+INSERT INTO cook_detail_material VALUES(null,1,"料酒","1茶匙(5ml)");
+INSERT INTO cook_detail_material VALUES(null,1,"生抽","1汤匙(15ml)");
+INSERT INTO cook_detail_material VALUES(null,1,"盐","适量");
+INSERT INTO cook_detail_material VALUES(null,1,"淀粉","一勺");
+INSERT INTO cook_detail_material VALUES(null,1,"白糖","1汤匙(15g)");
+INSERT INTO cook_detail_material VALUES(null,1,"油","1汤匙(15ml)");
 /*菜系详情表_步骤*/
 CREATE TABLE cook_detail_step(
     sid         INT PRIMARY KEY AUTO_INCREMENT,
@@ -101,6 +113,18 @@ CREATE TABLE cook_detail_step(
     step_pic	VARCHAR(128),
     step_order	INT
 );
+INSERT INTO cook_detail_step VALUES(null,1,"用温水洗净,放盆中用冷水浸泡半小时。","paigu_step1.jpeg",1);
+INSERT INTO cook_detail_step VALUES(null,1,"同时准备蒜末、姜末、葱花、黑豆豉碎、红椒切粒","paigu_step2.jpeg",2);
+INSERT INTO cook_detail_step VALUES(null,1,"肋排捞出沥干水,再用厨房纸吸一下水分,放入搅拌用的大碗中。","paigu_step3.jpeg",3);
+INSERT INTO cook_detail_step VALUES(null,1,"加料酒,生抽,白糖,盐","paigu_step4.jpeg",4);
+INSERT INTO cook_detail_step VALUES(null,1,"加蚝油,陈皮丝","paigu_step5.jpeg",5);
+INSERT INTO cook_detail_step VALUES(null,1,"加蒜末,姜末,白胡椒粉,豆豉碎","paigu_step6.jpeg",6);
+INSERT INTO cook_detail_step VALUES(null,1,"用手抓匀,然后放冰箱冷藏腌制40分钟","paigu_step7.jpeg",7);
+INSERT INTO cook_detail_step VALUES(null,1,"时间到取出肋排,放红椒粒,加淀粉和少许香油用手抓匀","paigu_step8.jpeg",8);
+INSERT INTO cook_detail_step VALUES(null,1,"一定要让每一块排骨上都均匀的薄薄的裹上淀粉","paigu_step9.jpeg",9);
+INSERT INTO cook_detail_step VALUES(null,1,"均匀放在在整蒸盘上，以免成熟度不一致","paigu_step10.jpeg",10);
+INSERT INTO cook_detail_step VALUES(null,1,"蒸锅水烧开上汽,肋排放入,中火蒸45分钟","paigu_step11.jpeg",11);
+INSERT INTO cook_detail_step VALUES(null,1,"出锅撒葱花","paigu_step12.jpeg",12);
 /*粤菜列表*/
 CREATE TABLE cook_guangdong(
     gdid        INT PRIMARY KEY AUTO_INCREMENT,
@@ -140,7 +164,7 @@ CREATE TABLE cook_discuss(
     id		INT PRIMARY KEY AUTO_INCREMENT,
     uid		INT,
     cid		INT,
-    data	VARCHAR(128),
+    date	VARCHAR(128) default "2019-8-28 19:59:58" ,
     content	VARCHAR(128)
 );
-
+INSERT INTO cook_discuss(id,uid,cid,content) VALUES(null,1,1,"这家常菜做得真好,步骤很详细,图片也拍得很诱人")

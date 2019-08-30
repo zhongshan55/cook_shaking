@@ -4,43 +4,43 @@
             <img src="../../../public/image/common/return.png" alt="">
         </div>
         <div class="bpic">
-            <img src="../../../public/image/common/xcf_recipe_1565694834275.jpeg" alt="">
+            <img :src="'http://127.0.0.1:3000/'+list.pic">
         </div>
         <div class="tdiv">
-            <p class="title">虾仁西兰花豆腐蒸蛋</p>
+            <p class="title">{{list.title}}</p>
             <div class="subtitle">
                 <span>粤菜</span>&nbsp;&nbsp;
                 <span>菜</span>
                 <span id="span3"  @click="collect1">收藏</span>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat nobis fugit eius, tempore vel assumenda dolore sit facilis ipsum dolorum eos incidunt repellat rerum illo repellendus reiciendis cumque enim. Eligendi?</p>
+                <p>{{list.detail}}</p>
             </div>
         </div>
         <div class="yl">
             <p style="font-size:14px;font-weight:bold">
                 用料
             </p>
-            <ul>
-                <li>鸡蛋</li>
-                <li>2-3个</li>
+            <ul v-for="(item,i) of list_m" :key=i>
+                <li><span>{{item.material}}</span><span>{{item.amount}}</span></li>
+                <!-- <li>{{list_m.amount}}</li>
                 <li>西兰花</li>
                 <li>小半朵</li>
                 <li>虾仁</li>
                 <li>15个左右</li>
                 <li>内脂豆腐</li>
-                <li>半盒</li>
+                <li>半盒</li> -->
             </ul>
         </div>
         <div class="step">
-            <div>
-                <p>步骤1</p>
+            <div v-for="(item,i) of list_s" :key=i>
+                <p>步骤{{item.step_order}}</p>
                 <div class="pic">
-                    <img src="../../../public/image/common/step1.jpeg" alt="">
+                    <img :src="'http://127.0.0.1:3000/'+item.step_pic" >
                 </div>
-                <p>1.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit </p>
-                <p>2.Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <p>3.Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                <p>{{item.step_detail}} </p>
+                <!-- <p>2.Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                <p>3.Lorem ipsum dolor sit amet consectetur adipisicing elit.</p> -->
             </div>
-            <div>
+            <!-- <div>
                 <p>步骤2</p>
                 <div class="pic">
                     <img src="../../../public/image/common/step2.jpeg" alt="">
@@ -66,7 +66,7 @@
                 <p>1.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit </p>
                 <p>2.Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                 <p>3.Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-            </div>
+            </div> -->
         </div>
         <div class="commentlist">
             <p>评论</p>
@@ -103,9 +103,45 @@
 export default {
     data() {
         return {
+            list:{},
+            list_m:[],
+            list_s:[]
         }
     },
     methods:{
+        fun(){
+            window.onscroll=function(){
+                var scrollTop=document.documentElement.scrollTop;
+                var top=document.getElementById("top");
+                // var bpic=document.getElementsByClassName("bpic")[0];
+                // console.log(bpic);
+                // console.log(bpic.style.height)
+                if(scrollTop>=430){
+                    top.className="show";
+                }else{
+                    top.className="";
+                }    
+            }
+        }
+        ,
+        loadMore(){
+            var url1="detail";
+            var obj={cid:1}
+            this.axios.get(url1,{params:obj}).then(res=>{
+                this.list=res.data.data;
+                console.log(this.list)
+            })
+            var url2="detail/material";
+            this.axios.get(url2,{params:obj}).then(res=>{
+                this.list_m=res.data.data_m;
+                console.log(this.list_m)
+            })
+            var url3="detail/step";
+            this.axios.get(url3,{params:obj}).then(res=>{
+                this.list_s=res.data.data_s;
+                console.log(this.list_s)
+            })
+        },
         collect1(){
            var  span3=document.getElementById("span3");
            var shoucang=document.getElementById("shoucang");
@@ -131,20 +167,17 @@ export default {
         comment(){
 
         }
-    }
+    },
+    created() {
+        this.loadMore();
+    },
+    mounted() {
+      this.fun()  
+    },
 
 }
 
-window.onscroll=function(){
-    var scrollTop=document.documentElement.scrollTop;
-    var top=document.getElementById("top");
-    console.log(top.className);
-    if(scrollTop>=430){
-        top.className="show";
-    }else{
-        top.className="";
-    }    
-}
+
 </script>
 <style scoped>
     #top{
@@ -184,6 +217,9 @@ window.onscroll=function(){
         right:15px;
         top:0;
     }
+    .subtitle p{
+        text-indent: 32px;
+    }
     #span3{
         display: block;
         background: url("../../../public/image/common/collect1.png") no-repeat center left;
@@ -213,18 +249,32 @@ window.onscroll=function(){
         clear: both;
     }
     .yl ul li{
-        width:50%;
+        width:100%;
         display: block;
-        float: left;
+        display: flex;
+        justify-content:space-around;
         border-bottom: 1px solid #dedede;
         margin-top:15px;
         padding-bottom:10px;
         font-size: 13px;
         color:#333;
     }
+    .yl ul li>span{
+        width: 50%;
+        text-align: center;
+    }
     .step>div{
         margin:15px;
         border-bottom: 1px solid #dedede;
+    }
+    .step>div>p:first-of-type{
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 12px;
+    }
+    .step>div>p:last-of-type{
+        font-size: 15px;
+        margin-bottom: 25px;
     }
     .pic{
         width: 345px;
@@ -243,6 +293,10 @@ window.onscroll=function(){
     .commentlist{
         margin:50px 15px;
     }
+    .commentlist>p{
+        font-size: 18px;
+        font-weight: bold;
+    }
     .commentlist>div{
         
         display: flex;
@@ -256,7 +310,7 @@ window.onscroll=function(){
     .commentlist .uname{
         margin-top:0px;
         margin-bottom:10px;
-        color:#ccc;
+        color:#bbb;
     }
     .commentlist .ucom{
         margin-top: 0px;
