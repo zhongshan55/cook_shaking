@@ -3,7 +3,7 @@ const router = express.Router();
 const pool = require("../pool");
 
 router.get("/", (req, res) => { 
-    var cid = req.query.cid;
+    var cid = req.params.cid;
     
     if (cid !== undefined) { 
         var sql1 = "select * from cook_detail where cid=? ";

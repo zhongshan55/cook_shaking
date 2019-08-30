@@ -108,6 +108,7 @@ export default {
             list_s:[]
         }
     },
+    props:["cid"],
     methods:{
         fun(){
             window.onscroll=function(){
@@ -126,7 +127,7 @@ export default {
         ,
         loadMore(){
             var url1="detail";
-            var obj={cid:1}
+            var obj={cid:this.cid}
             this.axios.get(url1,{params:obj}).then(res=>{
                 this.list=res.data.data;
                 console.log(this.list)

@@ -9,7 +9,7 @@
 <div class='selector' >
   <ul>
     <li v-for="(item,i) of list" :key="i">
-      <label><img :src="'http://127.0.0.1:3000/'+list[i].pic" alt=""></label>
+      <label ><img :src="'http://127.0.0.1:3000/'+item.pic"  :data-cid="item.cid" @click="go_detail"></label>
     </li>
   </ul>
   </div>
@@ -25,26 +25,22 @@ export default {
     data(){
       return{
         cook:0,
-        list:[""],
+        list:[],
         angleStart:-360
       }
     },
 
     methods:{
+      go_detail(e){
+        var cid=e.target.dataset.cid;
+        
+        this.$router.push(`/detail?cid=${cid}`);
+      
+      },
       loadMore(){
         //获取当前浏览器内高度
        var shake=document.getElementById("shake-content");
          shake.style.height = (window.innerHeight-55) + 'px'
-
-         //为了防止第一次搜索时报GET http://127.0.0.1:3000/undefined 404 (Not Found)的错,进入页面默认查询一次,但不显示
-        //  var url="/user/shake";
-        //  this.axios.get(url).then(res=>{
-        //   if(res.data.code==1){
-        //     this.list=res.data.data
-        //     console.log(this.list)
-        //   }
-        //  })
-         
       },
     //旋转动画
     rotate(li,d) {

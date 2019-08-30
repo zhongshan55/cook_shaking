@@ -28,7 +28,7 @@ export default new Router({
     // {path:'/Carousel',component:Carousel}
     {path:'/Sort',component:Sort},
     {path:'/User',component:User},
-    {path:'/Detail',component:Detail},
+    {path:'/Detail/:cid',component:Detail},
 
     {path:'/Test',component:Test}
     
