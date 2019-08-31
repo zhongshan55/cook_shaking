@@ -2,15 +2,8 @@
   <div class="main">
     <!-- logo -->
     <div class="logoandlocation">
-      <div class="logo">
-        <img src="../../../public/image/home/shi.png" />
-        <img src="../../../public/image/home/tian.png" />
-        <img src="../../../public/image/home/xia.png" />
-      </div>
-      <!-- <div class="location">
-            <img src="../../../public/image/location.png">
-            <span><a href="javascript:;">广州</a></span>
-      </div>-->
+      美食天下
+     <img src="../../../public/image/home/search.png" />
     </div>
     <div style="margin-top:50px;"></div>
     <!-- 轮播图 -->
@@ -21,25 +14,29 @@
       <div class="cake" @click="uptoYue">
         <!-- <router-link></router-link> -->
         <a href="#">
-          <img slot="icon" src="../../../public/image/home/gd.png" alt />
+          <img slot="icon" src="../../../public/image/home/cook01.png" alt />
+          <p>粤菜</p>
         </a>
         <!-- <span>粤菜</span> -->
       </div>
       <div class="cake">
         <a href="#">
-          <img slot="icon" src="../../../public/image/home/sc.png" alt />
+          <img slot="icon" src="../../../public/image/home/cook02.png" alt />
+          <p>川菜</p>
         </a>
         <!-- <span>川菜</span> -->
       </div>
       <div class="cake">
         <a href="#">
-          <img slot="icon" src="../../../public/image/home/hn.png" alt />
+          <img slot="icon" src="../../../public/image/home/cook03.png" alt />
+          <p>湘菜</p>
         </a>
         <!-- <span>湘菜</span> -->
       </div>
       <div class="cake">
         <a href="#">
-          <img slot="icon" src="../../../public/image/home/zj.png" alt />
+          <img slot="icon" src="../../../public/image/home/cook04.png" alt />
+          <p>豫菜</p>
         </a>
         <!-- <span>浙菜</span> -->
       </div>
@@ -49,7 +46,7 @@
       <div class="news">
         <!-- 热门 更多 -->
         <div class="title">
-          <h3>热门菜列</h3>
+          <h3><img src="../../../public/image/home/good.png" > 热门菜列</h3>
           <a href="javascript:;">
             更多
             <img src="../../../public/image/home/right.png" alt />
@@ -60,10 +57,10 @@
           <li v-for="(item,i) of list" :key="i">
             <div class="newsImg">
               <a href="javascript:;">
-                <img :src="`http://127.0.0.1:3000/`+item.pic" alt />
+                <img :src="`http://127.0.0.1:3000/`+item.pic" :data-cid="item.cid"/>
               </a>
             </div>
-            <div class="detail">
+            <div class="detail" :data-cid="item.cid">
               <div class="detailbtn">
                 <mt-button
                   @click="addCollect"
@@ -214,21 +211,24 @@ export default {
 .logoandlocation {
   position: fixed;
   width: 100%;
-  height: 60px;
-  background: white;
-  border-top: 1px solid blanchedalmond;
+  height: 48px;
+  background: #fff;
+  border-bottom: 2px solid #f0f0f0;
   z-index: 999;
-  padding: 5px 0;
+  /* padding: 5px 0; */
+  text-align:center;
+  line-height: 48px;
+  /* box-sizing: border-box; */
+  font-size: 20px;
+  
 }
 
-.logoandlocation > .logo {
-  display: flex;
-  justify-content: space-around;
-}
-.logoandlocation > .logo > img {
-  width: 50px;
-  height: 50px;
-  display: block;
+.logoandlocation> img {
+  width: 25px;
+  height: 25px;
+  position:absolute;
+  right:15px;
+  top:12px;
 }
 
 /* 地理位置 */
@@ -259,11 +259,16 @@ export default {
   justify-content: space-around;
 }
 /* 字体大小 */
-.navbar > div > span {
+.navbar > div p {
   display: block;
-  font-size: 10px;
+  font-size: 12px;
   color: #d4ba92;
+  text-align: center;
 }
+.navbar > div img{
+  width: 40px;
+}
+
 /*  goods */
 .goods {
   margin: 0 10px;
@@ -271,7 +276,7 @@ export default {
   /* border-top: 1px solid #d4ba92; */
 }
 .goods > .news {
-  border-top: 1px solid #d4ba92;
+  border-top: 1px solid #f3e0c4;
   margin-top: 20px;
 }
 /* 新品 更多 */
@@ -281,7 +286,7 @@ export default {
 .news > .title {
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 /* 新品 */
 .news > .title > h3 {
@@ -291,6 +296,10 @@ export default {
   border-radius: 100px;
   font-weight: normal;
   padding: 3px 10px;
+}
+.news > .title > h3>img{
+  vertical-align: -5px;
+  width: 23px;
 }
 /* 更多 */
 .news > .title > a {
@@ -333,7 +342,7 @@ a {
 .detailtext > a > .ptitle {
   font-size: 18px;
   color: #d4ba92;
-  font-style: oblique;
+  /* font-style: oblique; */
   margin-right: 5px;
 }
 
@@ -344,6 +353,7 @@ a {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  color:dimgrey;
 
   width: 250px;
   margin-top: 6px;
