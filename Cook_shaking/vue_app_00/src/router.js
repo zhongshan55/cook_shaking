@@ -13,7 +13,7 @@ import Sort from './components/sort/Sort.vue'
 import User from './components/me/User.vue'  //用户详情
 import Detail from './components/common/Detail.vue'
 
-import Test from './components/shake/test.vue'
+
 
 Vue.use(Router)
 export default new Router({
@@ -30,7 +30,7 @@ export default new Router({
     {path:'/User',component:User},
     {path:'/Detail/:cid',component:Detail,props:true},
 
-    {path:'/Test',component:Test}
+
     
 
   ]

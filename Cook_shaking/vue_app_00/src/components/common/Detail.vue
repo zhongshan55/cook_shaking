@@ -4,7 +4,7 @@
             <img src="../../../public/image/common/return.png" alt="">
         </div>
         <div class="bpic">
-            <img :src="'http://127.0.0.1:3000/'+list.pic">
+            <img :src="lg_img">
         </div>
         <div class="tdiv">
             <p class="title">{{list.title}}</p>
@@ -105,7 +105,8 @@ export default {
         return {
             list:{},
             list_m:[],
-            list_s:[]
+            list_s:[],
+            lg_img:""
         }
     },
     props:["cid"],
@@ -132,6 +133,7 @@ export default {
             this.axios.get(url1,{params:obj}).then(res=>{
                 this.list=res.data.data;
                 console.log(this.list)
+                this.lg_img='http://127.0.0.1:3000/'+this.list.pic
             })
             var url2="detail/material";
             this.axios.get(url2,{params:obj}).then(res=>{
@@ -176,11 +178,6 @@ export default {
     mounted() {
       this.fun()  
     },
-    watch:{
-        cid(){
-            this.loadMore()
-        }
-    }
 
 }
 
