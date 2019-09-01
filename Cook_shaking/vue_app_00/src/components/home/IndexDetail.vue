@@ -13,31 +13,31 @@
     <div class="navbar">
       <div class="cake" @click="uptoYue">
         <!-- <router-link></router-link> -->
-        <a href="#">
+        <span>
           <img slot="icon" src="../../../public/image/home/cook01.png" alt />
           <p>粤菜</p>
-        </a>
+        </span>
         <!-- <span>粤菜</span> -->
       </div>
       <div class="cake">
-        <a href="#">
+        <span>
           <img slot="icon" src="../../../public/image/home/cook02.png" alt />
           <p>川菜</p>
-        </a>
+        </span>
         <!-- <span>川菜</span> -->
       </div>
       <div class="cake">
-        <a href="#">
+        <span>
           <img slot="icon" src="../../../public/image/home/cook03.png" alt />
           <p>湘菜</p>
-        </a>
+        </span>
         <!-- <span>湘菜</span> -->
       </div>
       <div class="cake">
-        <a href="#">
+        <span>
           <img slot="icon" src="../../../public/image/home/cook04.png" alt />
           <p>豫菜</p>
-        </a>
+        </span>
         <!-- <span>浙菜</span> -->
       </div>
     </div>
@@ -47,20 +47,20 @@
         <!-- 热门 更多 -->
         <div class="title">
           <h3><img src="../../../public/image/home/good.png" > 热门菜列</h3>
-          <a href="javascript:;">
-            更多
+          <span>
+            更多 
             <img src="../../../public/image/home/right.png" alt />
-          </a>
+          </span>
         </div>
         <!-- 菜系展示 -->
         <ul>
           <li v-for="(item,i) of list" :key="i">
             <div class="newsImg">
-              <a href="javascript:;">
-                <img :src="`http://127.0.0.1:3000/`+item.pic" :data-cid="item.cid"/>
-              </a>
+              <span>
+                <img :src="`http://127.0.0.1:3000/`+item.pic" :data-cid="item.cid" @click="go_detail"/>
+              </span>
             </div>
-            <div class="detail" :data-cid="item.cid">
+            <div class="detail" >
               <div class="detailbtn">
                 <mt-button
                   @click="addCollect"
@@ -73,22 +73,21 @@
                   :data-href="item.href"
                 >
                   <!-- 未收藏图标 -->
-                  <div v-if="item.display">
-                    <img class="btnimg" :src="`http://127.0.0.1:3000/`+item.pic_collect_active" />
+                  <div v-if="item.collect_status==1">
+                    <img class="btnimg" src="http://127.0.0.1:3000/collect_active.png" />
                   </div>
+                  <!-- 已收藏图标 -->
                   <div v-else>
-                    <img class="btnimg" :src="`http://127.0.0.1:3000/`+item.pic_collect" />
+                    <img class="btnimg" src="http://127.0.0.1:3000/collect.png" />
                   </div>
 
-                  <!-- 已收藏图标 -->
                 </mt-button>
               </div>
               <div class="detailtext">
-                <a href="javascript:;">
+                <span>
                   <span class="ptitle">{{item.title}}</span>
-                  <!-- <span class="pprice"></span> -->
                   <p class="psubtitle">{{item.subtitle}}</p>
-                </a>
+                </span>
               </div>
             </div>
           </li>
@@ -102,15 +101,17 @@ import carousel from "./Carousel";
 export default {
   data() {
     return {
-      // p1:{},
-      // p2:{},
-      // p3:{}
       list: [], //用于接收服务器端数据
       list_active: [] ///add_active 请求返回结果
-      // active:1
     };
   },
   methods: {
+    //跳转到详情页面
+    go_detail(e){
+      var cid=e.target.dataset.cid;
+      this.$router.push(`/detail/${cid}`) 
+      console.log(cid)
+    },
     //跳转到粤菜列表
     uptoYue() {
     //   this.$router.push("Yuecai.vue");
@@ -140,21 +141,17 @@ export default {
             return;
           });
         } else if (res.data.code == 1) {
-          this.$toast("添加成功");
+          this.$toast("添加收藏成功");
         } else if (res.data.code == 2) {
-          this.$toast("删除成功");
+          this.$toast("删除收藏成功");
         }
+        this.load();
       });
     },
     load() {
       //首页信息加载
       var url = "home";
       this.axios.get(url).then(result => {
-        // console.log(result.data);
-        // var [p1,p2,p3]=result.data;
-        // this.p1=p1;
-        // this.p2=p2;
-        // this.p3=p3;
         this.list = result.data.data; //将数据传给list
         console.log(this.list);
       });
@@ -193,9 +190,8 @@ export default {
   },
   created() {
     this.load(); //首页信息加载
-    this.$nextTick(() => {
-      this.addCollect_active();
-    });
+    //  this.$nextTick()函数作用是等页面的数据更新完成以后，它再执行内部回调函数中的逻辑
+
   }
 };
 </script>
@@ -224,30 +220,13 @@ export default {
 }
 
 .logoandlocation> img {
-  width: 25px;
-  height: 25px;
-  position:absolute;
-  right:15px;
-  top:12px;
-}
-
-/* 地理位置 */
-.logoandlocation > .location {
-  display: flex;
-  position: relative;
-  justify-content: center;
-  align-items: center;
-  left: 330px;
-  height: 50px;
-}
-.logoandlocation > .location > span {
-  display: block;
-  font-size: 14px;
-}
-.logoandlocation > .location > img {
   width: 20px;
   height: 20px;
+  position:absolute;
+  right:15px;
+  top:15px;
 }
+
 /*轮播图*/
 .carousel {
   height: 222px;
@@ -266,7 +245,7 @@ export default {
   text-align: center;
 }
 .navbar > div img{
-  width: 40px;
+  width: 30px;
 }
 
 /*  goods */
@@ -290,7 +269,7 @@ export default {
 }
 /* 新品 */
 .news > .title > h3 {
-  font-size: 16px;
+  font-size: 14px;
   color: black;
   background: #f4ebe2;
   border-radius: 100px;
@@ -302,10 +281,9 @@ export default {
   width: 23px;
 }
 /* 更多 */
-.news > .title > a {
-  text-decoration: none;
-  font-size: 14px;
-  color: black;
+.news > .title > span {
+  font-size: 16px;
+  color: rgb(61, 51, 51);
   font-weight: normal;
 }
 /* ul 去除圆点 */
@@ -319,8 +297,9 @@ a {
 }
 .newsImg {
   overflow: hidden;
+  height:237px;
 }
-.newsImg > a > img {
+.newsImg > span > img {
   width: 100%;
 }
 .news > ul > li {
@@ -339,14 +318,14 @@ a {
   margin-top: 8px;
   margin-bottom: 10px;
 }
-.detailtext > a > .ptitle {
+.detailtext > span > .ptitle {
   font-size: 18px;
   color: #d4ba92;
   /* font-style: oblique; */
   margin-right: 5px;
 }
 
-.detailtext > a > .psubtitle {
+.detailtext > span > .psubtitle {
   /*文字超出显示...*/
   overflow: hidden;
   text-overflow: ellipsis;
@@ -370,15 +349,15 @@ a {
   border-radius: 50px;
   outline: 0;
   top: 50%;
-  margin-top: -25px;
+  margin-top: -20px;
   left: 288px;
   /* border-radius: 50%; */
 }
 .detailbtn > .mint-button {
   position: relative;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   /* background-image: url("../../../public/image/home/collect.png"); */
   /* background-repeat:no-repeat; */
   /* background-position:center; */
@@ -386,8 +365,8 @@ a {
 .btnimg {
   position: absolute;
   display: block;
-  left: 9px;
-  top: 8px;
+  left: 5px;
+  top: 4px;
 }
 </style>
 

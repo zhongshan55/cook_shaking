@@ -3,9 +3,12 @@
    
     <mt-swipe @change="handleChange" :auto="3000" :show-indicators="true">
         <mt-swipe-item v-for="(item,i) of list" :key="i">
-            <a href="javascript:;">
+            <!-- 通过router-link跳转到详情页.若路由为"/detail",无参数,可写为
+              :to{path:'/detail'.query{cid:item.cid}}
+             -->
+            <router-link :to="{path:'/detail/'+item.cid} " >
                 <img :src="`http://127.0.0.1:3000/`+item.pic" alt="">
-            </a>
+            </router-link>
             <!-- <img src="../../../public/image/home/paigu.png" alt=""> -->
         </mt-swipe-item>
 
@@ -37,7 +40,7 @@ export default {
             var url="carousel"
             this.axios.get(url).then(result=>{
                 this.list=result.data.data;
-                // console.log(this.list)
+                // console.log(this.list,11)
             })
         }
     },
