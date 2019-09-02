@@ -71,10 +71,10 @@ export default {
       // 获取返回结果
       this.axios.get(url, { params: obj }).then(res => {
         if (res.data.code == 2) {
-         this.$toast("删除收藏成功");
+         this.$toast("取消收藏成功");
          this.loadMore();
        } else  {
-          this.$toast("删除收藏失败成功");
+          this.$toast("取消收藏失败成功");
         }
        
       });
@@ -122,19 +122,27 @@ h3{
   justify-content: start;
   padding:10px 0;
   border-bottom:1px solid #ccc;
+  /* box-sizing: border-box; */
 }
 /* 左侧图片 */
 .left{
   width:30%;
+  background: #000;
+  height: 116.8px;
+  line-height: 116.8px;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 .left img{
   width:100%;
+  vertical-align: middle;
 }
 /* 右侧文字介绍 */
 .right{
   width:70%;
   text-align: left;
   padding: 10px;
+    box-sizing: border-box;
 }
 /* 右侧上部分 标题 和 取消收藏  */
 .right .rightTop{
@@ -150,10 +158,16 @@ h3{
   font-size:20px;
   font-weight:bold;
   margin-bottom:10px;
+    overflow: hidden;
+  text-overflow: ellipsis;
+  white-space:nowrap;
 }
 /* 副标题 */
 .right .rightTop .left_title .sub_title{
   font-size:16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space:nowrap;
 }
 /* 右侧上部分 取消收藏 */
 .right .rightTop .right_img{
@@ -161,7 +175,7 @@ h3{
   text-align: right;
 }
 .right .rightTop .right_img span{
-  font-size:14px;
+  font-size:13px;
 }
 .right .rightTop .right_img img{
   width:20%;

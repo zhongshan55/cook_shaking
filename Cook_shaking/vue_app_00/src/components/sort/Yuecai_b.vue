@@ -21,13 +21,7 @@
           :data-pic="item.pic"
           :data-href="item.href"
           >
-                 <div v-if="item.collect_status==1">
-                    <img class="btnimg" src="http://127.0.0.1:3000/collect_active.png" />
-                  </div>
-                  <!-- 已收藏图标 -->
-                  <div v-else>
-                    <img class="btnimg" src="http://127.0.0.1:3000/collect.png" />
-                  </div>
+            <img src="../../../public/image/collect/collect.png">
           </mt-button>
         </div>
       </div>
@@ -45,70 +39,68 @@ export default {
       pno:0     //页面(第几页)
     }
   },
+  props:["fid"],
   methods:{
     loadMore(){
       //功能:获取商品分页数据
       // 1.发送请求
-      var url="sort/sichuan";
+      var url="sort/yuecai";
       //当前页码1
-      // this.pno++;
+      this.pno++;
       //创建参数对象
       // var obj = {pno:this.pno};
       //发送ajax请求获取当前页内容
-      this.axios.get(url
-      // ,{params:obj}
-      ).then(res=>{
+      this.axios.get(url,{params:obj}).then(res=>{
         // 2.获取服务器返回结果
         //console.log(res.data.data);
         // 3.将返回结果保存
         // var row = 1页.concat(2页)
         //this.list = res.data.data;
         // 4.拼接多页内容
-        var rows = res.data.data; 
+        var rows = this.list.concat(res.data); 
         // 5.将结果赋值list
         this.list = rows;
         //console.log(this.list);
       })
     },
-     addCollect(e){              //添加收藏夹
-            //获取数据
-            var fid=e.target.dataset.fid;
-            var cid=e.target.dataset.cid;
-            // console.log(cid)
-            var title=e.target.dataset.title;
-            var subtitle=e.target.dataset.subtitle;
-            var detail=e.target.dataset.detail;
-            var pic=e.target.dataset.pic;
-            var href=e.target.dataset.href;
-            
-            //请求地址
-            var url="add/addcollect";
-            //请求参数
-            var obj={fid,cid,title,subtitle,pic,href,detail}
-            // 获取返回结果
-            this.axios.get(url,{params:obj}).then(res=>{
-                if(res.data.code==-1){
-                    this.$messagebox("消息","请先登录再收藏")
-                    .then(res=>{
-                        this.$router.push("/Login");
-                        return;
-                    })
-                }else if(res.data.code==1) {
-                    this.$toast("添加成功")
-                    
-                }else if(res.data.code==2) {
-                    this.$toast("删除成功")
-                }
-            this.loadMore();
-            })
-        },
+    addCollect(e){ //添加收藏夹
+      //获取数据
+      //console.log(111);
+      var fid=e.target.dataset.fid;
+      //console.log(fid);
+      var cid=e.target.dataset.cid;
+      //console.log(cid)
+      var title=e.target.dataset.title;
+      var subtitle=e.target.dataset.subtitle;
+      var detail=e.target.dataset.detail;
+      var pic=e.target.dataset.pic;
+      var href=e.target.dataset.href;
+      //请求地址
+      var url="addcollect";
+      //请求参数
+      var obj={fid,cid,title,subtitle,pic,href,detail}
+      //获取返回结果
+      this.axios.get(url,{params:obj}).then(res=>{
+        if(res.data.code==-1){
+          this.$messagebox("消息","请先登录再收藏")
+            .then(res=>{
+            this.$router.push("/Login");
+             return;
+           })
+         }else{
+           this.$toast("添加成功")
+        }
+        if(res.data.code==-2){
+           this.$messagebox("你好呀！！！","已收藏过了")
+         }
+      })
+    },
   },
   created(){
     this.loadMore();
   }
 }
 </script>
-
 <style scoped>
 *{
   padding:0;
