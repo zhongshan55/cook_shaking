@@ -1,7 +1,10 @@
 <template>
     <div>
         <div id="top">
-            <img src="../../../public/image/common/return.png" alt="">
+            <span>{{list.title}}</span>
+            <div @click="return_list">
+                <img src="../../../public/image/common/return.png" alt="">
+            </div>
         </div>
         <div class="bpic">
             <img :src="'http://127.0.0.1:3000/'+list.pic">
@@ -21,13 +24,6 @@
             </p>
             <ul v-for="(item,i) of list_m" :key=i>
                 <li><span>{{item.material}}</span><span>{{item.amount}}</span></li>
-                <!-- <li>{{list_m.amount}}</li>
-                <li>西兰花</li>
-                <li>小半朵</li>
-                <li>虾仁</li>
-                <li>15个左右</li>
-                <li>内脂豆腐</li>
-                <li>半盒</li> -->
             </ul>
         </div>
         <div class="step">
@@ -37,55 +33,20 @@
                     <img :src="'http://127.0.0.1:3000/'+item.step_pic" >
                 </div>
                 <p>{{item.step_detail}} </p>
-                <!-- <p>2.Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <p>3.Lorem ipsum dolor sit amet consectetur adipisicing elit.</p> -->
             </div>
-            <!-- <div>
-                <p>步骤2</p>
-                <div class="pic">
-                    <img src="../../../public/image/common/step2.jpeg" alt="">
-                </div>
-                <p>1.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit </p>
-                <p>2.Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <p>3.Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-            </div>
-            <div>
-                <p>步骤3</p>
-                <div class="pic">
-                    <img src="../../../public/image/common/step3.jpeg" alt="">
-                </div>
-                <p>1.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit </p>
-                <p>2.Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <p>3.Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-            </div>
-            <div>
-                <p>步骤4</p>
-                <div class="pic">
-                    <img src="../../../public/image/common/step3.jpeg" alt="">
-                </div>
-                <p>1.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit </p>
-                <p>2.Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <p>3.Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-            </div> -->
         </div>
         <div class="commentlist">
             <p>评论</p>
-            <div>
+            <div v-for="(item,i) of list_c" :key=i>
                 <div class="touxiang">
                     <img src="../../../public/image/common/touxiang.png" alt="">
                 </div>
                 <div>
-                    <p class="uname">Lorem ipsum dolor sit amet.</p>
-                    <p class="ucom" >Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa hic veniam quae </p>
-                </div>
-            </div>
-            <div>
-                <div class="touxiang">
-                    <img src="../../../public/image/common/touxiang.png" alt="">
-                </div>
-                <div>
-                    <p class="uname">Lorem ipsum </p>
-                    <p class="ucom">Lorem ipsum dolor sit amet consectetur adipisicing</p>
+                    <p class="uname">
+                        <span>{{item.uname}}</span>
+                        <span>{{item.date}}</span>
+                    </p>
+                    <p class="ucom" >{{item.content}}</p>
                 </div>
             </div>
         </div>
@@ -97,15 +58,18 @@
             <input id="txt" type="text" placeholder="喜欢评论的人，做饭一定超好吃~">
             <input id="btn" type="button" value="发送">
         </div>
+        <div id="full"></div>
     </div>
 </template>
 <script>
+import $ from 'jquery'
 export default {
     data() {
         return {
             list:{},
             list_m:[],
-            list_s:[]
+            list_s:[],
+            list_c:[]
         }
     },
     props:["cid"],
@@ -143,6 +107,14 @@ export default {
                 this.list_s=res.data.data_s;
                 console.log(this.list_s)
             })
+            var url4="detail/comment";
+            this.axios.get(url4,{params:obj}).then(res=>{
+                this.list_c=res.data.data_c;
+                console.log(this.list_c)
+            })
+        },
+        return_list(){
+            history.back(); 
         },
         collect1(){
            var  span3=document.getElementById("span3");
@@ -167,11 +139,35 @@ export default {
             }
         },
         comment(){
-
+            $(".comment").show();
+            this.fun1()
+        },
+        fun1(){
+            $('body').click(function(e){                
+                $('.comment').hide(); 
+            })
+            $('.dibu').click(function(e){
+                e.stopPropagation();
+            })
+            $('.comment').click(function(e){
+                e.stopPropagation();
+            })
+            $('#txt').focus(function(){
+                var url="detail/addcomment";
+                this.axios.get(url).then(res=>{
+                    if(res.data.code==-1){
+                        this.$messagebox("消息","请先登录再评论").then(res=>{
+                            this.$router.push("/Login");
+                            return;
+                        })
+                    }
+                })
+            })
         }
     },
     created() {
         this.loadMore();
+    
     },
     mounted() {
       this.fun()  
@@ -198,9 +194,25 @@ export default {
         opacity: 1;
         background: #fff;
     }
+    #top>div{
+        width:48px;
+        height:48px;
+    }
     #top img{
         width:24px;
         margin: 12px;
+    }
+    #top span{
+        position: absolute;
+        top:50%;
+        left:50%;
+        transform: translate(-50%,-50%);
+        font-size:22px;
+        opacity: 0;
+        transition: all 0.5s linear;
+    }
+    #top.show span{
+        opacity: 1;
     }
     .bpic img{
         width:100%;
@@ -318,6 +330,8 @@ export default {
         margin-top:0px;
         margin-bottom:10px;
         color:#bbb;
+        display: flex;
+        justify-content: space-between;
     }
     .commentlist .ucom{
         margin-top: 0px;
@@ -330,6 +344,7 @@ export default {
         width: 100%;
         height: 48px;
         /* display: none; */
+        z-index: 2;
     }
     .dibu span{
         line-height: 48px;
@@ -359,18 +374,20 @@ export default {
         height: 48px;
         line-height: 48px;
         background: #eee;
-        display: none;
+        z-index: 3;
+        display: none;  
     }
     .comment input{
         border:0;
         margin-left: 20px;
-        margin-right: 20px;
+        margin-right: 10px;
+        outline: none;
     }
     #txt{
-        outline: none;
         width:250px;
         height:34px;
-        border-radius: 4px;    
+        border-radius: 4px;  
+        padding-left:5px;
     }
     #btn{
         width:45px;

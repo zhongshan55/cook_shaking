@@ -172,7 +172,7 @@ shake_More(){
 
 }
 #shake-content{
-  background: rgb(45,45,45);
+  background: rgb(44,44,44);
      position:relative;
 }
 .shake-img{

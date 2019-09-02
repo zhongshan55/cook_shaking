@@ -46,16 +46,17 @@ router.get("/comment", (req, res) => {
         var sql4 = "select * from cook_discuss where cid=?";
         pool.query(sql4, [cid], (err, result) => { 
             if (err) throw err;
-            // res.send({ code: 1, msg: "查询成功", data_c: result })
-            console.log(result)
-            var uid = result.uid;
-            var sql5 = "select uname from cook_user where uid=?";
-            pool.query(sql5, [uid], (err, result) => { 
-                if (err) throw err;
-                res.send({ code: 1, msg: "查询成功", data_u: result })
-                console.log(result)
-            })
+            res.send({ code: 1, msg: "查询成功", data_c: result })
+            console.log(result)            
         })
+    }
+})
+
+router.get("/addcomment", (req, res) => { 
+    var uid = req.session.uid;
+    if (!uid) { 
+        res.send({ code: -1, msg: "未登录" })
+        return;
     }
 })
 module.exports = router;
