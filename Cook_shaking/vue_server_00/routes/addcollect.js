@@ -51,20 +51,20 @@ router.get("/addcollect",(req,res)=>{
     })
 })
 
+//取消收藏接口
+router.get("/removecollect",(req,res)=>{
+    var uid=req.session.uid;
+    var cid=req.query.cid;
+    var sql=`delete from cook_collect where uid=${uid} and cid=${cid}`;
+    pool.query(sql,(err,result)=>{
+        if(err) throw err;
+        if(result.affectedRows>0){
+            res.send({code:2,msg:"是否删除"})
+        }
+    })
+})
+
 //http://127.0.0.1:3000/user/login?uname=tom&upwd=123
 //http://127.0.0.1:3000/add/addcollect?uid=01%fid=02&cid=02&title=yu&subtitle=hahah&detail=xixixi&pic=01.jpg&href=hadfsd
-//用户登录收藏过的图标变红
-router.get("/add_active",(req,res)=>{
-    var uid=req.session.uid
-    if(!uid){
-        res.send({code:-1,msg:"未登录"})
-    }else{
-        var sql="SELECT cid,display FROM cook_collect where uid=? "
-        pool.query(sql,[uid],(err,result)=>{
-            if(err) throw err;
-            res.send({code:1,data:result})
-        })
-    }
-})
 
 module.exports=router;

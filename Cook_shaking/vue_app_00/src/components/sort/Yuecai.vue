@@ -168,7 +168,7 @@ ul li a{
   font-size:20px;
   font-weight: normal;
   color:#d4ba92;
-  font-style: oblique;
+  /* font-style: oblique; */
 }
 /* 副标题样式 */
 .goods_top .left .sub_title{

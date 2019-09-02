@@ -155,35 +155,8 @@ export default {
         this.list = result.data.data; //将数据传给list
         console.log(this.list);
       });
-    },
-    // 验证是否已收藏 收藏图标变红   加载获得购物车中uid 和cid display
-    addCollect_active() {
-      var url = "add/add_active";
-      this.axios.get(url).then(res => {
-        if (res.data.code == -1) {
-          // this.active=-1
-          console.log(res);
-        } else {
-          // this.list_active=res.data.data
-          this.list_active = res.data.data;
-          console.log(this.list_active);
-          let list = this.list;
-          let list_active = this.list_active;
-          for (var item of list) {
-            item.display = false;
-            for (var acitem of list_active) {
-              if (item.cid == acitem.cid) {
-                item.display = true;
-              }
-            }
-          }
-          this.list = list;
-          this.list_active = list_active;
-          console.log(this.list);
-          console.log(this.list_active);
-        }
-      });
     }
+
   },
   components: {
     carousel

@@ -4,11 +4,7 @@
       <mt-tab-item id="1">川菜</mt-tab-item>
       <mt-tab-item id="2">粤菜</mt-tab-item>
       <mt-tab-item id="3">湘菜</mt-tab-item>
-      <mt-tab-item id="4">湘菜</mt-tab-item>
-      <mt-tab-item id="5">湘菜</mt-tab-item>
-      <mt-tab-item id="6">湘菜</mt-tab-item>
-      <mt-tab-item id="7">湘菜</mt-tab-item>
-      <mt-tab-item id="8">湘菜</mt-tab-item>
+      <mt-tab-item id="4">豫菜</mt-tab-item>
     </mt-navbar>
     <div style="margin-top:55px;"></div>
     <!-- tab-container -->
@@ -21,7 +17,10 @@
         <yuecai></yuecai>
       </mt-tab-container-item>
       <mt-tab-container-item id="3">
-        333
+           未有菜谱发布,敬请期待...
+      </mt-tab-container-item>
+        <mt-tab-container-item id="4">
+            未有菜谱发布,敬请期待...
       </mt-tab-container-item>
     </mt-tab-container>
   </div>

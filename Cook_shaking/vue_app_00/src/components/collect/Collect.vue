@@ -2,33 +2,42 @@
 <template>
   <div id="collect">
     <!-- 标题 -->
-    <h3>收藏列表(4)</h3>
+    <h3>收藏列表({{list.length}})</h3>
     <hr>
     <!-- 商品列表 -->
-    <div class="collectList" v-for="(item,i) of list" :key="i"> 
-      <!-- 左侧图片 -->
-      <div class="left">
-        <img :src="'http://127.0.0.1:3000/'+item.pic">
-      </div>
-      <!-- 右侧文字介绍 -->
-      <div class="right">
-        <!-- 右侧上部分标题和取消收藏 -->
-        <div class="rightTop">
-          <!-- 左侧标题部分 -->
-          <div class="left_title">
-            <p class="title">{{item.title}}</p>
-            <p class="sub_title">{{item.subtitle}}</p>
+    <div>
+    <mt-loadmore :top-method="loadTop" ref='loadmore' >
+    <ul>
+      <li class="collectList" v-for="(item,i) of list" :key="i">
+    
+          <!-- 左侧图片 -->
+          <div class="left">
+            <img :src="'http://127.0.0.1:3000/'+item.pic">
           </div>
-          <!-- 右侧取消收藏部分 -->
-          <div class="right_img">
-            <span>取消收藏</span><img src="../../../public/image/collect/collect.png">
+          <!-- 右侧文字介绍 -->
+          <div class="right">
+            <!-- 右侧上部分标题和取消收藏 -->
+            <div class="rightTop">
+              <!-- 左侧标题部分 -->
+              <div class="left_title">
+                <p class="title">{{item.title}}</p>
+                <p class="sub_title">{{item.subtitle}}</p>
+              </div>
+              <!-- 右侧取消收藏部分 -->
+              <div class="right_img"  >
+                <span>取消收藏 </span><img src="../../../public/image/collect/collect_active.png" @click="removeCollect" 
+                  :data-cid="item.cid">
+              </div>
+            </div>
+            <!-- 右侧下部分详情介绍 -->
+            <div class="right_intr">
+              <p>{{item.detail}}</p>
+            </div>
           </div>
-        </div>
-        <!-- 右侧下部分详情介绍 -->
-        <div class="right_intr">
-          <p>{{item.detail}}</p>
-        </div>
-      </div>
+        
+      </li>
+    </ul>
+    </mt-loadmore>
     </div>
   </div>
 </template>
@@ -37,10 +46,39 @@
 export default {
   data(){
     return {
-      list:[]
+      list:[],
+      isAutoFill:false,
+      allLoaded:false
     }
   },
+   loadBottom() {
+      this.loadMore();
+    },
   methods:{
+    loadTop(){
+      this.loadMore();
+      console.log("刷新")
+      this.$refs.loadmore //==><ANY ref="loadmore"></ANY>
+      .onTopLoaded();
+    } ,
+    removeCollect(e){
+
+      //请求地址
+      var url = "add/removecollect";
+      var cid=e.target.dataset.cid
+      //请求参数
+      var obj = { cid};
+      // 获取返回结果
+      this.axios.get(url, { params: obj }).then(res => {
+        if (res.data.code == 2) {
+         this.$toast("删除收藏成功");
+         this.loadMore();
+       } else  {
+          this.$toast("删除收藏失败成功");
+        }
+       
+      });
+    },
     loadMore(){
       //功能:获取商品分页数据
       // 1.发送请求
@@ -52,6 +90,7 @@ export default {
         // 3.将返回结果保存
         // var row = 1页.concat(2页)
         this.list = res.data;
+        console.log(this.list)
         // 4.拼接多页内容
         //var rows = this.list.concat(res.data); 
         // 5.将结果赋值list

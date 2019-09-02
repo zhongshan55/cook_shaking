@@ -21,7 +21,13 @@
           :data-pic="item.pic"
           :data-href="item.href"
           >
-            <img src="../../../public/image/collect/collect.png">
+                 <div v-if="item.collect_status==1">
+                    <img class="btnimg" src="http://127.0.0.1:3000/collect_active.png" />
+                  </div>
+                  <!-- 已收藏图标 -->
+                  <div v-else>
+                    <img class="btnimg" src="http://127.0.0.1:3000/collect.png" />
+                  </div>
           </mt-button>
         </div>
       </div>
@@ -45,18 +51,20 @@ export default {
       // 1.发送请求
       var url="sort/sichuan";
       //当前页码1
-      this.pno++;
+      // this.pno++;
       //创建参数对象
-      var obj = {pno:this.pno};
+      // var obj = {pno:this.pno};
       //发送ajax请求获取当前页内容
-      this.axios.get(url,{params:obj}).then(res=>{
+      this.axios.get(url
+      // ,{params:obj}
+      ).then(res=>{
         // 2.获取服务器返回结果
         //console.log(res.data.data);
         // 3.将返回结果保存
         // var row = 1页.concat(2页)
         //this.list = res.data.data;
         // 4.拼接多页内容
-        var rows = this.list.concat(res.data); 
+        var rows = res.data.data; 
         // 5.将结果赋值list
         this.list = rows;
         //console.log(this.list);
@@ -91,6 +99,7 @@ export default {
                 }else if(res.data.code==2) {
                     this.$toast("删除成功")
                 }
+            this.loadMore();
             })
         },
   },
@@ -168,7 +177,7 @@ ul li a{
   font-size:20px;
   font-weight: normal;
   color:#d4ba92;
-  font-style: oblique;
+  /* font-style: oblique; */
 }
 /* 副标题样式 */
 .goods_top .left .sub_title{
