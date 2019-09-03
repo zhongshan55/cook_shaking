@@ -2,15 +2,8 @@
   <div class="main">
     <!-- logo -->
     <div class="logoandlocation">
-      <div class="logo">
-        <img src="../../../public/image/home/shi.png" />
-        <img src="../../../public/image/home/tian.png" />
-        <img src="../../../public/image/home/xia.png" />
-      </div>
-      <!-- <div class="location">
-            <img src="../../../public/image/location.png">
-            <span><a href="javascript:;">广州</a></span>
-      </div>-->
+      美食天下
+     <img src="../../../public/image/home/search.png" />
     </div>
     <div style="margin-top:50px;"></div>
     <!-- 轮播图 -->
@@ -20,27 +13,31 @@
     <div class="navbar">
       <div class="cake" @click="uptoYue">
         <!-- <router-link></router-link> -->
-        <a href="#">
-          <img slot="icon" src="../../../public/image/home/gd.png" alt />
-        </a>
+        <span>
+          <img slot="icon" src="../../../public/image/home/cook01.png" alt />
+          <p>粤菜</p>
+        </span>
         <!-- <span>粤菜</span> -->
       </div>
       <div class="cake">
-        <a href="#">
-          <img slot="icon" src="../../../public/image/home/sc.png" alt />
-        </a>
+        <span>
+          <img slot="icon" src="../../../public/image/home/cook02.png" alt />
+          <p>川菜</p>
+        </span>
         <!-- <span>川菜</span> -->
       </div>
       <div class="cake">
-        <a href="#">
-          <img slot="icon" src="../../../public/image/home/hn.png" alt />
-        </a>
+        <span>
+          <img slot="icon" src="../../../public/image/home/cook03.png" alt />
+          <p>湘菜</p>
+        </span>
         <!-- <span>湘菜</span> -->
       </div>
       <div class="cake">
-        <a href="#">
-          <img slot="icon" src="../../../public/image/home/zj.png" alt />
-        </a>
+        <span>
+          <img slot="icon" src="../../../public/image/home/cook04.png" alt />
+          <p>豫菜</p>
+        </span>
         <!-- <span>浙菜</span> -->
       </div>
     </div>
@@ -49,21 +46,21 @@
       <div class="news">
         <!-- 热门 更多 -->
         <div class="title">
-          <h3>热门菜列</h3>
-          <a href="javascript:;">
-            更多
+          <h3><img src="../../../public/image/home/good.png" > 热门菜列</h3>
+          <span>
+            更多 
             <img src="../../../public/image/home/right.png" alt />
-          </a>
+          </span>
         </div>
         <!-- 菜系展示 -->
         <ul>
           <li v-for="(item,i) of list" :key="i">
             <div class="newsImg">
-              <a href="javascript:;">
-                <img :src="`http://127.0.0.1:3000/`+item.pic" alt />
-              </a>
+              <span>
+                <img :src="`http://127.0.0.1:3000/`+item.pic" :data-cid="item.cid" @click="go_detail"/>
+              </span>
             </div>
-            <div class="detail">
+            <div class="detail" >
               <div class="detailbtn">
                 <mt-button
                   @click="addCollect"
@@ -76,22 +73,21 @@
                   :data-href="item.href"
                 >
                   <!-- 未收藏图标 -->
-                  <div v-if="item.display">
-                    <img class="btnimg" :src="`http://127.0.0.1:3000/`+item.pic_collect_active" />
+                  <div v-if="item.collect_status==1">
+                    <img class="btnimg" src="http://127.0.0.1:3000/collect_active.png" />
                   </div>
+                  <!-- 已收藏图标 -->
                   <div v-else>
-                    <img class="btnimg" :src="`http://127.0.0.1:3000/`+item.pic_collect" />
+                    <img class="btnimg" src="http://127.0.0.1:3000/collect.png" />
                   </div>
 
-                  <!-- 已收藏图标 -->
                 </mt-button>
               </div>
               <div class="detailtext">
-                <a href="javascript:;">
+                <span>
                   <span class="ptitle">{{item.title}}</span>
-                  <!-- <span class="pprice"></span> -->
                   <p class="psubtitle">{{item.subtitle}}</p>
-                </a>
+                </span>
               </div>
             </div>
           </li>
@@ -105,15 +101,17 @@ import carousel from "./Carousel";
 export default {
   data() {
     return {
-      // p1:{},
-      // p2:{},
-      // p3:{}
       list: [], //用于接收服务器端数据
       list_active: [] ///add_active 请求返回结果
-      // active:1
     };
   },
   methods: {
+    //跳转到详情页面
+    go_detail(e){
+      var cid=e.target.dataset.cid;
+      this.$router.push(`/detail/${cid}`) 
+      console.log(cid)
+    },
     //跳转到粤菜列表
     uptoYue() {
     //   this.$router.push("Yuecai.vue");
@@ -143,21 +141,17 @@ export default {
             return;
           });
         } else if (res.data.code == 1) {
-          this.$toast("添加成功");
+          this.$toast("添加收藏成功");
         } else if (res.data.code == 2) {
-          this.$toast("删除成功");
+          this.$toast("删除收藏成功");
         }
+        this.load();
       });
     },
     load() {
       //首页信息加载
       var url = "home";
       this.axios.get(url).then(result => {
-        // console.log(result.data);
-        // var [p1,p2,p3]=result.data;
-        // this.p1=p1;
-        // this.p2=p2;
-        // this.p3=p3;
         this.list = result.data.data; //将数据传给list
         console.log(this.list);
       });
@@ -196,9 +190,8 @@ export default {
   },
   created() {
     this.load(); //首页信息加载
-    this.$nextTick(() => {
-      this.addCollect_active();
-    });
+    //  this.$nextTick()函数作用是等页面的数据更新完成以后，它再执行内部回调函数中的逻辑
+
   }
 };
 </script>
@@ -214,40 +207,26 @@ export default {
 .logoandlocation {
   position: fixed;
   width: 100%;
-  height: 60px;
-  background: white;
-  border-top: 1px solid blanchedalmond;
+  height: 48px;
+  background: #fff;
+  border-bottom: 2px solid #f0f0f0;
   z-index: 999;
-  padding: 5px 0;
+  /* padding: 5px 0; */
+  text-align:center;
+  line-height: 48px;
+  /* box-sizing: border-box; */
+  font-size: 20px;
+  
 }
 
-.logoandlocation > .logo {
-  display: flex;
-  justify-content: space-around;
-}
-.logoandlocation > .logo > img {
-  width: 50px;
-  height: 50px;
-  display: block;
-}
-
-/* 地理位置 */
-.logoandlocation > .location {
-  display: flex;
-  position: relative;
-  justify-content: center;
-  align-items: center;
-  left: 330px;
-  height: 50px;
-}
-.logoandlocation > .location > span {
-  display: block;
-  font-size: 14px;
-}
-.logoandlocation > .location > img {
+.logoandlocation> img {
   width: 20px;
   height: 20px;
+  position:absolute;
+  right:15px;
+  top:15px;
 }
+
 /*轮播图*/
 .carousel {
   height: 222px;
@@ -259,11 +238,16 @@ export default {
   justify-content: space-around;
 }
 /* 字体大小 */
-.navbar > div > span {
+.navbar > div p {
   display: block;
-  font-size: 10px;
+  font-size: 12px;
   color: #d4ba92;
+  text-align: center;
 }
+.navbar > div img{
+  width: 30px;
+}
+
 /*  goods */
 .goods {
   margin: 0 10px;
@@ -271,7 +255,7 @@ export default {
   /* border-top: 1px solid #d4ba92; */
 }
 .goods > .news {
-  border-top: 1px solid #d4ba92;
+  border-top: 1px solid #f3e0c4;
   margin-top: 20px;
 }
 /* 新品 更多 */
@@ -281,22 +265,25 @@ export default {
 .news > .title {
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 /* 新品 */
 .news > .title > h3 {
-  font-size: 16px;
+  font-size: 14px;
   color: black;
   background: #f4ebe2;
   border-radius: 100px;
   font-weight: normal;
   padding: 3px 10px;
 }
+.news > .title > h3>img{
+  vertical-align: -5px;
+  width: 23px;
+}
 /* 更多 */
-.news > .title > a {
-  text-decoration: none;
-  font-size: 14px;
-  color: black;
+.news > .title > span {
+  font-size: 16px;
+  color: rgb(61, 51, 51);
   font-weight: normal;
 }
 /* ul 去除圆点 */
@@ -310,8 +297,9 @@ a {
 }
 .newsImg {
   overflow: hidden;
+  height:237px;
 }
-.newsImg > a > img {
+.newsImg > span > img {
   width: 100%;
 }
 .news > ul > li {
@@ -330,20 +318,21 @@ a {
   margin-top: 8px;
   margin-bottom: 10px;
 }
-.detailtext > a > .ptitle {
+.detailtext > span > .ptitle {
   font-size: 18px;
   color: #d4ba92;
-  font-style: oblique;
+  /* font-style: oblique; */
   margin-right: 5px;
 }
 
-.detailtext > a > .psubtitle {
+.detailtext > span > .psubtitle {
   /*文字超出显示...*/
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  color:dimgrey;
 
   width: 250px;
   margin-top: 6px;
@@ -360,15 +349,15 @@ a {
   border-radius: 50px;
   outline: 0;
   top: 50%;
-  margin-top: -25px;
+  margin-top: -20px;
   left: 288px;
   /* border-radius: 50%; */
 }
 .detailbtn > .mint-button {
   position: relative;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   /* background-image: url("../../../public/image/home/collect.png"); */
   /* background-repeat:no-repeat; */
   /* background-position:center; */
@@ -376,8 +365,8 @@ a {
 .btnimg {
   position: absolute;
   display: block;
-  left: 9px;
-  top: 8px;
+  left: 5px;
+  top: 4px;
 }
 </style>
 

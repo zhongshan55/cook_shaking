@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="bpic">
-            <img :src="'http://127.0.0.1:3000/'+list.pic">
+            <img :src="lg_img">
         </div>
         <div class="tdiv">
             <p class="title">{{list.title}}</p>
@@ -55,10 +55,10 @@
             <span @click="comment"> 32</span>
         </div>
         <div class="comment">
-            <input id="txt" type="text" placeholder="喜欢评论的人，做饭一定超好吃~">
-            <input id="btn" type="button" value="发送">
+            <input id="txt" type="text" v-model="content"  placeholder="喜欢评论的人，做饭一定超好吃~">
+            <input id="btn" type="button" value="发送" @click="send1">
         </div>
-        <div id="full"></div>
+        <!-- <div id="full"></div> -->
     </div>
 </template>
 <script>
@@ -69,7 +69,9 @@ export default {
             list:{},
             list_m:[],
             list_s:[],
-            list_c:[]
+            list_c:[],
+            lg_img:"",
+            content:""
         }
     },
     props:["cid"],
@@ -96,6 +98,7 @@ export default {
             this.axios.get(url1,{params:obj}).then(res=>{
                 this.list=res.data.data;
                 console.log(this.list)
+                this.lg_img='http://127.0.0.1:3000/'+this.list.pic
             })
             var url2="detail/material";
             this.axios.get(url2,{params:obj}).then(res=>{
@@ -125,7 +128,7 @@ export default {
            }else{
                span3.className="";
                shoucang.className="" ;
-           }
+           } 
         },
         collect2(){
             var  span3=document.getElementById("span3");
@@ -142,6 +145,25 @@ export default {
             $(".comment").show();
             this.fun1()
         },
+        send1(e){
+            var uname=e.target.dataset.uname;
+                var cid = e.target.dataset.cid;
+                var content=this.content;
+                console.log(this.content);
+                var url="detail/addcomment";
+                var obj={uname,cid,content};
+                // var that=this;
+                this.axios.get(url,{params:obj}).then(res=>{
+                    if(res.data.code==-1){
+                        this.$message("消息","请先登录再评论").then(res=>{
+                            this.$router.push("/Login");
+                            return;
+                        });
+                    }else if(res.data.code==1){
+                        this.$toast("评论成功")
+                    }
+                })
+        },
         fun1(){
             $('body').click(function(e){                
                 $('.comment').hide(); 
@@ -152,17 +174,25 @@ export default {
             $('.comment').click(function(e){
                 e.stopPropagation();
             })
-            $('#txt').focus(function(){
-                var url="detail/addcomment";
-                this.axios.get(url).then(res=>{
-                    if(res.data.code==-1){
-                        this.$messagebox("消息","请先登录再评论").then(res=>{
-                            this.$router.push("/Login");
-                            return;
-                        })
-                    }
-                })
-            })
+            // $('#btn').click(function(e){
+            //     var uname=e.target.dataset.uname;
+            //     var cid = e.target.dataset.cid;
+            //     var content=this.content;
+            //     console.log(this.content);
+            //     var url="detail/addcomment";
+            //     var obj={uname,cid,content};
+                
+            //     that.axios.get(url,{params:obj}).then(res=>{
+            //         if(res.data.code==-1){
+            //             this.$message("消息","请先登录再评论").then(res=>{
+            //                 this.$router.push("/Login");
+            //                 return;
+            //             });
+            //         }else if(res.data.code==1){
+            //             this.$toast("评论成功")
+            //         }
+            //     })
+            // })
         }
     },
     created() {
@@ -172,11 +202,6 @@ export default {
     mounted() {
       this.fun()  
     },
-    watch:{
-        cid(){
-            this.loadMore()
-        }
-    }
 
 }
 
