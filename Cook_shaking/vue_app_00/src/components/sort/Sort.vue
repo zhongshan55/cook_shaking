@@ -27,7 +27,7 @@
 </template>
 
 <script>
-// 引入
+// 引入d
 import Cooklist from "./Cooklist";
 export default {
   data(){
@@ -35,9 +35,18 @@ export default {
       selected:"1"
     }
   },
+  props:["fid"],
+  methods:{
+    load(){
+      console.log(this.fid)
+    }
+  },
   components:{
     // 注册
     "cooklist":Cooklist,
+  },
+  created(){
+    this.load();
   }
 }
 </script>

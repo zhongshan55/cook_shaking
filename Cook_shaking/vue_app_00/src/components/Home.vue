@@ -6,9 +6,10 @@
             <!-- 轮播图 -->
               <carousel/>
               <!-- 首页信息 -->
+                         <!-- 定义 -->
              <indexdetail  @uptoYue="changeTabbar($event)"/>
           </mt-tab-container-item>
-          <mt-tab-container-item id="sort">
+          <mt-tab-container-item id="sort" @getslot="changeSlot($event)" :fid="fid">
               <sort></sort>
           </mt-tab-container-item>
           <mt-tab-container-item id="shopping_cart">
@@ -97,7 +98,8 @@ export default {
         {isSelect:false},
         {isSelect:false},
         {isSelect:false}
-      ]
+      ],
+      fid:"1"
     }
   },
   components:{
@@ -122,6 +124,10 @@ export default {
      },
      changeTabbar(active){
        this.active = active;
+     },
+     changeSlot(fid){
+       this.fid=fid;
+
      }
   }
 }

@@ -11,31 +11,31 @@
 
     <!-- 菜系分类 -->
     <div class="navbar">
-      <div class="cake" @click="uptoYue">
+      <div class="cake" >
         <!-- <router-link></router-link> -->
         <span>
-          <img slot="icon" src="../../../public/image/home/cook01.png" alt />
+          <img slot="icon" src="../../../public/image/home/cook01.png" alt @click="go_sort" :data-fid="1"/>
           <p>粤菜</p>
         </span>
         <!-- <span>粤菜</span> -->
       </div>
-      <div class="cake">
+      <div class="cake" >
         <span>
-          <img slot="icon" src="../../../public/image/home/cook02.png" alt />
+          <img slot="icon" src="../../../public/image/home/cook02.png" alt  @click="go_sort" :data-fid="2" />
           <p>川菜</p>
         </span>
         <!-- <span>川菜</span> -->
       </div>
       <div class="cake">
         <span>
-          <img slot="icon" src="../../../public/image/home/cook03.png" alt />
+          <img slot="icon" src="../../../public/image/home/cook03.png" alt  @click="go_sort" :data-fid="3"/>
           <p>湘菜</p>
         </span>
         <!-- <span>湘菜</span> -->
       </div>
       <div class="cake">
         <span>
-          <img slot="icon" src="../../../public/image/home/cook04.png" alt />
+          <img slot="icon" src="../../../public/image/home/cook04.png" alt  @click="go_sort" :data-fid="4"/>
           <p>豫菜</p>
         </span>
         <!-- <span>浙菜</span> -->
@@ -110,12 +110,15 @@ export default {
     go_detail(e){
       var cid=e.target.dataset.cid;
       this.$router.push(`/detail/${cid}`) 
-      console.log(cid)
+      // console.log(cid)
     },
     //跳转到粤菜列表
-    uptoYue() {
-    //   this.$router.push("Yuecai.vue");
+    go_sort(e) {
+      var fid=e.target.dataset.fid;
+      console.log(fid);
+      //  this.$router.push(`sort/${fid}`);
       this.$emit('uptoYue','sort');
+      this.$emit('changeSlot',fid)
     },
     addCollect(e) {
       //添加收藏夹
@@ -153,7 +156,7 @@ export default {
       var url = "home";
       this.axios.get(url).then(result => {
         this.list = result.data.data; //将数据传给list
-        console.log(this.list);
+        // console.log(this.list);
       });
     }
 
