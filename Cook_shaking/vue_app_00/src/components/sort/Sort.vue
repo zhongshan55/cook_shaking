@@ -35,10 +35,10 @@ export default {
       selected:"1"
     }
   },
-  props:["fid"],
+  props:["cooklist_id"],
   methods:{
     load(){
-      console.log(this.fid)
+      // console.log("cooklist_id"+this.cooklist_id);
     }
   },
   components:{
@@ -47,6 +47,14 @@ export default {
   },
   created(){
     this.load();
+  },
+  watch:{
+    //监听cooklist_id值,改变是重新给selected赋值(切换面板)
+    cooklist_id(){
+       console.log("cooklist_id"+this.cooklist_id);
+      this.selected=this.cooklist_id
+      console.log("selected"+this.selected)
+    }
   }
 }
 </script>

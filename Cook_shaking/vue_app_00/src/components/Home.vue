@@ -6,11 +6,11 @@
             <!-- 轮播图 -->
               <carousel/>
               <!-- 首页信息 -->
-                         <!-- 定义 -->
-             <indexdetail  @uptoYue="changeTabbar($event)"/>
+                         <!-- 通过getIndex事件获取子组件"indexdetail"传递的值-->
+             <indexdetail  @getIndex="changeTabbar($event)"/>
           </mt-tab-container-item>
-          <mt-tab-container-item id="sort" @getslot="changeSlot($event)" :fid="fid">
-              <sort></sort>
+          <mt-tab-container-item id="sort">
+              <sort  :cooklist_id="cooklist_id"></sort>
           </mt-tab-container-item>
           <mt-tab-container-item id="shopping_cart">
                   <shake/>
@@ -99,7 +99,7 @@ export default {
         {isSelect:false},
         {isSelect:false}
       ],
-      fid:"1"
+      cooklist_id:"1"
     }
   },
   components:{
@@ -122,13 +122,13 @@ export default {
        }
 
      },
-     changeTabbar(active){
-       this.active = active;
+    //  定义事件"getIndex".获取子组件"indexdetail"传递的值
+     changeTabbar({sort,cooklist_id}){  
+       this.active = sort;
+       //向子组件sort传值
+       this.cooklist_id=cooklist_id;
+      // console.log("getsoltdeid:"+this.cooklist_id)
      },
-     changeSlot(fid){
-       this.fid=fid;
-
-     }
   }
 }
 </script>
