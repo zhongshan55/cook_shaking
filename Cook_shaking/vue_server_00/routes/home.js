@@ -25,7 +25,7 @@ router.get("/",(req,res)=>{
     }
 
     var uid = req.session.uid;
-    console.log(uid);
+    console.log("uid:"+uid);
     // 当未登录时,查询出菜谱列表
     if(uid==undefined){
      var sql ="SELECT * FROM cook_index_detail";
@@ -42,7 +42,7 @@ router.get("/",(req,res)=>{
            var sql="SELECT cid from cook_collect WHERE uid=?";
            pool.query(sql,[uid],(err,result)=>{
             if(err) throw err;
-             if(result.length>0){
+            //  if(result.length>0){
               var ids=result;
             //   console.log(ids);
               for(var i=0;i<list.length;i++){  //循环遍历首页的每个菜谱
@@ -53,9 +53,9 @@ router.get("/",(req,res)=>{
                       }
                     }
                 }
-                console.log(list);
+                // console.log(list);
                res.send({code:2,msg:"被当前用户收藏的菜谱的收藏状态为1",data:list})
-                }
+                // }
            })
          
      }

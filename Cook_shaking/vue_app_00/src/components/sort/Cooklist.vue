@@ -2,7 +2,9 @@
   <div class="product">
     <div class="goods_item" v-for="(item,i) of list" :key="i">
       <!-- 商品图片 -->
+      <div class="goods_img">
       <img :src="'http://127.0.0.1:3000/'+item.pic">
+      </div>
       <!-- 商品介绍上部分 -->
       <div class="goods_top">
         <!-- 左边标题和副标题 -->
@@ -21,7 +23,13 @@
           :data-pic="item.pic"
           :data-href="item.href"
           >
-            <img src="../../../public/image/collect/collect.png">
+                 <div v-if="item.collect_status==1">
+                    <img class="btnimg" src="http://127.0.0.1:3000/collect_active.png" />
+                  </div>
+                  <!-- 已收藏图标 -->
+                  <div v-else>
+                    <img class="btnimg" src="http://127.0.0.1:3000/collect.png" />
+                  </div>
           </mt-button>
         </div>
       </div>
@@ -39,67 +47,74 @@ export default {
       pno:0     //页面(第几页)
     }
   },
+  props:["fid"],
   methods:{
     loadMore(){
       //功能:获取商品分页数据
       // 1.发送请求
-      var url="sort/yuecai";
+      var url="sort/sichuan";
       //当前页码1
-      this.pno++;
+      // this.pno++;
       //创建参数对象
-      var obj = {pno:this.pno};
+      // var obj = {pno:this.pno};
+      var obj={fid:this.fid};
+      // console.log(this.fid);
+
       //发送ajax请求获取当前页内容
-      this.axios.get(url,{params:obj}).then(res=>{
+      this.axios.get(url,{params:obj}
+      // ,{params:obj}
+      ).then(res=>{
         // 2.获取服务器返回结果
         //console.log(res.data.data);
         // 3.将返回结果保存
         // var row = 1页.concat(2页)
         //this.list = res.data.data;
         // 4.拼接多页内容
-        var rows = this.list.concat(res.data); 
+        var rows = res.data.data; 
         // 5.将结果赋值list
         this.list = rows;
         //console.log(this.list);
       })
     },
-    addCollect(e){ //添加收藏夹
-      //获取数据
-      //console.log(111);
-      var fid=e.target.dataset.fid;
-      //console.log(fid);
-      var cid=e.target.dataset.cid;
-      //console.log(cid)
-      var title=e.target.dataset.title;
-      var subtitle=e.target.dataset.subtitle;
-      var detail=e.target.dataset.detail;
-      var pic=e.target.dataset.pic;
-      var href=e.target.dataset.href;
-      //请求地址
-      var url="addcollect";
-      //请求参数
-      var obj={fid,cid,title,subtitle,pic,href,detail}
-      //获取返回结果
-      this.axios.get(url,{params:obj}).then(res=>{
-        if(res.data.code==-1){
-          this.$messagebox("消息","请先登录再收藏")
-            .then(res=>{
-            this.$router.push("/Login");
-             return;
-           })
-         }else{
-           this.$toast("添加成功")
-        }
-        if(res.data.code==-2){
-           this.$messagebox("你好呀！！！","已收藏过了")
-         }
-      })
-    },
+     addCollect(e){              //添加收藏夹
+            //获取数据
+            var fid=e.target.dataset.fid;
+            var cid=e.target.dataset.cid;
+            // console.log(cid)
+            var title=e.target.dataset.title;
+            var subtitle=e.target.dataset.subtitle;
+            var detail=e.target.dataset.detail;
+            var pic=e.target.dataset.pic;
+            var href=e.target.dataset.href;
+            
+            //请求地址
+            var url="add/addcollect";
+            //请求参数
+            var obj={fid,cid,title,subtitle,pic,href,detail}
+            // 获取返回结果
+            this.axios.get(url,{params:obj}).then(res=>{
+                if(res.data.code==-1){
+                    this.$messagebox("消息","请先登录再收藏")
+                    .then(res=>{
+                        this.$router.push("/Login");
+                        return;
+                    })
+                }else if(res.data.code==1) {
+                    this.$toast("添加收藏成功")
+                    
+                }else if(res.data.code==2) {
+                    this.$toast("取消收藏成功")
+                }
+            this.loadMore();
+            })
+        },
   },
   created(){
     this.loadMore();
   }
 }
 </script>
+
 <style scoped>
 *{
   padding:0;
@@ -151,9 +166,21 @@ ul li a{
   padding: 5px;
 }
 /* 3.修饰商品中图片样式 */
-.goods_item>img{
+.goods_img{
+  height: 120px;
   width: 100%;
-  padding-bottom:10px;
+  text-align:center;
+  line-height: 120px;
+  overflow: hidden;
+  border-radius: 5%;
+  /* border:1px solid #f8f8f8; */
+  margin-bottom: 5px;
+  background: #000;
+}
+.goods_item>.goods_img>img{
+  width: 100%;
+  /* padding-bottom:10px; */
+  vertical-align: middle;
 }
 /* 4.商品介绍上部分 */
 .goods_top{
@@ -165,15 +192,18 @@ ul li a{
   width: 60%;
 }
 .goods_top .left h4{
-  font-size:20px;
+  font-size:18px;
   font-weight: normal;
   color:#d4ba92;
-  font-style: oblique;
+  /* font-style: oblique; */
+   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space:nowrap;
 }
 /* 副标题样式 */
 .goods_top .left .sub_title{
   margin:5px 0;
-  font-size: 16px;
+  font-size: 14px;
   color:#747474;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -186,8 +216,8 @@ ul li a{
   display:-webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  font-size: 14px;
-  color:#000;
+  font-size: 12px;
+  color:rgb(71, 69, 69);
   line-height: 18px;
   margin-bottom:10px;
 }

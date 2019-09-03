@@ -39,15 +39,16 @@ export default {
       pno:0     //页面(第几页)
     }
   },
+  props:["fid"],
   methods:{
     loadMore(){
       //功能:获取商品分页数据
       // 1.发送请求
-      var url="sort/sichuan";
+      var url="sort/yuecai";
       //当前页码1
       this.pno++;
       //创建参数对象
-      var obj = {pno:this.pno};
+      // var obj = {pno:this.pno};
       //发送ajax请求获取当前页内容
       this.axios.get(url,{params:obj}).then(res=>{
         // 2.获取服务器返回结果
@@ -62,44 +63,44 @@ export default {
         //console.log(this.list);
       })
     },
-     addCollect(e){              //添加收藏夹
-            //获取数据
-            var fid=e.target.dataset.fid;
-            var cid=e.target.dataset.cid;
-            // console.log(cid)
-            var title=e.target.dataset.title;
-            var subtitle=e.target.dataset.subtitle;
-            var detail=e.target.dataset.detail;
-            var pic=e.target.dataset.pic;
-            var href=e.target.dataset.href;
-            
-            //请求地址
-            var url="add/addcollect";
-            //请求参数
-            var obj={fid,cid,title,subtitle,pic,href,detail}
-            // 获取返回结果
-            this.axios.get(url,{params:obj}).then(res=>{
-                if(res.data.code==-1){
-                    this.$messagebox("消息","请先登录再收藏")
-                    .then(res=>{
-                        this.$router.push("/Login");
-                        return;
-                    })
-                }else if(res.data.code==1) {
-                    this.$toast("添加成功")
-                    
-                }else if(res.data.code==2) {
-                    this.$toast("删除成功")
-                }
-            })
-        },
+    addCollect(e){ //添加收藏夹
+      //获取数据
+      //console.log(111);
+      var fid=e.target.dataset.fid;
+      //console.log(fid);
+      var cid=e.target.dataset.cid;
+      //console.log(cid)
+      var title=e.target.dataset.title;
+      var subtitle=e.target.dataset.subtitle;
+      var detail=e.target.dataset.detail;
+      var pic=e.target.dataset.pic;
+      var href=e.target.dataset.href;
+      //请求地址
+      var url="addcollect";
+      //请求参数
+      var obj={fid,cid,title,subtitle,pic,href,detail}
+      //获取返回结果
+      this.axios.get(url,{params:obj}).then(res=>{
+        if(res.data.code==-1){
+          this.$messagebox("消息","请先登录再收藏")
+            .then(res=>{
+            this.$router.push("/Login");
+             return;
+           })
+         }else{
+           this.$toast("添加成功")
+        }
+        if(res.data.code==-2){
+           this.$messagebox("你好呀！！！","已收藏过了")
+         }
+      })
+    },
   },
   created(){
     this.loadMore();
   }
 }
 </script>
-
 <style scoped>
 *{
   padding:0;
@@ -168,7 +169,7 @@ ul li a{
   font-size:20px;
   font-weight: normal;
   color:#d4ba92;
-  font-style: oblique;
+  /* font-style: oblique; */
 }
 /* 副标题样式 */
 .goods_top .left .sub_title{
