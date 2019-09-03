@@ -58,5 +58,17 @@ router.get("/addcomment", (req, res) => {
         res.send({ code: -1, msg: "未登录" })
         return;
     }
+    var uname = req.query.uname;
+    var cid = req.query.cid;
+    var content = req.query.content;
+
+    // var sql_uid = "select uid from cook_user where cid=${cid}";
+    var sql = `insert into cook_discuss values(null,1,${uname},${cid},${content})`
+    pool.query(sql, (err, result) => { 
+        if (err) throw err;
+        if (result.affectedRows > 0) {
+            res.send({ code: 1, msg: "评论成功" })
+        }    
+    })
 })
 module.exports = router;
