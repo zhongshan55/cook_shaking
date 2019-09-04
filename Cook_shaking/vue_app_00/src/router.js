@@ -26,7 +26,7 @@ export default new Router({
     {path:'/Collect',component:Collect},
     // {path:'/IndexDetail',component:IndexDetail},
     // {path:'/Carousel',component:Carousel}
-    {path:'/Sort/:ifd',component:Sort},
+    {path:'/Sort/:fid',component:Sort},
     {path:'/User',component:User},
     {path:'/Detail/:cid',component:Detail,props:true},
 

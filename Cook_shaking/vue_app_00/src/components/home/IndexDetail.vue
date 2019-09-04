@@ -11,31 +11,31 @@
 
     <!-- 菜系分类 -->
     <div class="navbar">
-      <div class="cake" @click="uptoYue">
+      <div class="cake" >
         <!-- <router-link></router-link> -->
         <span>
-          <img slot="icon" src="../../../public/image/home/cook01.png" alt />
+          <img slot="icon" src="../../../public/image/home/cook01.png" alt @click="go_sort" :data-cooklist_id="1"/>
           <p>粤菜</p>
         </span>
         <!-- <span>粤菜</span> -->
       </div>
-      <div class="cake">
+      <div class="cake" >
         <span>
-          <img slot="icon" src="../../../public/image/home/cook02.png" alt />
+          <img slot="icon" src="../../../public/image/home/cook02.png" alt  @click="go_sort" :data-cooklist_id="2" />
           <p>川菜</p>
         </span>
         <!-- <span>川菜</span> -->
       </div>
       <div class="cake">
         <span>
-          <img slot="icon" src="../../../public/image/home/cook03.png" alt />
+          <img slot="icon" src="../../../public/image/home/cook03.png" alt  @click="go_sort" :data-cooklist_id="3"/>
           <p>湘菜</p>
         </span>
         <!-- <span>湘菜</span> -->
       </div>
       <div class="cake">
         <span>
-          <img slot="icon" src="../../../public/image/home/cook04.png" alt />
+          <img slot="icon" src="../../../public/image/home/cook04.png" alt  @click="go_sort" :data-cooklist_id="4"/>
           <p>豫菜</p>
         </span>
         <!-- <span>浙菜</span> -->
@@ -110,12 +110,16 @@ export default {
     go_detail(e){
       var cid=e.target.dataset.cid;
       this.$router.push(`/detail/${cid}`) 
-      console.log(cid)
+      // console.log(cid)
     },
     //跳转到粤菜列表
-    uptoYue() {
-    //   this.$router.push("Yuecai.vue");
-      this.$emit('uptoYue','sort');
+    go_sort(e) {
+      //获取选中的菜谱类型面板cooklist_id ,用于对应sort组件<mt-tab-container-item>的id
+      var cooklist_id=e.target.dataset.cooklist_id;
+      //$emit() :父组件绑定自定义的"getIndex"事件,子组件通过$emit()向父组件进行传值
+      //向父组件传递sort    作用:底部导航显示"分类"模块
+      //向父组件传递cooklist_id  作用:"分类"模块显示对应的面板id的菜谱类型
+      this.$emit('getIndex',{sort:'sort',cooklist_id:cooklist_id});
     },
     addCollect(e) {
       //添加收藏夹
@@ -153,7 +157,7 @@ export default {
       var url = "home";
       this.axios.get(url).then(result => {
         this.list = result.data.data; //将数据传给list
-        console.log(this.list);
+        // console.log(this.list);
       });
     }
 

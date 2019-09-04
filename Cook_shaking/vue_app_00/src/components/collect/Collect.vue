@@ -90,7 +90,7 @@ export default {
         // 3.将返回结果保存
         // var row = 1页.concat(2页)
         this.list = res.data;
-        console.log(this.list)
+        // console.log(this.list)
         // 4.拼接多页内容
         //var rows = this.list.concat(res.data); 
         // 5.将结果赋值list

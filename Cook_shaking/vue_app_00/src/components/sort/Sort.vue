@@ -27,7 +27,7 @@
 </template>
 
 <script>
-// 引入
+// 引入d
 import Cooklist from "./Cooklist";
 export default {
   data(){
@@ -35,9 +35,26 @@ export default {
       selected:"1"
     }
   },
+  props:["cooklist_id"],
+  methods:{
+    load(){
+      // console.log("cooklist_id"+this.cooklist_id);
+    }
+  },
   components:{
     // 注册
     "cooklist":Cooklist,
+  },
+  created(){
+    this.load();
+  },
+  watch:{
+    //监听cooklist_id值,改变是重新给selected赋值(切换面板)
+    cooklist_id(){
+       console.log("cooklist_id"+this.cooklist_id);
+      this.selected=this.cooklist_id
+      console.log("selected"+this.selected)
+    }
   }
 }
 </script>
