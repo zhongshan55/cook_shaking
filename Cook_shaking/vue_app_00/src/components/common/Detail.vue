@@ -12,9 +12,26 @@
         <div class="tdiv">
             <p class="title">{{list.title}}</p>
             <div class="subtitle">
-                <span>粤菜</span>&nbsp;&nbsp;
+                <span>粤菜</span>
                 <span>菜</span>
-                <span id="span3"  @click="collect1">收藏</span>
+                <span v-if="collected==1" class="st_collect active"  @click="collect" 
+                :data-fid="list.fid" 
+                :data-cid="list.cid" 
+                :data-title="list.title"
+                :data-subtitle="list.subtitle"
+                :data-detail="list.detail"
+                :data-pic="list.pic"
+                :data-href="list.href"
+                >收藏</span>
+                <span v-else class="st_collect"  @click="collect" 
+                :data-fid="list.fid" 
+                :data-cid="list.cid" 
+                :data-title="list.title"
+                :data-subtitle="list.subtitle"
+                :data-detail="list.detail"
+                :data-pic="list.pic"
+                :data-href="list.href"
+                >收藏</span>
                 <p>{{list.detail}}</p>
             </div>
         </div>
@@ -51,12 +68,30 @@
             </div>
         </div>
         <div class="dibu">
-            <span id="shoucang" @click="collect2">收藏</span>
+            <span @click="collect" 
+                :data-fid="list.fid" 
+                :data-cid="list.cid" 
+                :data-title="list.title"
+                :data-subtitle="list.subtitle"
+                :data-detail="list.detail"
+                :data-pic="list.pic"
+                :data-href="list.href" v-if="collected==1" class="active">收藏</span>
+            <span @click="collect" 
+                :data-fid="list.fid" 
+                :data-cid="list.cid" 
+                :data-title="list.title"
+                :data-subtitle="list.subtitle"
+                :data-detail="list.detail"
+                :data-pic="list.pic"
+                :data-href="list.href"
+            v-else class="shoucang">收藏</span>    
             <span @click="comment"> 32</span>
         </div>
         <div class="comment">
             <input id="txt" type="text" v-model="content"  placeholder="喜欢评论的人，做饭一定超好吃~">
-            <input id="btn" type="button" value="发送" @click="send1">
+            <input id="btn" type="button" value="发送" @click="send1"
+            :data-cid="list.cid"
+            >
         </div>
         <!-- <div id="full"></div> -->
     </div>
@@ -71,24 +106,25 @@ export default {
             list_s:[],
             list_c:[],
             lg_img:"",
-            content:""
+            content:"",
+            collected:0
         }
     },
     props:["cid"],
     methods:{
         fun(){
-            window.onscroll=function(){
-                var scrollTop=document.documentElement.scrollTop;
-                var top=document.getElementById("top");
-                // var bpic=document.getElementsByClassName("bpic")[0];
-                // console.log(bpic);
-                // console.log(bpic.style.height)
-                if(scrollTop>=430){
-                    top.className="show";
-                }else{
-                    top.className="";
-                }    
-            }
+            // window.onscroll=function(){
+            //     var scrollTop=document.documentElement.scrollTop;
+            //     var top=document.getElementById("top");
+            //     // var bpic=document.getElementsByClassName("bpic")[0];
+            //     // console.log(bpic);
+            //     // console.log(bpic.style.height)
+            //     if(scrollTop>=430){
+            //         top.className="show";
+            //     }else{
+            //         top.className="";
+            //     }    
+            // }
         }
         ,
         loadMore(){
@@ -97,7 +133,7 @@ export default {
             var obj={cid:this.cid}
             this.axios.get(url1,{params:obj}).then(res=>{
                 this.list=res.data.data;
-                console.log(this.list)
+                console.log("1"+this.list)
                 this.lg_img='http://127.0.0.1:3000/'+this.list.pic
             })
             var url2="detail/material";
@@ -115,52 +151,86 @@ export default {
                 this.list_c=res.data.data_c;
                 console.log(this.list_c)
             })
+            var url5="detail/collect";
+            var span3=document.getElementById("span3");
+            var shoucang=document.getElementById("shoucang");
+            this.axios.get(url5,{params:obj}).then(res=>{
+                if(res.data.code==1){
+                    this.collected=1;
+                    
+                }else if(res.data.code==-1){
+                    this.collected=-1
+                    
+                }
+                console.log("购物车返回"+res.data.msg)
+            })
         },
         return_list(){
             history.back(); 
         },
-        collect1(){
-           var  span3=document.getElementById("span3");
-           var shoucang=document.getElementById("shoucang");
-           if(span3.className==""){
-                span3.className="active";
-                shoucang.className="active";
-           }else{
-               span3.className="";
-               shoucang.className="" ;
-           } 
-        },
-        collect2(){
+        collect(e){
             var  span3=document.getElementById("span3");
             var shoucang=document.getElementById("shoucang");
-            if(shoucang.className==""){
-                span3.className="active";
-                shoucang.className="active";
-            }else{
-               span3.className="";
-               shoucang.className="";
-            }
+            //添加收藏夹
+            //获取数据
+            var fid = e.target.dataset.fid;
+            
+            var cid = e.target.dataset.cid;
+            // console.log(cid)
+            var title = e.target.dataset.title;
+            // console.log("1."+title)
+            var subtitle = e.target.dataset.subtitle;
+            // console.log("2."+subtitle)
+            var detail = e.target.dataset.detail;
+            // console.log("3."+detail)
+            var pic = e.target.dataset.pic;
+            // console.log("4."+pic)
+            var href = e.target.dataset.href;
+            // console.log(href)
+
+            //请求地址
+            var url = "add/addcollect";
+            //请求参数
+            var obj = { fid, cid, title, subtitle, pic, href, detail };
+            // 获取返回结果
+            this.axios.get(url, { params: obj }).then(res => {
+                if (res.data.code == -1) {
+                this.$messagebox("消息", "请先登录再收藏").then(res => {
+                    this.$router.push("/Login");
+                    return;
+                });
+                } else if (res.data.code == 1) {
+                    this.$toast("添加收藏成功");
+                    
+                
+                } else if (res.data.code == 2) {
+                    this.$toast("删除收藏成功");
+                    
+                }
+                this.loadMore();
+            });
         },
         comment(){
             $(".comment").show();
             this.fun1()
         },
         send1(e){
-            var uname=e.target.dataset.uname;
+                
                 var cid = e.target.dataset.cid;
                 var content=this.content;
                 console.log(this.content);
                 var url="detail/addcomment";
-                var obj={uname,cid,content};
-                // var that=this;
+                var obj={cid,content};
+                var that=this;
                 this.axios.get(url,{params:obj}).then(res=>{
                     if(res.data.code==-1){
-                        this.$message("消息","请先登录再评论").then(res=>{
+                        this.$messagebox("消息","请先登录再评论").then(res=>{
                             this.$router.push("/Login");
                             return;
                         });
                     }else if(res.data.code==1){
                         this.$toast("评论成功")
+                        this.loadMore();
                     }
                 })
         },
@@ -174,33 +244,15 @@ export default {
             $('.comment').click(function(e){
                 e.stopPropagation();
             })
-            // $('#btn').click(function(e){
-            //     var uname=e.target.dataset.uname;
-            //     var cid = e.target.dataset.cid;
-            //     var content=this.content;
-            //     console.log(this.content);
-            //     var url="detail/addcomment";
-            //     var obj={uname,cid,content};
-                
-            //     that.axios.get(url,{params:obj}).then(res=>{
-            //         if(res.data.code==-1){
-            //             this.$message("消息","请先登录再评论").then(res=>{
-            //                 this.$router.push("/Login");
-            //                 return;
-            //             });
-            //         }else if(res.data.code==1){
-            //             this.$toast("评论成功")
-            //         }
-            //     })
-            // })
+            
         }
     },
     created() {
         this.loadMore();
+        this.fun()  
     
     },
     mounted() {
-      this.fun()  
     },
 
 }
@@ -256,23 +308,25 @@ export default {
     .subtitle{
         position: relative;
     }
-    .subtitle #span3{
-        position: absolute;
-        right:15px;
-        top:0;
-    }
+    /* .subtitle>span{
+        margin-right: 5px;
+    } */
+    
     .subtitle p{
         text-indent: 32px;
     }
-    #span3{
+    .st_collect{
         display: block;
+        position: absolute;
+        right:15px;
+        top:0;
         background: url("../../../public/image/common/collect1.png") no-repeat center left;
         background-size:18px 18px;
         height: 18px;
         padding-left: 20px;
         color:#dbdbdb;
     }
-    #span3.active{
+    .st_collect.active{
         background: url("../../../public/image/common/collect.png") no-repeat center left;
         background-size:18px 18px;
         color:#efce4a;
@@ -376,18 +430,19 @@ export default {
         margin-left: 10px;
         margin-right: 10px;
     }
-    #shoucang{
+    .shoucang{
         background: url("../../../public/image/common/shoucang.png") no-repeat center left;
         background-size: 18px 18px;
         padding-left: 20px;
         color:#dbdbdb;
     }
-    #shoucang.active{
+    .active{
         background: url("../../../public/image/common/shoucang1.png") no-repeat center left;
         background-size: 18px 18px;
+        padding-left: 20px;
         color:#f66;
     }
-    #shoucang+span{
+    div>span:last-child{
         background: url("../../../public/image/common/pinglun.png") no-repeat center left;
         background-size:18px 18px;
         padding-left: 20px;
