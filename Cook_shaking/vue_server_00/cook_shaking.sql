@@ -171,8 +171,8 @@ INSERT INTO cook_collect VALUES(null,02,02,02,"酸菜鱼","鱼肉鲜嫩，酸辣
 CREATE TABLE cook_discuss(
     id		INT PRIMARY KEY AUTO_INCREMENT,
     uid		INT,
+    uname   VARCHAR(50),	
     cid		INT,
-    date	VARCHAR(128) default "2019-8-28 19:59:58" ,
     content	VARCHAR(128)
 );
-INSERT INTO cook_discuss(id,uid,cid,content) VALUES(null,1,1,"这家常菜做得真好,步骤很详细,图片也拍得很诱人")
+INSERT INTO cook_discuss VALUES(null,1,"tom",1,"这家常菜做得真好,步骤很详细,图片也拍得很诱人")

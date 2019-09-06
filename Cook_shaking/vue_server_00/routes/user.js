@@ -25,9 +25,11 @@ router.get('/login',(req,res)=>{
         }else{
              // //登录成功
             // 1.登录成功的凭据保存session  
-            req.session.uid=result[0].uid;
-            // console.log(req.session);//打印查看session
-            res.send({code:1,msg:"登录成功"})
+            req.session.uid = result[0].uid;
+            req.session.uname = result[0].user_name;
+            
+            console.log(req.session);//打印查看session
+            res.send({code:1,msg:"登录成功",result:result[0]})
         }
    })
 
