@@ -6,14 +6,13 @@
                 <img src="../../../public/image/common/return.png" alt="">
             </div>
         </div>
-        <div class="bpic">
+        <div class="bpic" id="bpic">
             <img :src="lg_img">
         </div>
         <div class="tdiv">
             <p class="title">{{list.title}}</p>
             <div class="subtitle">
-                <span>粤菜</span>
-                <span>菜</span>
+                <span>{{list_f.fname}}</span>
                 <span v-if="collected==1" class="st_collect active"  @click="collect" 
                 :data-fid="list.fid" 
                 :data-cid="list.cid" 
@@ -36,7 +35,7 @@
             </div>
         </div>
         <div class="yl">
-            <p style="font-size:14px;font-weight:bold">
+            <p style="font-size:14px;font-weight:bold;color:#333">
                 用料
             </p>
             <ul v-for="(item,i) of list_m" :key=i>
@@ -45,7 +44,7 @@
         </div>
         <div class="step">
             <div v-for="(item,i) of list_s" :key=i>
-                <p>步骤{{item.step_order}}</p>
+                <p style="color:#333">步骤{{item.step_order}}</p>
                 <div class="pic">
                     <img :src="'http://127.0.0.1:3000/'+item.step_pic" >
                 </div>
@@ -53,15 +52,14 @@
             </div>
         </div>
         <div class="commentlist">
-            <p>评论</p>
-            <div v-for="(item,i) of list_c" :key=i>
+            <p style="color:#666">评论({{list_c.length}})</p>
+            <div id=commentarea v-for="(item,i) of list_c" :key=i>
                 <div class="touxiang">
                     <img src="../../../public/image/common/touxiang.png" alt="">
                 </div>
-                <div>
+                <div id="commentcontent">
                     <p class="uname">
                         <span>{{item.uname}}</span>
-                        <span>{{item.date}}</span>
                     </p>
                     <p class="ucom" >{{item.content}}</p>
                 </div>
@@ -85,7 +83,7 @@
                 :data-pic="list.pic"
                 :data-href="list.href"
             v-else class="shoucang">收藏</span>    
-            <span @click="comment"> 32</span>
+            <span @click="comment">{{list_c.length}}</span>
         </div>
         <div class="comment">
             <input id="txt" type="text" v-model="content"  placeholder="喜欢评论的人，做饭一定超好吃~">
@@ -105,6 +103,7 @@ export default {
             list_m:[],
             list_s:[],
             list_c:[],
+            list_f:[],
             lg_img:"",
             content:"",
             collected:0
@@ -112,29 +111,29 @@ export default {
     },
     props:["cid"],
     methods:{
-        fun(){
-            // window.onscroll=function(){
-            //     var scrollTop=document.documentElement.scrollTop;
-            //     var top=document.getElementById("top");
-            //     // var bpic=document.getElementsByClassName("bpic")[0];
-            //     // console.log(bpic);
-            //     // console.log(bpic.style.height)
-            //     if(scrollTop>=430){
-            //         top.className="show";
-            //     }else{
-            //         top.className="";
-            //     }    
-            // }
-        }
-        ,
+        handleScroll(){
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+            // console.log(scrollTop)
+            var offsetHeight=document.querySelector('#bpic').offsetHeight
+            // console.log(offsetHeight)
+            var top=document.getElementById("top");
+            scrollTop>offsetHeight?top.className="show":top.className=""
+            
+        },
         loadMore(){
             var url1="detail";
-            console.log(this.cid);
+            // console.log(this.cid);
             var obj={cid:this.cid}
             this.axios.get(url1,{params:obj}).then(res=>{
                 this.list=res.data.data;
-                console.log("1"+this.list)
+                console.log(this.list)
                 this.lg_img='http://127.0.0.1:3000/'+this.list.pic
+                
+            })
+            var url1_1="detail/family";
+            this.axios.get(url1_1,{params:obj}).then(res=>{
+                this.list_f=res.data.data;
+                console.log(this.list_f);
             })
             var url2="detail/material";
             this.axios.get(url2,{params:obj}).then(res=>{
@@ -162,7 +161,6 @@ export default {
                     this.collected=-1
                     
                 }
-                console.log("购物车返回"+res.data.msg)
             })
         },
         return_list(){
@@ -249,10 +247,14 @@ export default {
     },
     created() {
         this.loadMore();
-        this.fun()  
+        // this.fun()  
     
     },
     mounted() {
+        window.addEventListener('scroll',this.handleScroll)
+    },
+    destroyed() {
+        window.removeEventListener('scroll',this.handleScroll)
     },
 
 }
@@ -395,8 +397,8 @@ export default {
         font-size: 18px;
         font-weight: bold;
     }
-    .commentlist>div{
-        
+    #commentarea{
+        padding-top: 10px;
         display: flex;
     }
     .commentlist .touxiang{
@@ -405,18 +407,23 @@ export default {
     .commentlist img{
         width: 30px;
     }
+    #commentcontent{
+        width:100%;
+        border-bottom: 1px solid #e5e5e5;
+    }
     .commentlist .uname{
         margin-top:0px;
-        margin-bottom:10px;
         color:#bbb;
-        display: flex;
-        justify-content: space-between;
+        margin-bottom: 5px; 
+        font-size: 12px;
     }
     .commentlist .ucom{
-        margin-top: 0px;
-        margin-bottom: 20px;
+        margin:0px;
+        margin-bottom: 10px;
+        font-size: 14px;;
     }
     .dibu{
+        border-top: 1px solid #8a8a8a;
         background: #fff;
         position: fixed;
         bottom: 0px;
@@ -447,7 +454,7 @@ export default {
         background-size:18px 18px;
         padding-left: 20px;
     }
-    .comment{
+    .comment{   
         position: fixed;
         bottom: 0px;
         width: 100%;

@@ -1,9 +1,9 @@
 <template>
   <div class="product">
-    <div class="goods_item" v-for="(item,i) of list" :key="i">
+    <div class="goods_item" v-for="(item,i) of list" :key="i" :data-cid="item.cid" @click="go_detail">
       <!-- 商品图片 -->
       <div class="goods_img">
-      <img :src="'http://127.0.0.1:3000/'+item.pic">
+        <img :src="'http://127.0.0.1:3000/'+item.pic">
       </div>
       <!-- 商品介绍上部分 -->
       <div class="goods_top">
@@ -21,15 +21,14 @@
           :data-detail="item.detail"
           :data-subtitle="item.subtitle"
           :data-pic="item.pic"
-          :data-href="item.href"
-          >
-                 <div v-if="item.collect_status==1">
-                    <img class="btnimg" src="http://127.0.0.1:3000/collect_active.png" />
-                  </div>
-                  <!-- 已收藏图标 -->
-                  <div v-else>
-                    <img class="btnimg" src="http://127.0.0.1:3000/collect.png" />
-                  </div>
+          :data-href="item.href">
+            <div v-if="item.collect_status==1">
+              <img class="btnimg" src="http://127.0.0.1:3000/collect_active.png" />
+            </div>
+            <!-- 已收藏图标 -->
+            <div v-else>
+              <img class="btnimg" src="http://127.0.0.1:3000/collect.png" />
+            </div>
           </mt-button>
         </div>
       </div>
@@ -75,9 +74,10 @@ export default {
         this.list = rows;
         //console.log(this.list);
       })
-        // console.log("页面重新刷新")
+      
     },
-     addCollect(e){              //添加收藏夹
+    addCollect(e){              //添加收藏夹
+            e.stopPropagation();
             //获取数据
             var fid=e.target.dataset.fid;
             var cid=e.target.dataset.cid;
@@ -108,7 +108,12 @@ export default {
                 }
             this.loadMore();
             })
-        },
+      },
+    go_detail(e){
+      var cid=e.currentTarget.dataset.cid;
+      console.log(cid)
+      this.$router.push(`/detail/${cid}`)
+    }
   },
   created(){
     this.loadMore();

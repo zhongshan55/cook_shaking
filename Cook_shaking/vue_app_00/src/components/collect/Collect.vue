@@ -7,7 +7,7 @@
     <div>
     <!-- <mt-loadmore :top-method="loadTop" ref='loadmore' > -->
     <ul>
-      <li class="collectList" v-for="(item,i) of list" :key="i">
+      <li class="collectList" v-for="(item,i) of list" :key="i" :data-cid="item.cid" @click="go_detail">
     
           <!-- 左侧图片 -->
           <div class="left">
@@ -57,12 +57,12 @@ export default {
   methods:{
     loadTop(){
       this.loadMore();
-      console.log("刷新")
+      // console.log("刷新")
       this.$refs.loadmore //==><ANY ref="loadmore"></ANY>
       .onTopLoaded();
     } ,
     removeCollect(e){
-
+      e.stopPropagation();
       //请求地址
       var url = "add/removecollect";
       var cid=e.target.dataset.cid
@@ -97,6 +97,11 @@ export default {
         //this.list = rows;
         //console.log(this.list);
       })
+    },
+    go_detail(e){
+      var cid=e.currentTarget.dataset.cid;
+      console.log(cid);
+      this.$router.push(`/detail/${cid}`)
     }
   },
   created(){
