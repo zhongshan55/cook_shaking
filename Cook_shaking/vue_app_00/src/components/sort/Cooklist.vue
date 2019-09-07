@@ -36,7 +36,7 @@
       <!-- 商品下部分详情介绍 -->
       <p class="intr">{{item.detail}}</p> 
     </div> 
-    <mt-button type="primary" size="large" @click="loadMore" class="btn">加载更多...</mt-button>
+    <!-- <mt-button type="primary" size="large" @click="loadMore" class="btn">加载更多...</mt-button> -->
   </div>
 </template>
 <script>
@@ -47,7 +47,7 @@ export default {
       pno:0     //页面(第几页)
     }
   },
-  props:["fid"],
+  props:["fid","update"],  //
   methods:{
     loadMore(){
       //功能:获取商品分页数据
@@ -75,6 +75,7 @@ export default {
         this.list = rows;
         //console.log(this.list);
       })
+        // console.log("页面重新刷新")
     },
      addCollect(e){              //添加收藏夹
             //获取数据
@@ -111,6 +112,13 @@ export default {
   },
   created(){
     this.loadMore();
+  },
+  watch:{
+    update(){
+      this.loadMore();
+      // console.log("监控到变化"+this.update)
+      
+    }
   }
 }
 </script>

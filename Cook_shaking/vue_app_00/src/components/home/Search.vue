@@ -1,13 +1,11 @@
-<!-- 收藏列表 -->
 <template>
-  <div id="collect">
-    <!-- 标题 -->
-     <div class="shake-top">收藏列表({{list.length}})</div>
-    <!-- 商品列表 -->
-    <div>
-    <!-- <mt-loadmore :top-method="loadTop" ref='loadmore' > -->
-    <ul>
-      <li class="collectList" v-for="(item,i) of list" :key="i">
+ <div>
+     <div class="search">
+        <mt-search v-model="value" cancel-text="取消"
+  placeholder="搜索菜谱">
+             <mt-cell
+          v-for="(item,i) of list" :key="i" >
+          <li class="collectList" :data-cid="item.cid" @click="go_detail">
     
           <!-- 左侧图片 -->
           <div class="left">
@@ -24,8 +22,7 @@
               </div>
               <!-- 右侧取消收藏部分 -->
               <div class="right_img"  >
-                <span @click="removeCollect" 
-                  :data-cid="item.cid">取消收藏 </span><img src="../../../public/image/collect/collect_active.png" >
+                <!-- <span>取消收藏 </span><img src="../../../public/image/collect/collect_active.png" > -->
               </div>
             </div>
             <!-- 右侧下部分详情介绍 -->
@@ -35,97 +32,59 @@
           </div>
         
       </li>
-    </ul>
-    <!-- </mt-loadmore> -->
-    </div>
-  </div>
-</template>
+             </mt-cell>
+        </mt-search> 
+     </div>
+     
+ </div>
 
+</template>
 <script>
 export default {
-  data(){
-    return {
-      list:[],
-      isAutoFill:false,
-      allLoaded:false
-    }
-  },
-  props:["focused"],
-  //  loadBottom() {
-  //     this.loadMore();
-  //   },
-  methods:{
-    loadTop(){
-      this.loadMore();
-      console.log("刷新")
-      this.$refs.loadmore //==><ANY ref="loadmore"></ANY>
-      .onTopLoaded();
-    } ,
-    removeCollect(e){
-
-      //请求地址
-      var url = "add/removecollect";
-      var cid=e.target.dataset.cid
-      //请求参数
-      var obj = { cid};
-      // 获取返回结果
-      this.axios.get(url, { params: obj }).then(res => {
-        if (res.data.code == 2) {
-         this.$toast("取消收藏成功");
-         this.loadMore();
-       } else  {
-          this.$toast("取消收藏失败成功");
-        }
-       
-      });
+    data(){
+       return{
+           value:"",
+           result:false,
+           list:[]
+       }
     },
-    loadMore(){
-      //功能:获取商品分页数据
-      // 1.发送请求
-      var url="collect";
-      //发送ajax请求获取当前页内容
-      this.axios.get(url).then(res=>{
-        // 2.获取服务器返回结果
-        //console.log(res.data);
-        // 3.将返回结果保存
-        // var row = 1页.concat(2页)
-        this.list = res.data;
-        // console.log(this.list)
-        // 4.拼接多页内容
-        //var rows = this.list.concat(res.data); 
-        // 5.将结果赋值list
-        //this.list = rows;
-        //console.log(this.list);
-      })
+    methods:{
+        search(){
+            var sql="home/search"
+            var obj={val:this.value};
+            this.axios.get(sql,{params:obj}).then((res)=>{
+                if(res.data.data.length==0){
+                    this.result=false
+                }else{
+                    this.result=true;
+                    this.list=res.data.data;
+                    console.log(this.list)
+                }
+            })
+        },
+           //跳转到详情页面
+    go_detail(e){
+      var cid=e.currentTarget.dataset.cid;
+      this.$router.push(`/detail/${cid}`) 
     }
-  },
-  created(){
-    this.loadMore();
-  },
-  watch:{
-    focused(){
-      this.loadMore()
+    },
+    created(){
+        // console.log(this.value+"111")
+    },
+    watch:{
+        value(){
+            this.search()
+        }
     }
-  }
 }
 </script>
-
 <style scoped>
 /* 清除默认样式 */
 *{
   padding:0;
   margin:0;
 }
-/* 列表标题 */
-.shake-top{
-  height: 48px;
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-  line-height: 48px;
-  background: #fff;
-  border-bottom: 2px solid #ddd;
-}
+
 /* 商品样式 */
 .collectList{
   display: flex;
@@ -203,5 +162,3 @@ export default {
   line-height: 18px;
 }
 </style>
-
-
