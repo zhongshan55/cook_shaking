@@ -168,6 +168,47 @@ INSERT INTO cook_detail_material VALUES(null,5,"白砂糖","适量");
 INSERT INTO cook_detail_material VALUES(null,5,"蚝油","适量");
 INSERT INTO cook_detail_material VALUES(null,5,"清水","适量");
 
+INSERT INTO cook_detail_material VALUES(null,6,"火腿","150克");
+INSERT INTO cook_detail_material VALUES(null,6,"海参","250克");
+INSERT INTO cook_detail_material VALUES(null,6,"鱼翅","150克");
+INSERT INTO cook_detail_material VALUES(null,6,"冬笋","250克");
+INSERT INTO cook_detail_material VALUES(null,6,"猪蹄","50克");
+INSERT INTO cook_detail_material VALUES(null,6,"干贝","50克");
+INSERT INTO cook_detail_material VALUES(null,6,"鲍鱼","6块");
+INSERT INTO cook_detail_material VALUES(null,6,"母鸡","1000克");
+INSERT INTO cook_detail_material VALUES(null,6,"高汤","1000克");
+INSERT INTO cook_detail_material VALUES(null,6,"香菇","100克");
+INSERT INTO cook_detail_material VALUES(null,6,"鸭胗","2只");
+INSERT INTO cook_detail_material VALUES(null,6,"鱼唇","50克");
+INSERT INTO cook_detail_material VALUES(null,6,"鱼鳔","50克");
+INSERT INTO cook_detail_material VALUES(null,6,"食盐","适量");
+INSERT INTO cook_detail_material VALUES(null,6,"味精","适量");
+INSERT INTO cook_detail_material VALUES(null,6,"酱油","适量");
+INSERT INTO cook_detail_material VALUES(null,6,"姜","适量");
+INSERT INTO cook_detail_material VALUES(null,6,"八角","适量");
+INSERT INTO cook_detail_material VALUES(null,6,"桂皮","适量");
+INSERT INTO cook_detail_material VALUES(null,6,"料酒","适量");
+INSERT INTO cook_detail_material VALUES(null,6,"葱","适量");
+INSERT INTO cook_detail_material VALUES(null,6,"猪油","适量");
+INSERT INTO cook_detail_material VALUES(null,6,"茶叶","适量");
+
+INSERT INTO cook_detail_material VALUES(null,7,"鱼肉","1条");
+INSERT INTO cook_detail_material VALUES(null,7,"金针菇","2把");
+INSERT INTO cook_detail_material VALUES(null,7,"芹菜","1把");
+INSERT INTO cook_detail_material VALUES(null,7,"酸萝卜","3块");
+INSERT INTO cook_detail_material VALUES(null,7,"豆芽","1把");
+INSERT INTO cook_detail_material VALUES(null,7,"土豆","1个");
+INSERT INTO cook_detail_material VALUES(null,7,"豆腐皮","200克");
+INSERT INTO cook_detail_material VALUES(null,7,"花生","适量");
+INSERT INTO cook_detail_material VALUES(null,7,"泡椒","适量");
+INSERT INTO cook_detail_material VALUES(null,7,"泡姜","适量");
+INSERT INTO cook_detail_material VALUES(null,7,"酱油","适量");
+INSERT INTO cook_detail_material VALUES(null,7,"料酒","适量");
+INSERT INTO cook_detail_material VALUES(null,7,"麻辣酱包","1包");
+INSERT INTO cook_detail_material VALUES(null,7,"香菜","适量");
+INSERT INTO cook_detail_material VALUES(null,7,"葱","适量");
+INSERT INTO cook_detail_material VALUES(null,7,"辣椒","适量");
+
 
 /*菜系详情表_步骤*/
 CREATE TABLE cook_detail_step(
@@ -221,6 +262,23 @@ INSERT INTO cook_detail_step VALUES(null,5,"放入木耳炒匀","doufu_step7.jpg
 INSERT INTO cook_detail_step VALUES(null,5,"
 淋入料汁烧入味","doufu_step8.jpg",8);
 INSERT INTO cook_detail_step VALUES(null,5,"放入大蒜叶子炒至断生，即可出锅","doufu_step9.jpg",9);
+
+INSERT INTO cook_detail_step VALUES(null,6,"鱼翅加水、料酒、葱、姜片焖10分钟。鲍鱼剞十字花刀加料酒、鸡汤蒸半小时，鱼唇切块加沸水、葱段、姜片、料酒煮10分钟，鸡头、脚，鸭肫切片，开水略淖，鱼肚切块；","06.jpg",1);
+INSERT INTO cook_detail_step VALUES(null,6,"海参、火腿、冬笋切片，猪中蹄筋切段，鸽蛋染酱油后略炸；","06.jpg",2);
+INSERT INTO cook_detail_step VALUES(null,6,"葱、姜、鸡、鸭肫略炒，加酱油、精盐、味精、料酒、鸡汤、八角、桂皮炒匀，加盖煮20分钟后，捞去葱、姜；","06.jpg",3);
+INSERT INTO cook_detail_step VALUES(null,6,"取能装2500克酒的酒坛一个，放入鸡、鱼翅、火腿、干贝、鲍鱼、香菇、冬笋，加鸡汤，茶叶封坛口，加盖小碗1个，烧沸后小火煨2小时，放海参、蹄筋、鱼唇、鱼肚煨1小时。","06.jpg",4);
+
+INSERT INTO cook_detail_step VALUES(null,7,"准备好主料。","kaoyu_step1.jpg",1);
+INSERT INTO cook_detail_step VALUES(null,7,"鱼洗干净对半剖开，不要剖断，2边抹上盐，倒入料酒酱油腌制三十分钟；腌制好后放入烤箱200度烤20分钟；（鱼肚的黑色部分要刮干净）","kaoyu_step2.jpg",2);
+INSERT INTO cook_detail_step VALUES(null,7,"
+配菜洗干净切好待用。","kaoyu_step3.jpg",3);
+INSERT INTO cook_detail_step VALUES(null,7,"热锅下油放入酸萝卜、泡椒、泡姜翻炒出味。","kaoyu_step4.jpg",4);
+INSERT INTO cook_detail_step VALUES(null,7,"放入麻辣酱料包炒出味，喜欢辣的可以放多点。","kaoyu_step5.jpg",5);
+INSERT INTO cook_detail_step VALUES(null,7,"配菜放入里面翻炒，加入水，盖盖煮至断生。","kaoyu_step6.jpg",6);
+INSERT INTO cook_detail_step VALUES(null,7,"炒好的配菜和辣椒汁一起淋在鱼上面，烤箱180度烤20分钟。（自己喜欢吃菜，所以放很多配菜在上面，不喜欢可以少放）","kaoyu_step7.jpg",7);
+INSERT INTO cook_detail_step VALUES(null,7,"取出表面洒上香菜，香葱再入烤箱烤五分钟。","kaoyu_step8.jpg",8);
+INSERT INTO cook_detail_step VALUES(null,7,"
+出炉后洒上炒花生和辣椒即可。","kaoyu_step9.jpg",9);
 
 /*粤菜列表*/
 CREATE TABLE cook_guangdong(
