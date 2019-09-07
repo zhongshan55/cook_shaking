@@ -2,15 +2,35 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../pool");
 
-router.get("/", (req, res) => { 
+router.get("/", (req, res) => {
     var cid = req.query.cid;
-    
     if (cid !== undefined) { 
         var sql1 = "select * from cook_detail where cid=? ";
         pool.query(sql1,[cid], (err, result) => { 
             if (err) throw err;
             res.send({ code: 1, msg: "查询成功", data: result[0] });
             console.log(result)
+        })
+    }
+})        
+
+router.get("/family", (req, res) => { 
+    var cid = req.query.cid;
+    if (cid !== undefined) { 
+        var sql1 = "select * from cook_detail where cid=? ";
+        pool.query(sql1,[cid], (err, result) => { 
+            if (err) throw err;
+            
+            console.log(result)
+            var fid = result[0].fid;
+            console.log(fid)
+            var sql = "select *from cook_family where fid=?";
+            pool.query(sql, [fid], (err, result) => { 
+                if (err) throw err;
+                res.send({ code: 1, msg: "查询成功", data: result[0] });
+                var fname = result[0].fname;
+                console.log(fname);
+            })
         })
     }
 })
@@ -99,4 +119,4 @@ router.get("/collect", (req, res) => {
         res.send({code:0,msg:"未登录"})
     }
 })
-module.exports = router;
+module.exports=router;
