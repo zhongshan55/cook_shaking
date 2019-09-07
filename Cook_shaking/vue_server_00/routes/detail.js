@@ -77,11 +77,11 @@ router.get("/addcomment", (req, res) => {
     // console.log(session)
     var uid = req.session.uid;
     var uname = req.session.uname;
-    // if (!uid) { 
-    //     res.send({ code: -1, msg: "未登录" })
-    //     return;
-    // }
-    // var uname = req.query.uname;
+    if (!uid) { 
+        res.send({ code: -1, msg: "未登录" })
+        return;
+    }
+    var uname = req.query.uname;
     var cid = req.query.cid;
     var content = req.query.content;
     console.log(uid);
