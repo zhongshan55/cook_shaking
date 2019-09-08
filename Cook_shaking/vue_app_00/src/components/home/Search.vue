@@ -40,9 +40,12 @@
           </div>     
       </li>
       </ul>
-      <div v-else class="bg">
+      <div v-if="result==-1&&value" class="bg">
         <img src="../../assets/search_res.png" alt="">
-         </div>
+        </div>
+      <div v-if="result==0" class="bg">
+        <img src="../../assets/bg.png" alt="">
+      </div>
   
      
  </div>
@@ -53,7 +56,7 @@ export default {
     data(){
        return{
            value:"",
-           result:false,
+           result:0,
            list:[]
        }
     },
@@ -69,9 +72,10 @@ export default {
             var obj={val:this.value};
             this.axios.get(sql,{params:obj}).then((res)=>{
                 if(res.data.data.length==0){
-                    this.result=false
+                    this.result=-1
+                    this.list=res.data.data;
                 }else{
-                    this.result=true;
+                    this.result=1;
                     this.list=res.data.data;
                     console.log(this.list)
                 }
@@ -88,7 +92,9 @@ export default {
     },
     watch:{
         value(){
-            // this.search()
+          if(!this.value){
+            this.result=0;
+          }
         },
         
     }
@@ -164,6 +170,8 @@ div.search_in{
 }
 div.bg{
   text-align:center;
+  /* height:200px; */
+  margin-top:50px;
   
 }
 /* 商品样式 */
