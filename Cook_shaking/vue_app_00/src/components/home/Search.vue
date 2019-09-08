@@ -1,11 +1,19 @@
 <template>
  <div>
      <div class="search">
-        <mt-search v-model="value" cancel-text="取消"
-  placeholder="搜索菜谱">
-             <mt-cell
-          v-for="(item,i) of list" :key="i" >
-          <li class="collectList" :data-cid="item.cid" @click="go_detail">
+         <span class="retreat" @click="go_retreat"> &lt; 返回</span>
+         <div class="search_in">
+          <img  class="img_left" src="../../assets/search.png" >
+         <img class="img_right" src="../../assets/close.png" v-if="value" @click="clean">
+         <input type="text"  placeholder="搜索菜谱"  v-model="value">
+         </div>
+         <div class="search_btn">
+         <button @click="search">搜索</button>
+         </div>
+     </div>
+           
+          <ul v-if="result">
+          <li class="collectList"  :data-cid="item.cid" @click="go_detail" v-for="(item,i) of list" :key="i">
     
           <!-- 左侧图片 -->
           <div class="left">
@@ -29,12 +37,13 @@
             <div class="right_intr">
               <p>{{item.detail}}</p>
             </div>
-          </div>
-        
+          </div>     
       </li>
-             </mt-cell>
-        </mt-search> 
-     </div>
+      </ul>
+      <div v-else class="bg">
+        <img src="../../assets/search_res.png" alt="">
+         </div>
+  
      
  </div>
 
@@ -49,6 +58,12 @@ export default {
        }
     },
     methods:{
+      go_retreat(){
+        this. $router.go(-1);
+      },
+      clean(){
+        this.value=""
+      },
         search(){
             var sql="home/search"
             var obj={val:this.value};
@@ -73,8 +88,9 @@ export default {
     },
     watch:{
         value(){
-            this.search()
-        }
+            // this.search()
+        },
+        
     }
 }
 </script>
@@ -85,6 +101,71 @@ export default {
   margin:0;
 }
 
+/* 搜索框样式 */
+div.search{
+  background: #eee;
+  display: flex;
+  height: 50px;
+}
+span.retreat{
+  display: inline-block;
+  height: 50px;
+  line-height: 50px;
+  color:#999;
+  width: 15%;
+  text-align: center;
+}
+  
+div.search_in{
+  width: 70%;
+  background: #fff#999;
+  position:relative;
+}
+.search_in>input{
+  height: 40px;
+  padding-left:25px;
+  border:0;
+  outline: none;
+  background: #fafafa;
+  border-radius: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top:5px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.search_in>.img_left{
+  position:absolute;
+  left:10px;
+  top:17px;
+
+}
+.search_in>.img_right{
+  position: absolute;
+  right:5px;
+  top:17px;
+  width: 16px;
+
+}
+.search .search_btn{
+  width: 15%;
+  line-height: 50px;
+  text-align:center;
+}
+.search_btn>button{
+  width:  80%;
+  height: 40px;
+  border:1px solid #ddd;
+  background: #eee;
+  font-size:16px;
+  color:rgb(58, 57, 57);
+  border-radius:5px;
+  outline: none;
+}
+div.bg{
+  text-align:center;
+  
+}
 /* 商品样式 */
 .collectList{
   display: flex;

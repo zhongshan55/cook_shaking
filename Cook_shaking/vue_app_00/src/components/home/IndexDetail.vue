@@ -3,7 +3,7 @@
     <!-- logo -->
     <div class="logoandlocation">
       美食天下
-     <img src="../../../public/image/home/search.png" />
+     <img src="../../../public/image/home/search.png" @click="go_search"/>
     </div>
     <div style="margin-top:50px;"></div>
     <!-- 轮播图 -->
@@ -107,6 +107,10 @@ export default {
   },
   props:["focused"],
   methods: {
+    //跳转搜索页面
+    go_search(){
+      this.$router.push("/search")
+    },
     //跳转到详情页面
     go_detail(e){
       var cid=e.target.dataset.cid;
