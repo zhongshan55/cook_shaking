@@ -120,6 +120,7 @@ span.retreat{
   color:#999;
   width: 15%;
   text-align: center;
+  font-size: 16px;
 }
   
 div.search_in{
@@ -171,7 +172,7 @@ div.search_in{
 div.bg{
   text-align:center;
   /* height:200px; */
-  margin-top:50px;
+  margin-top:150px;
   
 }
 /* 商品样式 */
