@@ -151,8 +151,6 @@ export default {
                 console.log(this.list_c)
             })
             var url5="detail/collect";
-            var span3=document.getElementById("span3");
-            var shoucang=document.getElementById("shoucang");
             this.axios.get(url5,{params:obj}).then(res=>{
                 if(res.data.code==1){
                     this.collected=1;
