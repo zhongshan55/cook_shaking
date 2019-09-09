@@ -217,18 +217,22 @@ export default {
                 console.log(this.content);
                 var url="detail/addcomment";
                 var obj={cid,content};
-                var that=this;
-                this.axios.get(url,{params:obj}).then(res=>{
-                    if(res.data.code==-1){
-                        this.$messagebox("消息","请先登录再评论").then(res=>{
-                            this.$router.push("/Login");
-                            return;
-                        });
-                    }else if(res.data.code==1){
-                        this.$toast("评论成功")
-                        this.loadMore();
-                    }
-                })
+                if(content==""){
+                    this.$messagebox("消息","内容不能为空")
+                }else{
+                    this.axios.get(url,{params:obj}).then(res=>{
+                        if(res.data.code==-1){
+                            this.$messagebox("消息","请先登录再评论").then(res=>{
+                                this.$router.push("/Login");
+                                return;
+                            });
+                        }else if(res.data.code==1){
+                            this.$toast("评论成功")
+                            this.loadMore();
+                            this.content=""
+                        }
+                    })
+                }
         },
         fun1(){
             $('body').click(function(e){                
