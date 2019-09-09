@@ -57,7 +57,7 @@
           <li v-for="(item,i) of list" :key="i">
             <div class="newsImg">
               <span>
-                <img :src="`http://127.0.0.1:3000/`+item.pic" :data-cid="item.cid" @click="go_detail"/>
+                <img :src="host+item.pic" :data-cid="item.cid" @click="go_detail"/>
               </span>
             </div>
             <div class="detail" >

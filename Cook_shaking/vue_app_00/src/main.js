@@ -21,6 +21,7 @@ axios.defaults.withCredentials=true
 //8:将axios 注册vue 实例中
 //由于axios不支持 use 将实例添加vue原型
 Vue.prototype.axios = axios;
+Vue.prototype.host = "http://127.0.0.1:3000/";
 
 //引入animate.css模块
 import animated from "animate.css"
