@@ -99,6 +99,7 @@ shake_More(){
     //播放音效
    shakeAudio.play();
    console.log("摇一摇成功")
+   this.shake_in();
    }
 
     lastShakeX = curShakeX;
@@ -168,8 +169,6 @@ shake_More(){
   line-height: 48px;
   background: #fff;
   border-bottom: 2px solid #ddd;
-
-
 }
 #shake-content{
   background: rgb(44,44,44);

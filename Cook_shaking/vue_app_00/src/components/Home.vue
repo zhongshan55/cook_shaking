@@ -2,21 +2,21 @@
   <div class="page-tabbar">
     <div class="page-wrap">
         <mt-tab-container class="page-tabbar-container" v-model="active">
-          <mt-tab-container-item id="home">
+          <mt-tab-container-item id="home" >
             <!-- 轮播图 -->
               <carousel/>
               <!-- 首页信息 -->
                          <!-- 通过getIndex事件获取子组件"indexdetail"传递的值-->
-             <indexdetail  @getIndex="changeTabbar($event)"/>
+             <indexdetail  @getIndex="changeTabbar($event)" :focused="currentIndex[0].isSelect"/>
           </mt-tab-container-item>
           <mt-tab-container-item id="sort">
-              <sort  :cooklist_id="cooklist_id"></sort>
+              <sort  :cooklist_id="cooklist_id" :focused="currentIndex[1].isSelect"></sort>
           </mt-tab-container-item>
           <mt-tab-container-item id="shopping_cart">
-                  <shake/>
+                  <shake />
           </mt-tab-container-item>
           <mt-tab-container-item id="bbs">
-             <collect></collect> 
+             <collect :focused="currentIndex[3].isSelect"></collect> 
           </mt-tab-container-item>
           <mt-tab-container-item id="me">
            <!-- 我的 -->

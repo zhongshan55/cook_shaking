@@ -3,7 +3,7 @@
     <!-- logo -->
     <div class="logoandlocation">
       美食天下
-     <img src="../../../public/image/home/search.png" />
+     <img src="../../../public/image/home/search.png" @click="go_search"/>
     </div>
     <div style="margin-top:50px;"></div>
     <!-- 轮播图 -->
@@ -47,7 +47,7 @@
         <!-- 热门 更多 -->
         <div class="title">
           <h3><img src="../../../public/image/home/good.png" > 热门菜列</h3>
-          <span>
+          <span @click="go_sort" :data-cooklist_id="1">
             更多 
             <img src="../../../public/image/home/right.png" alt />
           </span>
@@ -105,7 +105,12 @@ export default {
       list_active: [] ///add_active 请求返回结果
     };
   },
+  props:["focused"],
   methods: {
+    //跳转搜索页面
+    go_search(){
+      this.$router.push("/search")
+    },
     //跳转到详情页面
     go_detail(e){
       var cid=e.target.dataset.cid;
@@ -115,7 +120,7 @@ export default {
     //跳转到粤菜列表
     go_sort(e) {
       //获取选中的菜谱类型面板cooklist_id ,用于对应sort组件<mt-tab-container-item>的id
-      var cooklist_id=e.target.dataset.cooklist_id;
+      var cooklist_id=e.currentTarget.dataset.cooklist_id;
       //$emit() :父组件绑定自定义的"getIndex"事件,子组件通过$emit()向父组件进行传值
       //向父组件传递sort    作用:底部导航显示"分类"模块
       //向父组件传递cooklist_id  作用:"分类"模块显示对应的面板id的菜谱类型
@@ -169,6 +174,11 @@ export default {
     this.load(); //首页信息加载
     //  this.$nextTick()函数作用是等页面的数据更新完成以后，它再执行内部回调函数中的逻辑
 
+  },
+  watch:{
+    focused(){
+      this.load()
+    }
   }
 };
 </script>

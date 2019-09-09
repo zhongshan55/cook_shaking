@@ -2,11 +2,10 @@
 <template>
   <div id="collect">
     <!-- 标题 -->
-    <h3>收藏列表({{list.length}})</h3>
-    <hr>
+     <div class="shake-top">收藏列表({{list.length}})</div>
     <!-- 商品列表 -->
     <div>
-    <mt-loadmore :top-method="loadTop" ref='loadmore' >
+    <!-- <mt-loadmore :top-method="loadTop" ref='loadmore' > -->
     <ul>
       <li class="collectList" v-for="(item,i) of list" :key="i" :data-cid="item.cid" @click="go_detail">
     
@@ -25,8 +24,8 @@
               </div>
               <!-- 右侧取消收藏部分 -->
               <div class="right_img"  >
-                <span>取消收藏 </span><img src="../../../public/image/collect/collect_active.png" @click="removeCollect" 
-                  :data-cid="item.cid">
+                <span @click="removeCollect" 
+                  :data-cid="item.cid">取消收藏 </span><img src="../../../public/image/collect/collect_active.png" >
               </div>
             </div>
             <!-- 右侧下部分详情介绍 -->
@@ -37,7 +36,7 @@
         
       </li>
     </ul>
-    </mt-loadmore>
+    <!-- </mt-loadmore> -->
     </div>
   </div>
 </template>
@@ -51,9 +50,10 @@ export default {
       allLoaded:false
     }
   },
-   loadBottom() {
-      this.loadMore();
-    },
+  props:["focused"],
+  //  loadBottom() {
+  //     this.loadMore();
+  //   },
   methods:{
     loadTop(){
       this.loadMore();
@@ -106,6 +106,11 @@ export default {
   },
   created(){
     this.loadMore();
+  },
+  watch:{
+    focused(){
+      this.loadMore()
+    }
   }
 }
 </script>
@@ -117,9 +122,14 @@ export default {
   margin:0;
 }
 /* 列表标题 */
-h3{
-  margin:10px 0;
+.shake-top{
+  height: 48px;
+  font-size: 18px;
+  font-weight: bold;
   text-align: center;
+  line-height: 48px;
+  background: #fff;
+  border-bottom: 2px solid #ddd;
 }
 /* 商品样式 */
 .collectList{

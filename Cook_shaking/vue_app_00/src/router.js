@@ -12,6 +12,7 @@ import Collect from './components/collect/Collect.vue'
 import Sort from './components/sort/Sort.vue'
 import User from './components/me/User.vue'  //用户详情
 import Detail from './components/common/Detail.vue'
+import Search from './components/home/Search'
 
 
 
@@ -29,6 +30,7 @@ export default new Router({
     {path:'/Sort/:fid',component:Sort},
     {path:'/User',component:User},
     {path:'/Detail/:cid',component:Detail,props:true},
+    {path:'/Search',component:Search},
 
 
     

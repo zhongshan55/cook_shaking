@@ -10,9 +10,9 @@ router.get("/",(req,res)=>{
       // 3.通过连接池发送sql语句
       pool.query(sql,[uid],(err,result)=>{
           if(err) throw err;
-          if(result.length>0){
+        //   if(result.length>0){
               res.send(result)
-          };
+        //   };
       })
   })
 
